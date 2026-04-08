@@ -68,9 +68,9 @@ The source of the data is a query through [mediacloud.org](http://mediacloud.org
 
 ## Types of visualizations & Python libraries to use
 
-## We plan to include static, text-analysis, and network visualizations. 
+We plan to include static, text-analysis, and network visualizations. 
 
-## Here are the Python libraries we might use:
+### Python libraries we might use:
 
 - For text processing: spaCy, nltk  
 - For semantic analysis: sentence\_transformers, (huggingface) transformers, pytorch, trafilatura  
