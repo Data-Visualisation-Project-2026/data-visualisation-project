@@ -16,6 +16,22 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
 
     daily_long['dimension'] = daily_long['dimension'].map(score_labels)
 
+    # Keep colors and legend order consistent across the chart.
+    color_map = {
+        'Kinetic': '#4E79A7',
+        'Humanitarian': '#F28E2B',
+        'Diplomatic': '#E15759',
+        'Economic': '#76B7B2',
+        'Culpability Bias': '#59A14F'
+    }
+
+    latest_date = daily_long['publish_date'].max()
+    legend_order = (
+        daily_long[daily_long['publish_date'] == latest_date]
+        .sort_values('average_score', ascending=False)['dimension']
+        .tolist()
+    )
+
     # Define the interactive line chart and its visual settings.
     chart = px.line(
         daily_long,
@@ -28,7 +44,8 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
             'average_score': 'Average Score',
             'dimension': 'Dimension'
         },
-        color_discrete_sequence=px.colors.qualitative.T10
+        color_discrete_map=color_map,
+        category_orders={'dimension': legend_order}
     )
 
     # Highlight selected dimensions while keeping the rest visible for context.
@@ -38,6 +55,25 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
             line={'width': 3.5 if is_highlighted else 1.5},
             opacity=1.0 if is_highlighted else 0.25,
             hovertemplate=f'{trace.name}: %{{y:.2f}}<extra></extra>'
+        )
+
+    # Mark major war events that help explain shifts in framing.
+    events = [
+        ('2026-02-28', 'Opening Strikes', 'top left'),
+        ('2026-03-18', 'Energy Escalation', 'top left'),
+        ('2026-03-27', 'Saudi Base Attack', 'top right')
+    ]
+
+    for event_date, event_label, label_position in events:
+        chart.add_vline(
+            x=event_date,
+            line_width=1,
+            line_dash='dash',
+            line_color='rgba(90, 90, 90, 0.55)',
+            annotation_text=event_label,
+            annotation_position=label_position,
+            annotation_font_size=11,
+            annotation_font_color='rgba(70, 70, 70, 0.9)'
         )
 
     chart.update_layout(
@@ -53,5 +89,13 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
         },
         margin={'l': 40, 'r': 140, 't': 60, 'b': 50}
     )
+
+    chart.update_xaxes(
+        dtick=4 * 24 * 60 * 60 * 1000,
+        tickformat='%b %d',
+        showgrid=False
+    )
+
+    chart.update_yaxes(showgrid=False)
 
     return chart
