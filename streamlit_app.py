@@ -2,6 +2,8 @@ import pandas as pd
 import altair as alt
 import streamlit as st
 
+st.set_page_config(layout='wide')
+
 st.title('Media Framing of the 2026 Iran War')
 
 df = pd.read_parquet('iran_war_media_framing_scores.parquet', engine='pyarrow')
@@ -40,7 +42,7 @@ chart = alt.Chart(daily_long).mark_line(opacity=0.9).encode(
         title='Date',
         axis=alt.Axis(
             format='%b %d',
-            tickCount='day',
+            tickCount=6,
             labelAngle=0,
             grid=False
         )
@@ -58,15 +60,15 @@ chart = alt.Chart(daily_long).mark_line(opacity=0.9).encode(
         'dimension:N',
         title='Dimension',
         legend=alt.Legend(
-            orient='right',
+            orient='bottom',
+            direction='horizontal',
             labelFontSize=12
         ),
         scale=alt.Scale(scheme='tableau10')
     )
 ).properties(
-    width=650,
     height=400,
     title='Framing Scores Over Time'
 )
 
-st.altair_chart(chart, width=True)
+st.altair_chart(chart, width='stretch')
