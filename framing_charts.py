@@ -1,7 +1,7 @@
 import plotly.express as px
 
 
-def make_framing_over_time_chart(df, score_cols):
+def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimensions):
     """Create an interactive line chart showing average framing scores over time."""
     # Aggregate each framing score by publication date.
     daily = df.groupby('publish_date')[score_cols].mean().reset_index()
@@ -14,14 +14,7 @@ def make_framing_over_time_chart(df, score_cols):
         value_name='average_score'
     )
 
-    label_map = {
-        'kinetic_focus': 'Kinetic',
-        'humanitarian_focus': 'Humanitarian',
-        'diplomatic_focus': 'Diplomatic',
-        'economic_focus': 'Economic',
-        'culpability_bias': 'Culpability Bias'
-    }
-    daily_long['dimension'] = daily_long['dimension'].map(label_map)
+    daily_long['dimension'] = daily_long['dimension'].map(score_labels)
 
     # Define the interactive line chart and its visual settings.
     chart = px.line(
@@ -38,23 +31,27 @@ def make_framing_over_time_chart(df, score_cols):
         color_discrete_sequence=px.colors.qualitative.T10
     )
 
-    chart.update_traces(
-        line={'width': 2.5},
-        hovertemplate='%{x|%b %d}<br>%{y:.2f}<extra>%{fullData.name}</extra>'
-    )
+    # Highlight selected dimensions while keeping the rest visible for context.
+    for trace in chart.data:
+        is_highlighted = trace.name in highlighted_dimensions
+        trace.update(
+            line={'width': 3.5 if is_highlighted else 1.5},
+            opacity=1.0 if is_highlighted else 0.25,
+            hovertemplate=f'{trace.name}: %{{y:.2f}}<extra></extra>'
+        )
 
     chart.update_layout(
-        height=400,
+        height=550,
         yaxis_range=[0.1, 0.7],
         hovermode='x unified',
         legend={
-            'orientation': 'h',
+            'orientation': 'v',
             'yanchor': 'top',
-            'y': -0.2,
-            'xanchor': 'center',
-            'x': 0.5
+            'y': 1,
+            'xanchor': 'left',
+            'x': 1.02
         },
-        margin={'l': 40, 'r': 30, 't': 60, 'b': 80}
+        margin={'l': 40, 'r': 140, 't': 60, 'b': 50}
     )
 
     return chart
