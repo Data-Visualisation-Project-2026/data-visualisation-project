@@ -1,3 +1,4 @@
+import pandas as pd
 import plotly.express as px
 
 
@@ -59,21 +60,42 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
 
     # Mark major war events that help explain shifts in framing.
     events = [
-        ('2026-02-28', 'Opening Strikes', 'top left'),
-        ('2026-03-18', 'Energy Escalation', 'top left'),
-        ('2026-03-27', 'Saudi Base Attack', 'top right')
+        ('2026-02-28', 'Opening Strikes', 'left'),
+        ('2026-03-18', 'Energy Escalation', 'left'),
+        ('2026-03-27', 'Saudi Base Attack', 'right')
     ]
 
-    for event_date, event_label, label_position in events:
-        chart.add_vline(
+    for event_date, event_label, label_anchor in events:
+        event_date = pd.Timestamp(event_date)
+
+        chart.add_shape(
+            type='line',
+            xref='x',
+            yref='paper',
+            x0=event_date,
+            x1=event_date,
+            y0=0,
+            y1=1,
+            line={
+                'width': 1,
+                'dash': 'dash',
+                'color': 'rgba(90, 90, 90, 0.55)'
+            }
+        )
+
+        chart.add_annotation(
             x=event_date,
-            line_width=1,
-            line_dash='dash',
-            line_color='rgba(90, 90, 90, 0.55)',
-            annotation_text=event_label,
-            annotation_position=label_position,
-            annotation_font_size=11,
-            annotation_font_color='rgba(70, 70, 70, 0.9)'
+            y=1.02,
+            xref='x',
+            yref='paper',
+            text=event_label,
+            showarrow=False,
+            xanchor=label_anchor,
+            yanchor='bottom',
+            font={
+                'size': 11,
+                'color': 'rgba(70, 70, 70, 0.9)'
+            }
         )
 
     chart.update_layout(
