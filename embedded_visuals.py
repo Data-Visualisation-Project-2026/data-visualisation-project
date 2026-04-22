@@ -8,7 +8,7 @@ import streamlit.components.v1 as components
 def render_outlet_event_timeline():
     """Render the outlet event timeline inside the Streamlit app."""
     html = _build_outlet_event_timeline_html()
-    components.html(html, height=900, scrolling=True)
+    components.html(html, height=1700, scrolling=True)
 
 
 def _build_outlet_event_timeline_html():
@@ -40,6 +40,51 @@ def _build_outlet_event_timeline_html():
     const meta = {meta};"""
 
     main_js = main_js.replace(fetch_block, embedded_data)
+    main_js = re.sub(
+        r'// ── GSAP horizontal scroll.*?gsap\.to\("#timeline-track", \{.*?\n\s*\}\);',
+        '',
+        main_js,
+        flags=re.DOTALL
+    )
+
+    # Preserve the visual style while using a reliable vertical layout in Streamlit.
+    embedded_css = """
+body {
+    min-height: 1600px;
+}
+
+#intro {
+    height: 430px !important;
+    min-height: 430px !important;
+}
+
+#timeline-section,
+#timeline-inner {
+    height: 650px !important;
+    min-height: 650px !important;
+    position: relative !important;
+    top: auto !important;
+    display: block !important;
+}
+
+#timeline-section {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+}
+
+#timeline-inner {
+    overflow: visible !important;
+}
+
+#timeline-track {
+    transform: none !important;
+}
+
+#outro {
+    height: 430px !important;
+    min-height: 430px !important;
+}
+"""
 
     return f"""
 <!DOCTYPE html>
@@ -49,6 +94,7 @@ def _build_outlet_event_timeline_html():
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Outlet Event Timeline</title>
     <style>{style_css}</style>
+    <style>{embedded_css}</style>
 </head>
 <body>
 {body_html}
