@@ -19,11 +19,11 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
 
     # Keep colors and legend order consistent across the chart.
     color_map = {
-        'Kinetic': '#315f86',
-        'Humanitarian': '#6f91aa',
-        'Diplomatic': '#486f7f',
-        'Economic': '#7aa6a3',
-        'Culpability Bias': '#557b97'
+        'Kinetic': '#4E79A7',
+        'Humanitarian': '#F28E2B',
+        'Diplomatic': '#E15759',
+        'Economic': '#76B7B2',
+        'Culpability Bias': '#59A14F'
     }
 
     latest_date = daily_long['publish_date'].max()
@@ -101,7 +101,7 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
         height=550,
         yaxis_range=[0.1, 0.7],
         hovermode='x unified',
-        title=None,
+        title_text='',
         legend={
             'orientation': 'v',
             'yanchor': 'top',

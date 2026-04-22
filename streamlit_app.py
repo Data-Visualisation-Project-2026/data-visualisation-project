@@ -74,11 +74,20 @@ st.markdown(
     }
 
     div[data-baseweb="tag"] {
-        background-color: #557086;
+        background-color: #557086 !important;
     }
 
     div[data-baseweb="tag"] span {
-        color: #ffffff;
+        color: #ffffff !important;
+    }
+
+    div[data-baseweb="tag"] svg {
+        color: #ffffff !important;
+        fill: #ffffff !important;
+    }
+
+    div[data-baseweb="tag"] path {
+        fill: #ffffff !important;
     }
 
     div[data-baseweb="checkbox"] label,
@@ -94,6 +103,17 @@ st.markdown(
 
     a {
         color: #2f5f86;
+    }
+
+    [data-testid="stSidebar"] [data-baseweb="radio"] div:first-child {
+        background-color: #6f8fa8 !important;
+        border-color: #6f8fa8 !important;
+    }
+
+    [data-testid="stSidebar"] [data-baseweb="radio"] div:first-child::before,
+    [data-testid="stSidebar"] [data-baseweb="radio"] div:first-child::after {
+        background-color: #6f8fa8 !important;
+        border-color: #6f8fa8 !important;
     }
     </style>
     """,
