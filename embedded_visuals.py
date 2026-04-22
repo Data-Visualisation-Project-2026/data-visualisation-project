@@ -41,8 +41,16 @@ def _build_outlet_event_timeline_html():
 
     main_js = main_js.replace(fetch_block, embedded_data)
     main_js = main_js.replace(
+        'const MARGIN = { top: 40, right: 20, bottom: 40, left: 20 };',
+        'const MARGIN = { top: 40, right: 60, bottom: 70, left: 70 };'
+    )
+    main_js = main_js.replace(
         'const VH = window.innerHeight;',
         'const VH = 650;'
+    )
+    main_js = main_js.replace(
+        'const DAY_WIDTH = Math.ceil(window.innerWidth * 4 / timeline.length);',
+        'const DAY_WIDTH = Math.ceil((window.innerWidth - MARGIN.left - MARGIN.right) / timeline.length);'
     )
     main_js = re.sub(
         r'// ── GSAP horizontal scroll.*?gsap\.to\("#timeline-track", \{.*?\n\s*\}\);',
@@ -72,7 +80,7 @@ body {
 }
 
 #timeline-section {
-    overflow-x: auto !important;
+    overflow-x: hidden !important;
     overflow-y: hidden !important;
 }
 
