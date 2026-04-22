@@ -19,19 +19,64 @@ st.markdown(
     }
 
     [data-testid="stSidebar"] {
-        background: #edf3f8;
-        border-right: 1px solid #c4d2de;
+        background: #dfeaf2;
+        border-right: 2px solid #9eb2c3;
+        box-shadow: 2px 0 10px rgba(47, 74, 95, 0.08);
+    }
+
+    [data-testid="stSidebar"] > div:first-child {
+        padding-top: 2rem;
+        padding-left: 1.35rem;
+        padding-right: 1.35rem;
     }
 
     [data-testid="stSidebar"] h2 {
         color: #2f4a5f;
-        font-size: 1rem;
-        margin-bottom: 0.75rem;
+        font-size: 1.05rem;
+        font-weight: 800;
+        letter-spacing: 0.03em;
+        margin-bottom: 1rem;
+        padding-bottom: 0.7rem;
+        border-bottom: 1px solid rgba(47, 74, 95, 0.22);
+        text-transform: uppercase;
+    }
+
+    [data-testid="stSidebar"] div[role="radiogroup"] {
+        gap: 0.8rem;
     }
 
     [data-testid="stSidebar"] div[role="radiogroup"] label {
+        align-items: center;
+        background: rgba(255, 255, 255, 0.72);
+        border: 1px solid #b4c5d2;
+        border-radius: 10px;
         color: #2f4a5f;
-        font-weight: 500;
+        font-size: 1.02rem;
+        font-weight: 650;
+        margin-bottom: 0.7rem;
+        padding: 0.8rem 0.85rem;
+        transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+    }
+
+    [data-testid="stSidebar"] div[role="radiogroup"] label:hover {
+        background: #f7fbff;
+        border-color: #6f8fa8;
+        box-shadow: 0 4px 12px rgba(47, 74, 95, 0.12);
+        transform: translateY(-1px);
+    }
+
+    [data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked) {
+        background: #eef5fa;
+        border-color: #2f4a5f;
+        border-left: 5px solid #2f4a5f;
+        box-shadow: 0 5px 14px rgba(47, 74, 95, 0.16);
+        color: #22394c;
+        font-weight: 800;
+    }
+
+    [data-testid="stSidebar"] div[role="radiogroup"] label p {
+        color: inherit;
+        font-size: 1.02rem;
     }
 
     [data-testid="stSidebar"] input[type="radio"] {
