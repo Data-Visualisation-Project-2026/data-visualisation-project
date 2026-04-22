@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st
 
+from embedded_visuals import render_outlet_event_timeline
 from framing_charts import make_framing_over_time_chart
 
 # Set up the Streamlit page and main title.
@@ -8,8 +9,8 @@ st.set_page_config(layout='wide')
 
 st.title('Media Framing of the 2026 Iran War')
 
-# Load the article framing data.
-df = pd.read_parquet('iran_war_media_framing_scores.parquet', engine='pyarrow')
+# Load the clustered article framing data.
+df = pd.read_parquet('iran_war_media_framing_scores_clustered.parquet', engine='pyarrow')
 
 # Columns containing the LLM-generated framing scores.
 score_cols = [
@@ -28,15 +29,25 @@ score_labels = {
     'culpability_bias': 'Culpability Bias'
 }
 
-df['publish_date'] = pd.to_datetime(df['publish_date'])
+df['publish_date'] = pd.to_datetime(df['indexed_date'])
 
-# Choose which framing dimensions to highlight in the chart.
-highlighted_dimensions = st.multiselect(
-    'Highlight framing dimensions',
-    options=list(score_labels.values()),
-    default=list(score_labels.values())
-)
+trend_tab, outlet_timeline_tab = st.tabs([
+    'Overall Framing Trends',
+    'Outlet Event Timeline'
+])
 
-# Build and display the framing-over-time chart.
-chart = make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimensions)
-st.plotly_chart(chart, use_container_width=True)
+with trend_tab:
+    # Choose which framing dimensions to highlight in the chart.
+    highlighted_dimensions = st.multiselect(
+        'Highlight framing dimensions',
+        options=list(score_labels.values()),
+        default=list(score_labels.values())
+    )
+
+    # Build and display the framing-over-time chart.
+    chart = make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimensions)
+    st.plotly_chart(chart, use_container_width=True)
+
+with outlet_timeline_tab:
+    # Display the embedded outlet event timeline.
+    render_outlet_event_timeline()
