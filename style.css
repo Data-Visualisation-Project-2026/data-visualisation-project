@@ -1,0 +1,63 @@
+* { margin: 0; padding: 0; box-sizing: border-box;}
+
+body { 
+    background: #0d0d0d;
+    color: #e8e8e8;
+    font-family: 'Georgia', serif;
+    overflow-x: hidden; 
+}
+
+#intro {
+    height: 100vh;
+    display: flex; 
+    flex-direction: column;
+    justify-content: center; 
+    padding: 0 10vw; 
+}
+#intro h1 { font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 1.2rem; line-height: 1.1; }
+#intro p { font-size: 1.2rem; color: #999; max-width: 560px; line-height: 1.7; }
+.scroll-hint { margin-top: 3rem; color: #444; font-size: 0.9rem; letter-spacng: 0.2em;
+font-family: monospace;
+}
+
+#timeline-section { 
+    height: 400vh; 
+    position: relative; 
+}
+
+#timeline-section {
+    position: sticky; 
+    top: 0; 
+    height: 100vh; 
+    overflow: hidden; 
+    display: flex; 
+    align-items: center;
+}
+
+#timeline-inner {
+    position: sticky;
+    top: 0; 
+    height: 100vh; 
+    overflow: hidden; 
+    display: flex; 
+    align-items: center; 
+}
+
+#timeline-track { 
+    display: flex;
+    align-items: center;
+    will-change: transform;
+}
+#timeline-svg {
+    display: block;
+}
+
+#outro {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 10vw; 
+}
+#outro h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+#outro p { font-size: 1.1rem; color: #999; max-width: 560px; line-height: 1.7; }

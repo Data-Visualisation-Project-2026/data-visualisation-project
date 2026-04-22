@@ -1,0 +1,41 @@
+{
+  "outlets": [
+    "apnews.com",
+    "reuters.com",
+    "bbc.com",
+    "aljazeera.com"
+  ],
+  "outlet_labels": {
+    "apnews.com": "AP News",
+    "reuters.com": "Reuters",
+    "bbc.com": "BBC",
+    "aljazeera.com": "Al Jazeera"
+  },
+  "outlet_colors": {
+    "apnews.com": "#e63946",
+    "reuters.com": "#457b9d",
+    "bbc.com": "#f4a261",
+    "aljazeera.com": "#2a9d8f"
+  },
+  "dimensions": [
+    "kinetic_focus",
+    "humanitarian_focus",
+    "diplomatic_focus",
+    "economic_focus",
+    "culpability_bias"
+  ],
+  "dimension_labels": {
+    "kinetic_focus": "Kinetic",
+    "humanitarian_focus": "Humanitarian",
+    "diplomatic_focus": "Diplomatic",
+    "economic_focus": "Economic",
+    "culpability_bias": "Culpability"
+  },
+  "dimension_colors": {
+    "kinetic_focus": "#e63946",
+    "humanitarian_focus": "#52b788",
+    "diplomatic_focus": "#457b9d",
+    "economic_focus": "#f4a261",
+    "culpability_bias": "#9b5de5"
+  }
+}
