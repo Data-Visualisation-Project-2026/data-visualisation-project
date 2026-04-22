@@ -1,8 +1,8 @@
 import pandas as pd
 import streamlit as st
 
-from embedded_visuals import render_outlet_event_timeline
-from framing_charts import make_framing_over_time_chart
+from visualizations.embedded_visuals import render_outlet_event_timeline
+from visualizations.framing_charts import make_framing_over_time_chart
 
 # Set up the Streamlit page and main title.
 st.set_page_config(layout='wide')
