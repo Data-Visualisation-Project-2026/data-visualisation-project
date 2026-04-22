@@ -29,33 +29,9 @@ st.markdown(
         margin-bottom: 0.75rem;
     }
 
-    [data-testid="stSidebar"] div[role="radiogroup"] {
-        gap: 0.45rem;
-    }
-
     [data-testid="stSidebar"] div[role="radiogroup"] label {
-        background: #f8fafc;
-        border: 1px solid #c4d2de;
-        border-radius: 999px;
         color: #2f4a5f;
-        margin-bottom: 0.45rem;
-        padding: 0.55rem 0.85rem;
-        transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-    }
-
-    [data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked) {
-        background: #2f4a5f;
-        border-color: #2f4a5f;
-        color: #ffffff;
-        font-weight: 700;
-    }
-
-    [data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked) p {
-        color: #ffffff;
-    }
-
-    [data-testid="stSidebar"] div[role="radiogroup"] label:hover {
-        border-color: #2f4a5f;
+        font-weight: 500;
     }
 
     [data-testid="stSidebar"] input[type="radio"] {
@@ -73,20 +49,29 @@ st.markdown(
         border-color: #c4d2de;
     }
 
-    div[data-baseweb="tag"] {
+    div[data-baseweb="select"] div[data-baseweb="tag"],
+    div[data-baseweb="popover"] div[data-baseweb="tag"],
+    span[data-baseweb="tag"] {
         background-color: #557086 !important;
+        border-color: #557086 !important;
     }
 
-    div[data-baseweb="tag"] span {
+    div[data-baseweb="select"] div[data-baseweb="tag"] span,
+    div[data-baseweb="popover"] div[data-baseweb="tag"] span,
+    span[data-baseweb="tag"] span {
         color: #ffffff !important;
     }
 
-    div[data-baseweb="tag"] svg {
+    div[data-baseweb="select"] div[data-baseweb="tag"] svg,
+    div[data-baseweb="popover"] div[data-baseweb="tag"] svg,
+    span[data-baseweb="tag"] svg {
         color: #ffffff !important;
         fill: #ffffff !important;
     }
 
-    div[data-baseweb="tag"] path {
+    div[data-baseweb="select"] div[data-baseweb="tag"] path,
+    div[data-baseweb="popover"] div[data-baseweb="tag"] path,
+    span[data-baseweb="tag"] path {
         fill: #ffffff !important;
     }
 
@@ -103,17 +88,6 @@ st.markdown(
 
     a {
         color: #2f5f86;
-    }
-
-    [data-testid="stSidebar"] [data-baseweb="radio"] div:first-child {
-        background-color: #6f8fa8 !important;
-        border-color: #6f8fa8 !important;
-    }
-
-    [data-testid="stSidebar"] [data-baseweb="radio"] div:first-child::before,
-    [data-testid="stSidebar"] [data-baseweb="radio"] div:first-child::after {
-        background-color: #6f8fa8 !important;
-        border-color: #6f8fa8 !important;
     }
     </style>
     """,
