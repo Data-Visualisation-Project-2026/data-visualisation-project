@@ -40,6 +40,10 @@ def _build_outlet_event_timeline_html():
     const meta = {meta};"""
 
     main_js = main_js.replace(fetch_block, embedded_data)
+    main_js = main_js.replace(
+        'const VH = window.innerHeight;',
+        'const VH = 650;'
+    )
     main_js = re.sub(
         r'// ── GSAP horizontal scroll.*?gsap\.to\("#timeline-track", \{.*?\n\s*\}\);',
         '',
