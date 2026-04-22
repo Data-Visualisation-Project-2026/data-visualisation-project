@@ -171,7 +171,7 @@ df['publish_date'] = pd.to_datetime(df['indexed_date'])
 st.sidebar.markdown('## Navigation')
 page = st.sidebar.radio(
     'Navigation',
-    ['Overview', 'Cluster Keywords', 'Outlet Event Timeline'],
+    ['Overview', 'Distinctive Phrases by Cluster', 'Detailed Framing Timeline'],
     label_visibility='collapsed'
 )
 
@@ -197,7 +197,7 @@ if page == 'Overview':
     chart = make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimensions)
     st.plotly_chart(chart, use_container_width=True)
 
-elif page == 'Cluster Keywords':
+elif page == 'Distinctive Phrases by Cluster':
     st.subheader('Distinctive Phrases by Article Cluster')
     st.write(
         'These charts show the top c-TF-IDF bigrams for each article cluster. '
