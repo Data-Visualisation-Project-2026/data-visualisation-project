@@ -3,6 +3,7 @@ import streamlit as st
 
 from visualizations.embedded_visuals import render_outlet_event_timeline
 from visualizations.framing_charts import make_framing_over_time_chart
+from visualizations.text_analysis import get_top_cluster_bigrams, make_cluster_bigram_charts
 
 # Set up the Streamlit page and main title.
 st.set_page_config(layout='wide')
@@ -170,7 +171,7 @@ df['publish_date'] = pd.to_datetime(df['indexed_date'])
 st.sidebar.markdown('## Navigation')
 page = st.sidebar.radio(
     'Navigation',
-    ['Overview', 'Outlet Event Timeline'],
+    ['Overview', 'Cluster Keywords', 'Outlet Event Timeline'],
     label_visibility='collapsed'
 )
 
@@ -195,6 +196,26 @@ if page == 'Overview':
     # Build and display the framing-over-time chart.
     chart = make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimensions)
     st.plotly_chart(chart, use_container_width=True)
+
+elif page == 'Cluster Keywords':
+    st.subheader('Distinctive Phrases by Article Cluster')
+    st.write(
+        'These charts show the top c-TF-IDF bigrams for each article cluster. '
+        'Higher-scoring phrases are more distinctive to that cluster relative to the others.'
+    )
+
+    # Compute and display cluster-specific bigram charts.
+    top_bigrams = get_top_cluster_bigrams(df, top_n=10)
+    bigram_charts = make_cluster_bigram_charts(top_bigrams)
+
+    chart_items = list(bigram_charts.items())
+
+    for row_start in range(0, len(chart_items), 2):
+        columns = st.columns(2)
+
+        for column, (_, chart) in zip(columns, chart_items[row_start:row_start + 2]):
+            with column:
+                st.plotly_chart(chart, use_container_width=True)
 
 else:
     # Display the embedded outlet event timeline.
