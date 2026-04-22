@@ -171,8 +171,9 @@ df['publish_date'] = pd.to_datetime(df['indexed_date'])
 st.sidebar.markdown('## Navigation')
 page = st.sidebar.radio(
     'Navigation',
-    ['Overview', 'Distinctive Phrases by Cluster', 'Detailed Framing Timeline'],
-    label_visibility='collapsed'
+    ['Overview', 'Detailed Framing Timeline', 'Distinctive Phrases by Cluster'],
+    label_visibility='collapsed',
+    key='main_navigation_v3'
 )
 
 if page == 'Overview':
@@ -197,6 +198,10 @@ if page == 'Overview':
     chart = make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimensions)
     st.plotly_chart(chart, use_container_width=True)
 
+elif page == 'Detailed Framing Timeline':
+    # Display the embedded outlet event timeline.
+    render_outlet_event_timeline()
+
 elif page == 'Distinctive Phrases by Cluster':
     st.subheader('Distinctive Phrases by Article Cluster')
     st.write(
@@ -216,7 +221,3 @@ elif page == 'Distinctive Phrases by Cluster':
         for column, (_, chart) in zip(columns, chart_items[row_start:row_start + 2]):
             with column:
                 st.plotly_chart(chart, use_container_width=True)
-
-else:
-    # Display the embedded outlet event timeline.
-    render_outlet_event_timeline()
