@@ -11,20 +11,20 @@ st.markdown(
     """
     <style>
     :root {
-        --primary-color: #34495e;
+        --primary-color: #2f4a5f;
     }
 
     .stApp {
-        color: #24303f;
+        color: #263746;
     }
 
     [data-testid="stSidebar"] {
-        background: #eef2f6;
-        border-right: 1px solid #c9d3df;
+        background: #edf3f8;
+        border-right: 1px solid #c4d2de;
     }
 
     [data-testid="stSidebar"] h2 {
-        color: #2f4054;
+        color: #2f4a5f;
         font-size: 1rem;
         margin-bottom: 0.75rem;
     }
@@ -35,17 +35,17 @@ st.markdown(
 
     [data-testid="stSidebar"] div[role="radiogroup"] label {
         background: #f8fafc;
-        border: 1px solid #c9d3df;
+        border: 1px solid #c4d2de;
         border-radius: 999px;
-        color: #34495e;
+        color: #2f4a5f;
         margin-bottom: 0.45rem;
         padding: 0.55rem 0.85rem;
         transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
     }
 
     [data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked) {
-        background: #34495e;
-        border-color: #34495e;
+        background: #2f4a5f;
+        border-color: #2f4a5f;
         color: #ffffff;
         font-weight: 700;
     }
@@ -55,26 +55,45 @@ st.markdown(
     }
 
     [data-testid="stSidebar"] div[role="radiogroup"] label:hover {
-        border-color: #34495e;
+        border-color: #2f4a5f;
     }
 
     [data-testid="stSidebar"] input[type="radio"] {
-        accent-color: #34495e;
+        accent-color: #2f4a5f;
     }
 
     .project-author {
-        color: #5b6775;
+        color: #5d6f7e;
         font-size: 1rem;
         margin-top: -0.7rem;
         margin-bottom: 2rem;
     }
 
     div[data-baseweb="select"] > div {
-        border-color: #c9d3df;
+        border-color: #c4d2de;
     }
 
     div[data-baseweb="tag"] {
-        background-color: #34495e;
+        background-color: #557086;
+    }
+
+    div[data-baseweb="tag"] span {
+        color: #ffffff;
+    }
+
+    div[data-baseweb="checkbox"] label,
+    div[role="checkbox"] {
+        accent-color: #2f4a5f;
+    }
+
+    button[kind="primary"],
+    button[data-testid="baseButton-primary"] {
+        background-color: #2f4a5f;
+        border-color: #2f4a5f;
+    }
+
+    a {
+        color: #2f5f86;
     }
     </style>
     """,
@@ -119,6 +138,13 @@ page = st.sidebar.radio(
 if page == 'Overview':
     # Intro section for the project overview page.
     st.subheader('Intro')
+    st.write(
+        'This project explores how media outlets framed the 2026 Iran War across time, '
+        'media sources, and narrative dimensions. We analyze how coverage varies in '
+        'kinetic, humanitarian, diplomatic, economic, and culpability framing.'
+    )
+
+    st.subheader('Average Framing Scores Over Time')
 
     # Choose which framing dimensions to highlight in the chart.
     highlighted_dimensions = st.multiselect(
