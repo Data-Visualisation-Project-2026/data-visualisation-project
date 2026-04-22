@@ -178,18 +178,25 @@ page = st.sidebar.radio(
 
 if page == 'Overview':
     # Intro section for the project overview page.
-    st.subheader('Intro')
-    st.write(
-        'This project explores how media outlets framed the 2026 Iran War across time, '
-        'media sources, and narrative dimensions. We analyze how coverage varies in '
-        'kinetic, humanitarian, diplomatic, economic, and culpability framing.'
+    st.markdown(
+        """
+        This project explores how media outlets framed the 2026 Iran War across time, media sources, and narrative dimensions. We analyze how coverage varies across five framing dimensions:
+
+        - **Kinetic Focus:** emphasis on military action, strikes, weapons, and strategy.
+        - **Humanitarian Focus:** emphasis on civilian suffering, refugees, and casualties.
+        - **Diplomatic Focus:** emphasis on negotiations, international organizations, and political responses.
+        - **Economic Focus:** emphasis on oil, trade, markets, and broader economic effects.
+        - **Culpability Bias:** the extent to which coverage uses strong or active language to assign blame.
+        """
     )
 
     st.subheader('Average Framing Scores Over Time')
+    st.caption('Date range: Feb 27, 2026 to March 30, 2026')
+    st.caption(f'Data source: {len(df):,} articles from {df["media_name"].nunique()} media sources')
 
     # Choose which framing dimensions to highlight in the chart.
     highlighted_dimensions = st.multiselect(
-        'Highlight framing dimensions',
+        'Use the dropdown to show or hide dimensions:',
         options=list(score_labels.values()),
         default=list(score_labels.values())
     )
@@ -197,6 +204,16 @@ if page == 'Overview':
     # Build and display the framing-over-time chart.
     chart = make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimensions)
     st.plotly_chart(chart, use_container_width=True)
+
+    st.markdown(
+        """
+        This chart shows that Kinetic and Culpability Bias were the most prominent framing dimensions throughout the period, suggesting that coverage focused most strongly on military action and the assignment of responsibility. By contrast, Humanitarian and Diplomatic scores remained lower on average, indicating that these perspectives were present but were not the dominant narrative frames in overall coverage.
+
+        Over time, Diplomatic framing shows a clear spike at the beginning of the period, then drops quickly and remains relatively low afterward. This suggests that early coverage may have paid more attention to international reactions, official statements, and interactions among political actors, before shifting toward other forms of framing. Economic framing also rises somewhat in the later part of the period, suggesting growing attention to the war’s broader economic and energy-related consequences.
+
+        Culpability Bias is also notable not only because it stays consistently high, but because it shows several sharp peaks over time. This suggests that coverage was often not purely descriptive, but frequently used language that more strongly assigned blame or responsibility. Overall, the five dimensions do not move in parallel, which suggests that media framing shifted over time rather than following one fixed narrative pattern.
+        """
+    )
 
 elif page == 'Detailed Framing Timeline':
     # Display the embedded outlet event timeline.

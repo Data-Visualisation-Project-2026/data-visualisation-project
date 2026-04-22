@@ -40,7 +40,7 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
         y='average_score',
         color='dimension',
         labels={
-            'publish_date': 'Date',
+            'publish_date': '',
             'average_score': 'Average Score',
             'dimension': 'Dimension'
         },
