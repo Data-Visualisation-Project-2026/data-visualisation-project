@@ -50,7 +50,7 @@ def _build_outlet_event_timeline_html():
     )
     main_js = main_js.replace(
         'const DAY_WIDTH = Math.ceil(window.innerWidth * 4 / timeline.length);',
-        'const DAY_WIDTH = Math.ceil((window.innerWidth - MARGIN.left - MARGIN.right) / timeline.length);'
+        'const DAY_WIDTH = Math.ceil(Math.max(window.innerWidth * 2.5, timeline.length * 45) / timeline.length);'
     )
     main_js = re.sub(
         r'// ── GSAP horizontal scroll.*?gsap\.to\("#timeline-track", \{.*?\n\s*\}\);',
@@ -80,7 +80,7 @@ body {
 }
 
 #timeline-section {
-    overflow-x: hidden !important;
+    overflow-x: auto !important;
     overflow-y: hidden !important;
 }
 
