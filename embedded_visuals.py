@@ -86,10 +86,19 @@ body {
 
 #timeline-inner {
     overflow: visible !important;
+    width: max-content !important;
+    min-width: max-content !important;
 }
 
 #timeline-track {
+    display: block !important;
     transform: none !important;
+    width: max-content !important;
+    min-width: max-content !important;
+}
+
+#timeline-svg {
+    max-width: none !important;
 }
 
 #outro {
