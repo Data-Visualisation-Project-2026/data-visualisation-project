@@ -3,7 +3,11 @@ import streamlit as st
 
 from visualizations.embedded_visuals import render_outlet_event_timeline
 from visualizations.framing_charts import make_framing_over_time_chart
-from visualizations.text_analysis import get_top_cluster_bigrams, make_cluster_bigram_charts
+from visualizations.text_analysis import (
+    get_top_cluster_bigrams,
+    make_cluster_bigram_charts,
+    make_outlet_framing_heatmap,
+)
 
 # Set up the Streamlit page and main title.
 st.set_page_config(layout='wide')
@@ -148,6 +152,7 @@ st.markdown(
 
 # Load the clustered article framing data.
 df = pd.read_parquet('iran_war_media_framing_scores_clustered.parquet', engine='pyarrow')
+df_five_sources = pd.read_parquet('iran_war_media_framing_scores2_clustered.parquet', engine='pyarrow')
 
 # Columns containing the LLM-generated framing scores.
 score_cols = [
@@ -191,8 +196,7 @@ if page == 'Overview':
     )
 
     st.subheader('Average Framing Scores Over Time')
-    st.caption('Date range: Feb 27, 2026 to March 30, 2026')
-    st.caption(f'Data source: {len(df):,} articles from {df["media_name"].nunique()} media sources')
+    st.caption('Feb 27–Mar 30, 2026 · Based on 1,925 articles from 77 media outlets')
 
     # Choose which framing dimensions to highlight in the chart.
     highlighted_dimensions = st.multiselect(
@@ -220,7 +224,7 @@ elif page == 'Detailed Framing Timeline':
     render_outlet_event_timeline()
 
 elif page == 'Distinctive Phrases by Cluster':
-    st.subheader('Distinctive Phrases by Article Cluster')
+    st.subheader('Distinctive Phrases by Media Cluster')
     st.write(
         'These charts show the top c-TF-IDF bigrams for each article cluster. '
         'Higher-scoring phrases are more distinctive to that cluster relative to the others.'
@@ -238,3 +242,10 @@ elif page == 'Distinctive Phrases by Cluster':
         for column, (_, chart) in zip(columns, chart_items[row_start:row_start + 2]):
             with column:
                 st.plotly_chart(chart, use_container_width=True)
+
+    st.subheader('Outlet-Level Framing Heatmap')
+    st.write(
+        'This heatmap compares average framing scores across the five major outlets '
+        'included in the focused article dataset.'
+    )
+    st.plotly_chart(make_outlet_framing_heatmap(df_five_sources), use_container_width=True)

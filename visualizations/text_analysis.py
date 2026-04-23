@@ -112,6 +112,86 @@ def make_cluster_bigram_chart(cluster_label, top_terms):
     return fig
 
 
+def make_outlet_framing_heatmap(df):
+    """Create an outlet-level heatmap of average framing scores for the 5-source dataset."""
+    score_cols = [
+        'kinetic_focus',
+        'humanitarian_focus',
+        'diplomatic_focus',
+        'economic_focus',
+        'culpability_bias'
+    ]
+
+    dimension_labels = {
+        'kinetic_focus': 'Kinetic',
+        'humanitarian_focus': 'Humanitarian',
+        'diplomatic_focus': 'Diplomatic',
+        'economic_focus': 'Economic',
+        'culpability_bias': 'Culpability Bias'
+    }
+
+    outlet_labels = {
+        'apnews.com': 'AP News',
+        'reuters.com': 'Reuters',
+        'bbc.com': 'BBC',
+        'aljazeera.com': 'Al Jazeera',
+        'tehrantimes.com': 'Tehran Times'
+    }
+
+    outlet_heatmap_raw = (
+        df.groupby('media_name')[score_cols]
+        .mean()
+        .rename(index=outlet_labels, columns=dimension_labels)
+    )
+
+    column_order = outlet_heatmap_raw.mean(axis=0).sort_values(ascending=False).index.tolist()
+    row_order = outlet_heatmap_raw.mean(axis=1).sort_values(ascending=False).index.tolist()
+    outlet_heatmap = outlet_heatmap_raw.loc[row_order, column_order]
+
+    date_range = pd.to_datetime(df['indexed_date'])
+    subtitle = (
+        f"{date_range.min():%b %d}–{date_range.max():%b %d, %Y} "
+        f"· Based on {len(df):,} articles from {df['media_name'].nunique()} media outlets"
+    )
+
+    fig = px.imshow(
+        outlet_heatmap,
+        color_continuous_scale='Blues',
+        text_auto='.2f',
+        aspect='auto',
+        labels={'x': '', 'y': '', 'color': 'Average Score'},
+        title='How Framing Differs Across Major Media Outlets'
+    )
+
+    fig.update_traces(textfont={'size': 10, 'color': '#264050'})
+
+    fig.update_layout(
+        paper_bgcolor='white',
+        plot_bgcolor='white',
+        width=980,
+        margin={'l': 40, 'r': 40, 't': 110, 'b': 90},
+        title={'x': 0.02, 'xanchor': 'left', 'font': {'size': 22}},
+        font={'color': '#263746'},
+        coloraxis_colorbar={'title': 'Average Score'}
+    )
+
+    fig.add_annotation(
+        x=0.02,
+        y=1.08,
+        xref='paper',
+        yref='paper',
+        text=subtitle,
+        showarrow=False,
+        xanchor='left',
+        yanchor='bottom',
+        font={'size': 12, 'color': '#5d6f7e'}
+    )
+
+    fig.update_xaxes(side='bottom', tickangle=0, automargin=True)
+
+    return fig
+
+
 def _make_cluster_documents(df):
     """Combine all article text in each cluster into one document."""
     return (
