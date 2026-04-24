@@ -25,13 +25,12 @@ def _build_outlet_event_timeline_html():
     events   = _load_json_for_script(base_dir / 'data' / 'events.json')
     meta     = _load_json_for_script(base_dir / 'data' / 'meta.json')
 
-    # Strip script tags from the original HTML body; we'll re-add everything inline.
+    # Strip script tags from the original HTML body; we re-add everything inline.
     body_match = re.search(r'<body>(.*)</body>', index_html, flags=re.DOTALL)
     body_html  = body_match.group(1) if body_match else index_html
     body_html  = re.sub(r'<script\b[^>]*>.*?</script>', '', body_html, flags=re.DOTALL)
 
-    # ── Replace fetch() calls with inline JSON data ───────────────────────────
-    # Use a regex so indentation differences don't matter.
+    # Replace fetch() calls with inline JSON — regex handles indentation differences.
     main_js = re.sub(
         r'const \[timeline, events, meta\] = await Promise\.all\(\[.*?\]\);',
         f'const timeline = {timeline};\n  const events = {events};\n  const meta = {meta};',
@@ -39,17 +38,17 @@ def _build_outlet_event_timeline_html():
         flags=re.DOTALL,
     )
 
-    # ── iframe-specific overrides ─────────────────────────────────────────────
+    # iframe-specific CSS — hides scrollbar, lets GSAP control layout.
     iframe_css = """
-/* Hide the scrollbar — scrolling still works, GSAP reads it */
+/* Hide scrollbar — scrolling still works, GSAP reads it */
 html { scrollbar-width: none; overflow-y: scroll; }
 ::-webkit-scrollbar { display: none; }
 
-/* Tighten intro/outro so the timeline gets more vertical real-estate */
+/* Tighten intro/outro */
 #intro  { height: 50vh; min-height: 50vh; }
 #outro  { height: 50vh; min-height: 50vh; }
 
-/* Let GSAP control the timeline layout — no overflow-x overrides */
+/* Let GSAP control the timeline — no overflow-x overrides */
 #timeline-section { height: 400vh; }
 #timeline-inner   { height: 100vh; overflow: hidden; }
 #timeline-track   { will-change: transform; }

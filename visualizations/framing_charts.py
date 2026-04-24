@@ -26,12 +26,7 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
         'Culpability Bias': '#59A14F'
     }
 
-    latest_date = daily_long['publish_date'].max()
-    legend_order = (
-        daily_long[daily_long['publish_date'] == latest_date]
-        .sort_values('average_score', ascending=False)['dimension']
-        .tolist()
-    )
+    legend_order = list(color_map.keys())
 
     # Define the interactive line chart and its visual settings.
     chart = px.line(
@@ -39,9 +34,8 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
         x='publish_date',
         y='average_score',
         color='dimension',
-        title='Framing Scores Over Time',
         labels={
-            'publish_date': 'Date',
+            'publish_date': '',
             'average_score': 'Average Score',
             'dimension': 'Dimension'
         },
@@ -100,8 +94,9 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
 
     chart.update_layout(
         height=550,
-        yaxis_range=[0.1, 0.7],
+        yaxis_range=[0, 0.7],
         hovermode='x unified',
+        title_text='',
         legend={
             'orientation': 'v',
             'yanchor': 'top',
