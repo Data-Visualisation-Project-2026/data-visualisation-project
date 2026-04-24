@@ -102,36 +102,52 @@ st.markdown(
     div[data-baseweb="select"] div[data-baseweb="tag"],
     div[data-baseweb="popover"] div[data-baseweb="tag"],
     span[data-baseweb="tag"] {
+        background: #557086 !important;
         background-color: #557086 !important;
         border-color: #557086 !important;
     }
 
     div[data-baseweb="select"] div[data-baseweb="tag"]:nth-of-type(1),
-    span[data-baseweb="tag"]:nth-of-type(1) {
+    div[data-baseweb="select"] div[data-baseweb="tag"]:nth-child(1),
+    span[data-baseweb="tag"]:nth-of-type(1),
+    span[data-baseweb="tag"]:nth-child(1) {
+        background: #4E79A7 !important;
         background-color: #4E79A7 !important;
         border-color: #4E79A7 !important;
     }
 
     div[data-baseweb="select"] div[data-baseweb="tag"]:nth-of-type(2),
-    span[data-baseweb="tag"]:nth-of-type(2) {
+    div[data-baseweb="select"] div[data-baseweb="tag"]:nth-child(2),
+    span[data-baseweb="tag"]:nth-of-type(2),
+    span[data-baseweb="tag"]:nth-child(2) {
+        background: #F28E2B !important;
         background-color: #F28E2B !important;
         border-color: #F28E2B !important;
     }
 
     div[data-baseweb="select"] div[data-baseweb="tag"]:nth-of-type(3),
-    span[data-baseweb="tag"]:nth-of-type(3) {
+    div[data-baseweb="select"] div[data-baseweb="tag"]:nth-child(3),
+    span[data-baseweb="tag"]:nth-of-type(3),
+    span[data-baseweb="tag"]:nth-child(3) {
+        background: #E15759 !important;
         background-color: #E15759 !important;
         border-color: #E15759 !important;
     }
 
     div[data-baseweb="select"] div[data-baseweb="tag"]:nth-of-type(4),
-    span[data-baseweb="tag"]:nth-of-type(4) {
+    div[data-baseweb="select"] div[data-baseweb="tag"]:nth-child(4),
+    span[data-baseweb="tag"]:nth-of-type(4),
+    span[data-baseweb="tag"]:nth-child(4) {
+        background: #76B7B2 !important;
         background-color: #76B7B2 !important;
         border-color: #76B7B2 !important;
     }
 
     div[data-baseweb="select"] div[data-baseweb="tag"]:nth-of-type(5),
-    span[data-baseweb="tag"]:nth-of-type(5) {
+    div[data-baseweb="select"] div[data-baseweb="tag"]:nth-child(5),
+    span[data-baseweb="tag"]:nth-of-type(5),
+    span[data-baseweb="tag"]:nth-child(5) {
+        background: #59A14F !important;
         background-color: #59A14F !important;
         border-color: #59A14F !important;
     }
@@ -257,7 +273,7 @@ elif page == 'Narrative Over Time':
 elif page == 'Narrative Across Media':
     st.subheader('Distinctive Phrases by Media Cluster')
     st.write(
-        'These charts show the most unique phrases in each media cluster.'
+        'These charts show the most unique phrases in each media cluster. '
         'The clusters were created using K-means based on framing-score patterns, and the phrases were identified using c-TF-IDF.'
     )
 

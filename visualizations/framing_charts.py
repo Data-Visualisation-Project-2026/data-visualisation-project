@@ -26,9 +26,8 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
         'Culpability Bias': '#59A14F'
     }
 
-    latest_date = daily_long['publish_date'].max()
     legend_order = (
-        daily_long[daily_long['publish_date'] == latest_date]
+        daily_long.groupby('dimension', as_index=False)['average_score']
         .sort_values('average_score', ascending=False)['dimension']
         .tolist()
     )
@@ -99,7 +98,7 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
 
     chart.update_layout(
         height=550,
-        yaxis_range=[0.1, 0.7],
+        yaxis_range=[0, 0.7],
         hovermode='x unified',
         title_text='',
         legend={

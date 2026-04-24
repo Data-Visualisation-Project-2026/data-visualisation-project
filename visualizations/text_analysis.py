@@ -162,23 +162,10 @@ def make_outlet_framing_heatmap(df):
     fig.update_layout(
         paper_bgcolor='white',
         plot_bgcolor='white',
-        width=980,
         margin={'l': 40, 'r': 40, 't': 110, 'b': 90},
         title={'x': 0.02, 'xanchor': 'left', 'font': {'size': 22}},
         font={'color': '#263746'},
         coloraxis_colorbar={'title': 'Average Score'}
-    )
-
-    fig.add_annotation(
-        x=0.02,
-        y=1.08,
-        xref='paper',
-        yref='paper',
-        text=subtitle,
-        showarrow=False,
-        xanchor='left',
-        yanchor='bottom',
-        font={'size': 12, 'color': '#5d6f7e'}
     )
 
     fig.update_xaxes(side='bottom', tickangle=0, automargin=True)
