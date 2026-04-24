@@ -156,13 +156,12 @@ def make_outlet_framing_heatmap(df):
         labels={'x': '', 'y': '', 'color': 'Average Score'}
     )
 
-    fig.update_traces(textfont={'size': 10, 'color': '#264050'})
+    fig.update_traces(textfont={'size': 9})
 
     fig.update_layout(
         paper_bgcolor='white',
         plot_bgcolor='white',
         margin={'l': 40, 'r': 40, 't': 110, 'b': 90},
-        title={'x': 0.02, 'xanchor': 'left', 'font': {'size': 22}},
         font={'color': '#263746'},
         coloraxis_colorbar={'title': 'Average Score'}
     )
