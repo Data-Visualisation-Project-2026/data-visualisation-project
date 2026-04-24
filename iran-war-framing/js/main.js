@@ -111,9 +111,14 @@ const legend = svg.append("g").attr("transform", `translate(${MARGIN.left}, ${sv
     .text(meta.outlet_labels[outlet]);                                                                                                                                               
  });                                                                                                                                                                                    
                                                                                                                                                                                          
-// ── GSAP horizontal scroll ────────────────────────────────────────────────                                                                                                          
-const scrollDistance = totalW - window.innerWidth + MARGIN.left + MARGIN.right;                                                                                                      
-                                                                                                                                                                                           
+// ── GSAP horizontal scroll ────────────────────────────────────────────────
+const scrollDistance = totalW - window.innerWidth + MARGIN.left + MARGIN.right;
+
+// Give #timeline-section exactly enough height for the full GSAP animation.
+// pinSpacing may not create the spacer reliably inside an iframe, so we do it manually.
+const timelineSection = document.getElementById('timeline-section');
+if (timelineSection) timelineSection.style.height = (window.innerHeight + scrollDistance * 1.5) + 'px';
+
 gsap.to("#timeline-track", {                                                                                                                                                           
     x: -scrollDistance,                                                                                                                                                                  
     ease: "none",                                                                                                                                                                        
