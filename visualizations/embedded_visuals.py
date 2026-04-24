@@ -30,10 +30,12 @@ def _build_outlet_event_timeline_html():
     body_html  = body_match.group(1) if body_match else index_html
     body_html  = re.sub(r'<script\b[^>]*>.*?</script>', '', body_html, flags=re.DOTALL)
 
-    # Replace fetch() calls with inline JSON — regex handles indentation differences.
+    # Replace fetch() calls with inline JSON.
+    # Use a lambda replacement so re.sub doesn't interpret \u sequences in JSON as regex escapes.
+    inline_data = f'const timeline = {timeline};\n  const events = {events};\n  const meta = {meta};'
     main_js = re.sub(
         r'const \[timeline, events, meta\] = await Promise\.all\(\[.*?\]\);',
-        f'const timeline = {timeline};\n  const events = {events};\n  const meta = {meta};',
+        lambda _: inline_data,
         main_js,
         flags=re.DOTALL,
     )
