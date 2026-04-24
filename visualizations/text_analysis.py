@@ -148,19 +148,13 @@ def make_outlet_framing_heatmap(df):
     row_order = outlet_heatmap_raw.mean(axis=1).sort_values(ascending=False).index.tolist()
     outlet_heatmap = outlet_heatmap_raw.loc[row_order, column_order]
 
-    date_range = pd.to_datetime(df['indexed_date'])
-    subtitle = (
-        f"{date_range.min():%b %d}–{date_range.max():%b %d, %Y} "
-        f"· Based on {len(df):,} articles from {df['media_name'].nunique()} media outlets"
-    )
-
     fig = px.imshow(
         outlet_heatmap,
         color_continuous_scale='Blues',
         text_auto='.2f',
         aspect='auto',
         labels={'x': '', 'y': '', 'color': 'Average Score'},
-        title='How Framing Differs Across Major Media Outlets'
+        title=''
     )
 
     fig.update_traces(textfont={'size': 10, 'color': '#264050'})

@@ -106,6 +106,36 @@ st.markdown(
         border-color: #557086 !important;
     }
 
+    div[data-baseweb="select"] div[data-baseweb="tag"]:nth-of-type(1),
+    span[data-baseweb="tag"]:nth-of-type(1) {
+        background-color: #4E79A7 !important;
+        border-color: #4E79A7 !important;
+    }
+
+    div[data-baseweb="select"] div[data-baseweb="tag"]:nth-of-type(2),
+    span[data-baseweb="tag"]:nth-of-type(2) {
+        background-color: #F28E2B !important;
+        border-color: #F28E2B !important;
+    }
+
+    div[data-baseweb="select"] div[data-baseweb="tag"]:nth-of-type(3),
+    span[data-baseweb="tag"]:nth-of-type(3) {
+        background-color: #E15759 !important;
+        border-color: #E15759 !important;
+    }
+
+    div[data-baseweb="select"] div[data-baseweb="tag"]:nth-of-type(4),
+    span[data-baseweb="tag"]:nth-of-type(4) {
+        background-color: #76B7B2 !important;
+        border-color: #76B7B2 !important;
+    }
+
+    div[data-baseweb="select"] div[data-baseweb="tag"]:nth-of-type(5),
+    span[data-baseweb="tag"]:nth-of-type(5) {
+        background-color: #59A14F !important;
+        border-color: #59A14F !important;
+    }
+
     div[data-baseweb="select"] div[data-baseweb="tag"] span,
     div[data-baseweb="popover"] div[data-baseweb="tag"] span,
     span[data-baseweb="tag"] span {
@@ -176,7 +206,7 @@ df['publish_date'] = pd.to_datetime(df['indexed_date'])
 st.sidebar.markdown('## Navigation')
 page = st.sidebar.radio(
     'Navigation',
-    ['Overview', 'Detailed Framing Timeline', 'Distinctive Phrases by Cluster'],
+    ['Overview', 'Narrative Over Time', 'Narrative Across Media'],
     label_visibility='collapsed',
     key='main_navigation_v3'
 )
@@ -195,7 +225,7 @@ if page == 'Overview':
         """
     )
 
-    st.subheader('Average Framing Scores Over Time')
+    st.subheader('Overall Framing Trends During the Iran War')
     st.caption('Feb 27–Mar 30, 2026 · Based on 1,925 articles from 77 media outlets')
 
     # Choose which framing dimensions to highlight in the chart.
@@ -211,23 +241,24 @@ if page == 'Overview':
 
     st.markdown(
         """
-        This chart shows that Kinetic and Culpability Bias were the most prominent framing dimensions throughout the period, suggesting that coverage focused most strongly on military action and the assignment of responsibility. By contrast, Humanitarian and Diplomatic scores remained lower on average, indicating that these perspectives were present but were not the dominant narrative frames in overall coverage.
+        The overall pattern suggests that coverage was driven mainly by military action and responsibility/blame. Kinetic framing stayed high for much of the period, while Culpability Bias remained consistently prominent, showing that many articles framed the war not only through what happened, but also through who was responsible.
+        Humanitarian framing stayed lower overall, suggesting that civilian suffering and human impacts were present but less central in the aggregate coverage.
 
-        Over time, Diplomatic framing shows a clear spike at the beginning of the period, then drops quickly and remains relatively low afterward. This suggests that early coverage may have paid more attention to international reactions, official statements, and interactions among political actors, before shifting toward other forms of framing. Economic framing also rises somewhat in the later part of the period, suggesting growing attention to the war’s broader economic and energy-related consequences.
+        Moreover, the emphasis shift over time. Diplomatic framing was unusually high at the beginning, likely reflecting early attention to official statements, international reactions, and political responses. After that, it dropped and stayed relatively low. Later, Economic framing becomes more visible, especially around moments linked to energy and regional escalation.
 
-        Culpability Bias is also notable not only because it stays consistently high, but because it shows several sharp peaks over time. This suggests that coverage was often not purely descriptive, but frequently used language that more strongly assigned blame or responsibility. Overall, the five dimensions do not move in parallel, which suggests that media framing shifted over time rather than following one fixed narrative pattern.
+        Taken together, the five lines show that media framing was not fixed: as the war developed, coverage moved between military, political, economic, and blame-centered narratives.
         """
     )
 
-elif page == 'Detailed Framing Timeline':
+elif page == 'Narrative Over Time':
     # Display the embedded outlet event timeline.
     render_outlet_event_timeline()
 
-elif page == 'Distinctive Phrases by Cluster':
+elif page == 'Narrative Across Media':
     st.subheader('Distinctive Phrases by Media Cluster')
     st.write(
-        'These charts show the top c-TF-IDF bigrams for each article cluster. '
-        'Higher-scoring phrases are more distinctive to that cluster relative to the others.'
+        'These charts show the most unique phrases in each media cluster.'
+        'The clusters were created using K-means based on framing-score patterns, and the phrases were identified using c-TF-IDF.'
     )
 
     # Compute and display cluster-specific bigram charts.
@@ -243,9 +274,7 @@ elif page == 'Distinctive Phrases by Cluster':
             with column:
                 st.plotly_chart(chart, use_container_width=True)
 
-    st.subheader('Outlet-Level Framing Heatmap')
-    st.write(
-        'This heatmap compares average framing scores across the five major outlets '
-        'included in the focused article dataset.'
-    )
+    st.subheader('How Framing Differs Across Major Media Outlets')
+    st.caption('Based on 1,736 articles from 5 major media outlets')
+    
     st.plotly_chart(make_outlet_framing_heatmap(df_five_sources), use_container_width=True)
