@@ -46,20 +46,20 @@ g.append("g")
 .attr("transform", `translate(0,${chartH})`)
 .call(d3.axisBottom(xScale).ticks(d3.timeWeek.every(1)).tickSize(-chartH).tickFormat(""))
 .call(ax => ax.select(".domain").remove())
-.call(ax => ax.selectAll("line").attr("stroke", "#222").attr("stroke-dasharray", "3,3"));
+.call(ax => ax.selectAll("line").attr("stroke", "#e0e0e0").attr("stroke-dasharray", "3,3"));
 
 // --- AXES ---
 g.append("g")
 .attr("transform", `translate(0, ${chartH})`)
 .call(d3.axisBottom(xScale).ticks(d3.timeWeek.every(1)).tickFormat(d3.timeFormat("%b %d")))
-.call(ax => ax.select(".domain").attr("stroke", "#444"))
-.call(ax => ax.selectAll("text").attr("fill", "#666").attr("font-size", "11px").attr("dy", "1.2em"));
+.call(ax => ax.select(".domain").attr("stroke", "#ccc"))
+.call(ax => ax.selectAll("text").attr("fill", "#555").attr("font-size", "11px").attr("dy", "1.2em"));
 
 g.append("g")
 .call(d3.axisLeft(yScale).ticks(5))
 .call(ax => ax.select(".domain").remove())
-.call(ax => ax.selectAll("line").attr("stroke", "#333"))
-.call(ax => ax.selectAll("text").attr("fill", "#666").attr("font-size", "11px").attr("dy", "1.2em"));
+.call(ax => ax.selectAll("line").attr("stroke", "#e0e0e0"))
+.call(ax => ax.selectAll("text").attr("fill", "#555").attr("font-size", "11px").attr("dy", "1.2em"));
 
 // --- LINES: ONE PER OUTLET x DIMENSION ---
 const line = d3.line()
@@ -89,13 +89,13 @@ meta.outlets.forEach(outlet => {
  // ── Event markers ─────────────────────────────────────────────────────────                                                                                                          
 events.forEach(event => {
     const x = xScale(parseDate(event.date));                                                                                                                                              
-    g.append("line")                                                                                                                                                                     
+    g.append("line")
     .attr("x1", x).attr("x2", x).attr("y1", 0).attr("y2", chartH)
-    .attr("stroke", "#fff").attr("stroke-width", 1)
-    .attr("stroke-dasharray", "4,4").attr("opacity", 0.3);
+    .attr("stroke", "#aaa").attr("stroke-width", 1)
+    .attr("stroke-dasharray", "4,4").attr("opacity", 0.7);
 
     g.append("text")
-    .attr("x", x + 6).attr("y", 16).attr("fill", "#888")
+    .attr("x", x + 6).attr("y", 16).attr("fill", "#777")
     .attr("font-size", "11px").attr("font-family", "monospace")
     .text(event.label);
 });                                                                                                                                                                                  
@@ -106,8 +106,8 @@ const legend = svg.append("g").attr("transform", `translate(${MARGIN.left}, ${sv
     const lx = i * 160;                                                                                                                                                                
     legend.append("rect").attr("x", lx).attr("y", 0).attr("width", 12).attr("height", 12)                                                                                                
     .attr("fill", meta.outlet_colors[outlet]).attr("rx", 2);                                                                                                                           
-    legend.append("text").attr("x", lx + 18).attr("y", 10)                                                                                                                               
-    .attr("fill", "#888").attr("font-size", "12px")                                                                                                                                    
+    legend.append("text").attr("x", lx + 18).attr("y", 10)
+    .attr("fill", "#444").attr("font-size", "12px")                                                                                                                                    
     .text(meta.outlet_labels[outlet]);                                                                                                                                               
  });                                                                                                                                                                                    
                                                                                                                                                                                          

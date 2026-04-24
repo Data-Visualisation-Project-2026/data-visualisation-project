@@ -50,6 +50,7 @@ def _build_outlet_event_timeline_html():
     # iframe-specific CSS — hides scrollbar, lets GSAP control layout.
     iframe_css = """
 /* Hide scrollbar — scrolling still works, GSAP reads it */
+html, body { background: #ffffff !important; }
 html { scrollbar-width: none; overflow-y: scroll; }
 ::-webkit-scrollbar { display: none; }
 
