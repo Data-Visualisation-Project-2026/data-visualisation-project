@@ -20,27 +20,18 @@ body {
 font-family: monospace;
 }
 
-#timeline-section { 
-    height: 400vh; 
-    position: relative; 
-}
-
 #timeline-section {
-    position: sticky; 
-    top: 0; 
-    height: 100vh; 
-    overflow: hidden; 
-    display: flex; 
-    align-items: center;
+    height: 400vh;
+    position: relative;
 }
 
 #timeline-inner {
     position: sticky;
-    top: 0; 
-    height: 100vh; 
-    overflow: hidden; 
-    display: flex; 
-    align-items: center; 
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
 }
 
 #timeline-track { 

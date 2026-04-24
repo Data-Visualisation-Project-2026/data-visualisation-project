@@ -57,29 +57,38 @@ html { scrollbar-width: none; overflow-y: scroll; }
 #intro  { height: 50vh; min-height: 50vh; }
 #outro  { height: 50vh; min-height: 50vh; }
 
-/* Let GSAP control the timeline — no overflow-x overrides */
-#timeline-section { height: 400vh; position: relative; }
-#timeline-inner   { height: 100vh; overflow: hidden; }
-#timeline-track   { will-change: transform; }
+/* Reset any inherited overrides; GSAP needs position:relative + 400vh */
+#timeline-section {
+  height: 400vh !important;
+  position: relative !important;
+  overflow: visible !important;
+  display: block !important;
+}
+
+/* Sticky viewport that GSAP will pin */
+#timeline-inner {
+  position: sticky !important;
+  top: 0 !important;
+  height: 100vh !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+#timeline-track { will-change: transform; }
 """
 
-    # JS fallback: set section height in px in case vh units misbehave in iframe.
+    # Debug logs — help confirm GSAP has the right dimensions inside the iframe.
     height_fix = """
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const vh = window.innerHeight;
+window.addEventListener('load', () => {
+  console.log('VH:', window.innerHeight, 'innerWidth:', window.innerWidth);
   const ts = document.getElementById('timeline-section');
-  if (ts) ts.style.minHeight = (vh * 4) + 'px';
-
-  // Debug dimensions
-  window.addEventListener('load', () => {
-    console.log('VH:', vh, 'innerWidth:', window.innerWidth);
-    console.log('timeline-section height:', ts ? ts.offsetHeight : 'not found');
-    const ti = document.getElementById('timeline-inner');
-    console.log('timeline-inner height:', ti ? ti.offsetHeight : 'not found');
-    const svg = document.getElementById('timeline-svg');
-    console.log('svg:', svg ? svg.getAttribute('width') + 'x' + svg.getAttribute('height') : 'not found');
-  });
+  const ti = document.getElementById('timeline-inner');
+  const svg = document.getElementById('timeline-svg');
+  console.log('timeline-section height:', ts ? ts.offsetHeight : 'not found');
+  console.log('timeline-inner height:', ti ? ti.offsetHeight : 'not found');
+  console.log('svg:', svg ? svg.getAttribute('width') + 'x' + svg.getAttribute('height') : 'not found');
 });
 </script>
 """
