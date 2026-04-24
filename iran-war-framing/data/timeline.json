@@ -1,0 +1,1139 @@
+[
+  {
+    "date": "2026-03-01",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.7,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.4,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.3
+      }
+    }
+  },
+  {
+    "date": "2026-03-02",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.65,
+        "humanitarian_focus": 0.15,
+        "diplomatic_focus": 0.35,
+        "economic_focus": 0.05,
+        "culpability_bias": 0.55
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.386,
+        "humanitarian_focus": 0.271,
+        "diplomatic_focus": 0.414,
+        "economic_focus": 0.386,
+        "culpability_bias": 0.343
+      }
+    }
+  },
+  {
+    "date": "2026-03-03",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.48,
+        "humanitarian_focus": 0.18,
+        "diplomatic_focus": 0.58,
+        "economic_focus": 0.44,
+        "culpability_bias": 0.42
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.243,
+        "humanitarian_focus": 0.271,
+        "diplomatic_focus": 0.557,
+        "economic_focus": 0.1,
+        "culpability_bias": 0.329
+      }
+    }
+  },
+  {
+    "date": "2026-03-04",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.633,
+        "humanitarian_focus": 0.4,
+        "diplomatic_focus": 0.5,
+        "economic_focus": 0.367,
+        "culpability_bias": 0.633
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.327,
+        "humanitarian_focus": 0.187,
+        "diplomatic_focus": 0.287,
+        "economic_focus": 0.367,
+        "culpability_bias": 0.293
+      }
+    }
+  },
+  {
+    "date": "2026-03-05",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.633,
+        "humanitarian_focus": 0.4,
+        "diplomatic_focus": 0.533,
+        "economic_focus": 0.2,
+        "culpability_bias": 0.6
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.433,
+        "humanitarian_focus": 0.15,
+        "diplomatic_focus": 0.35,
+        "economic_focus": 0.417,
+        "culpability_bias": 0.433
+      }
+    }
+  },
+  {
+    "date": "2026-03-06",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.65,
+        "humanitarian_focus": 0.4,
+        "diplomatic_focus": 0.525,
+        "economic_focus": 0.375,
+        "culpability_bias": 0.55
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.1,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.0,
+        "economic_focus": 0.9,
+        "culpability_bias": 0.1
+      }
+    }
+  },
+  {
+    "date": "2026-03-07",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.367,
+        "humanitarian_focus": 0.067,
+        "diplomatic_focus": 0.133,
+        "economic_focus": 0.167,
+        "culpability_bias": 0.4
+      }
+    }
+  },
+  {
+    "date": "2026-03-08",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.575,
+        "humanitarian_focus": 0.35,
+        "diplomatic_focus": 0.3,
+        "economic_focus": 0.6,
+        "culpability_bias": 0.6
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.6,
+        "humanitarian_focus": 0.9,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.3,
+        "culpability_bias": 0.5
+      }
+    }
+  },
+  {
+    "date": "2026-03-09",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.375,
+        "humanitarian_focus": 0.412,
+        "diplomatic_focus": 0.488,
+        "economic_focus": 0.575,
+        "culpability_bias": 0.45
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.133,
+        "humanitarian_focus": 0.133,
+        "diplomatic_focus": 0.267,
+        "economic_focus": 0.633,
+        "culpability_bias": 0.367
+      }
+    }
+  },
+  {
+    "date": "2026-03-10",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.383,
+        "diplomatic_focus": 0.183,
+        "economic_focus": 0.45,
+        "culpability_bias": 0.4
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.22,
+        "humanitarian_focus": 0.06,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.54,
+        "culpability_bias": 0.32
+      }
+    }
+  },
+  {
+    "date": "2026-03-11",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.65,
+        "humanitarian_focus": 0.375,
+        "diplomatic_focus": 0.3,
+        "economic_focus": 0.55,
+        "culpability_bias": 0.575
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.28,
+        "humanitarian_focus": 0.18,
+        "diplomatic_focus": 0.16,
+        "economic_focus": 0.58,
+        "culpability_bias": 0.3
+      }
+    }
+  },
+  {
+    "date": "2026-03-12",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.433,
+        "humanitarian_focus": 0.383,
+        "diplomatic_focus": 0.233,
+        "economic_focus": 0.483,
+        "culpability_bias": 0.55
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.192,
+        "humanitarian_focus": 0.031,
+        "diplomatic_focus": 0.477,
+        "economic_focus": 0.423,
+        "culpability_bias": 0.269
+      }
+    }
+  },
+  {
+    "date": "2026-03-13",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.333,
+        "humanitarian_focus": 0.258,
+        "diplomatic_focus": 0.367,
+        "economic_focus": 0.633,
+        "culpability_bias": 0.358
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.25,
+        "humanitarian_focus": 0.133,
+        "diplomatic_focus": 0.333,
+        "economic_focus": 0.583,
+        "culpability_bias": 0.15
+      }
+    }
+  },
+  {
+    "date": "2026-03-14",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.4,
+        "humanitarian_focus": 0.467,
+        "diplomatic_focus": 0.333,
+        "economic_focus": 0.267,
+        "culpability_bias": 0.433
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.1,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.2,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.5
+      }
+    }
+  },
+  {
+    "date": "2026-03-15",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.425,
+        "humanitarian_focus": 0.425,
+        "diplomatic_focus": 0.475,
+        "economic_focus": 0.35,
+        "culpability_bias": 0.55
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.667,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.333,
+        "economic_focus": 0.567,
+        "culpability_bias": 0.633
+      }
+    }
+  },
+  {
+    "date": "2026-03-16",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.343,
+        "humanitarian_focus": 0.157,
+        "diplomatic_focus": 0.643,
+        "economic_focus": 0.514,
+        "culpability_bias": 0.4
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.35,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.2,
+        "economic_focus": 0.3,
+        "culpability_bias": 0.25
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.133,
+        "humanitarian_focus": 0.4,
+        "diplomatic_focus": 0.567,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.467
+      }
+    }
+  },
+  {
+    "date": "2026-03-17",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.5,
+        "humanitarian_focus": 0.327,
+        "diplomatic_focus": 0.491,
+        "economic_focus": 0.345,
+        "culpability_bias": 0.518
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.44,
+        "humanitarian_focus": 0.38,
+        "diplomatic_focus": 0.34,
+        "economic_focus": 0.58,
+        "culpability_bias": 0.54
+      }
+    }
+  },
+  {
+    "date": "2026-03-18",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.286,
+        "humanitarian_focus": 0.171,
+        "diplomatic_focus": 0.471,
+        "economic_focus": 0.714,
+        "culpability_bias": 0.4
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.167,
+        "humanitarian_focus": 0.2,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.7,
+        "culpability_bias": 0.2
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.233,
+        "humanitarian_focus": 0.267,
+        "diplomatic_focus": 0.167,
+        "economic_focus": 0.2,
+        "culpability_bias": 0.433
+      }
+    }
+  },
+  {
+    "date": "2026-03-19",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.336,
+        "humanitarian_focus": 0.264,
+        "diplomatic_focus": 0.318,
+        "economic_focus": 0.427,
+        "culpability_bias": 0.464
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.1,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.0,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.4
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.433,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.244,
+        "economic_focus": 0.556,
+        "culpability_bias": 0.467
+      }
+    }
+  },
+  {
+    "date": "2026-03-20",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.33,
+        "diplomatic_focus": 0.16,
+        "economic_focus": 0.06,
+        "culpability_bias": 0.5
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.05,
+        "diplomatic_focus": 0.2,
+        "economic_focus": 0.7,
+        "culpability_bias": 0.25
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.6,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.3,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.4
+      }
+    }
+  },
+  {
+    "date": "2026-03-21",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.517,
+        "humanitarian_focus": 0.35,
+        "diplomatic_focus": 0.45,
+        "economic_focus": 0.4,
+        "culpability_bias": 0.6
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.45,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.2,
+        "economic_focus": 0.85,
+        "culpability_bias": 0.45
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.5,
+        "diplomatic_focus": 0.2,
+        "economic_focus": 0.9,
+        "culpability_bias": 0.4
+      }
+    }
+  },
+  {
+    "date": "2026-03-22",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.45,
+        "humanitarian_focus": 0.55,
+        "diplomatic_focus": 0.2,
+        "economic_focus": 0.75,
+        "culpability_bias": 0.5
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.4,
+        "humanitarian_focus": 0.467,
+        "diplomatic_focus": 0.433,
+        "economic_focus": 0.567,
+        "culpability_bias": 0.4
+      }
+    }
+  },
+  {
+    "date": "2026-03-23",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.371,
+        "humanitarian_focus": 0.257,
+        "diplomatic_focus": 0.286,
+        "economic_focus": 0.586,
+        "culpability_bias": 0.343
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.15,
+        "diplomatic_focus": 0.3,
+        "economic_focus": 0.75,
+        "culpability_bias": 0.4
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.4,
+        "humanitarian_focus": 0.271,
+        "diplomatic_focus": 0.286,
+        "economic_focus": 0.514,
+        "culpability_bias": 0.4
+      }
+    }
+  },
+  {
+    "date": "2026-03-24",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.62,
+        "humanitarian_focus": 0.22,
+        "diplomatic_focus": 0.6,
+        "economic_focus": 0.42,
+        "culpability_bias": 0.64
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.32,
+        "humanitarian_focus": 0.24,
+        "diplomatic_focus": 0.44,
+        "economic_focus": 0.44,
+        "culpability_bias": 0.36
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.16,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.3,
+        "economic_focus": 0.84,
+        "culpability_bias": 0.16
+      }
+    }
+  },
+  {
+    "date": "2026-03-25",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.333,
+        "humanitarian_focus": 0.267,
+        "diplomatic_focus": 0.35,
+        "economic_focus": 0.617,
+        "culpability_bias": 0.3
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.1,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.9,
+        "culpability_bias": 0.4
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.117,
+        "humanitarian_focus": 0.183,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.883,
+        "culpability_bias": 0.183
+      }
+    }
+  },
+  {
+    "date": "2026-03-26",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.45,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.45,
+        "economic_focus": 0.683,
+        "culpability_bias": 0.417
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.16,
+        "humanitarian_focus": 0.22,
+        "diplomatic_focus": 0.22,
+        "economic_focus": 0.62,
+        "culpability_bias": 0.24
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.18,
+        "humanitarian_focus": 0.16,
+        "diplomatic_focus": 0.38,
+        "economic_focus": 0.48,
+        "culpability_bias": 0.18
+      }
+    }
+  },
+  {
+    "date": "2026-03-27",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.283,
+        "humanitarian_focus": 0.408,
+        "diplomatic_focus": 0.35,
+        "economic_focus": 0.583,
+        "culpability_bias": 0.367
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.24,
+        "humanitarian_focus": 0.16,
+        "diplomatic_focus": 0.26,
+        "economic_focus": 0.72,
+        "culpability_bias": 0.28
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.333,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.567,
+        "economic_focus": 0.4,
+        "culpability_bias": 0.367
+      }
+    }
+  },
+  {
+    "date": "2026-03-28",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.65,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.475,
+        "economic_focus": 0.45,
+        "culpability_bias": 0.65
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.5,
+        "humanitarian_focus": 0.15,
+        "diplomatic_focus": 0.2,
+        "economic_focus": 0.55,
+        "culpability_bias": 0.45
+      }
+    }
+  },
+  {
+    "date": "2026-03-29",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.35,
+        "humanitarian_focus": 0.425,
+        "diplomatic_focus": 0.25,
+        "economic_focus": 0.5,
+        "culpability_bias": 0.45
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.8,
+        "culpability_bias": 0.1
+      }
+    }
+  },
+  {
+    "date": "2026-03-30",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.412,
+        "humanitarian_focus": 0.425,
+        "diplomatic_focus": 0.362,
+        "economic_focus": 0.575,
+        "culpability_bias": 0.538
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.143,
+        "humanitarian_focus": 0.157,
+        "diplomatic_focus": 0.157,
+        "economic_focus": 0.686,
+        "culpability_bias": 0.214
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.6,
+        "economic_focus": 0.7,
+        "culpability_bias": 0.2
+      }
+    }
+  },
+  {
+    "date": "2026-03-31",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.327,
+        "humanitarian_focus": 0.22,
+        "diplomatic_focus": 0.3,
+        "economic_focus": 0.66,
+        "culpability_bias": 0.427
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.233,
+        "humanitarian_focus": 0.367,
+        "diplomatic_focus": 0.25,
+        "economic_focus": 0.583,
+        "culpability_bias": 0.3
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.233,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.367,
+        "economic_focus": 0.4,
+        "culpability_bias": 0.3
+      }
+    }
+  },
+  {
+    "date": "2026-04-01",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.35,
+        "humanitarian_focus": 0.15,
+        "diplomatic_focus": 0.25,
+        "economic_focus": 0.667,
+        "culpability_bias": 0.367
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.29,
+        "humanitarian_focus": 0.2,
+        "diplomatic_focus": 0.24,
+        "economic_focus": 0.57,
+        "culpability_bias": 0.27
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.4,
+        "humanitarian_focus": 0.175,
+        "diplomatic_focus": 0.45,
+        "economic_focus": 0.35,
+        "culpability_bias": 0.275
+      }
+    }
+  },
+  {
+    "date": "2026-04-02",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.35,
+        "humanitarian_focus": 0.2,
+        "diplomatic_focus": 0.27,
+        "economic_focus": 0.6,
+        "culpability_bias": 0.37
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.4,
+        "humanitarian_focus": 0.175,
+        "diplomatic_focus": 0.412,
+        "economic_focus": 0.425,
+        "culpability_bias": 0.325
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.32,
+        "humanitarian_focus": 0.22,
+        "diplomatic_focus": 0.12,
+        "economic_focus": 0.7,
+        "culpability_bias": 0.24
+      }
+    }
+  },
+  {
+    "date": "2026-04-03",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.225,
+        "humanitarian_focus": 0.25,
+        "diplomatic_focus": 0.075,
+        "economic_focus": 0.6,
+        "culpability_bias": 0.35
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.225,
+        "humanitarian_focus": 0.4,
+        "diplomatic_focus": 0.325,
+        "economic_focus": 0.425,
+        "culpability_bias": 0.475
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.7,
+        "humanitarian_focus": 0.45,
+        "diplomatic_focus": 0.25,
+        "economic_focus": 0.3,
+        "culpability_bias": 0.6
+      }
+    }
+  },
+  {
+    "date": "2026-04-04",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.28,
+        "humanitarian_focus": 0.16,
+        "diplomatic_focus": 0.32,
+        "economic_focus": 0.52,
+        "culpability_bias": 0.4
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.1,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.0,
+        "economic_focus": 0.8,
+        "culpability_bias": 0.1
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.5,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.45,
+        "economic_focus": 0.3,
+        "culpability_bias": 0.55
+      }
+    }
+  },
+  {
+    "date": "2026-04-05",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.633,
+        "humanitarian_focus": 0.667,
+        "diplomatic_focus": 0.533,
+        "economic_focus": 0.433,
+        "culpability_bias": 0.6
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.0,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.0,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.0
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.85,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.5,
+        "culpability_bias": 0.75
+      }
+    }
+  },
+  {
+    "date": "2026-04-06",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.575,
+        "humanitarian_focus": 0.5,
+        "diplomatic_focus": 0.425,
+        "economic_focus": 0.6,
+        "culpability_bias": 0.6
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.0,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.0,
+        "economic_focus": 0.9,
+        "culpability_bias": 0.1
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.475,
+        "humanitarian_focus": 0.05,
+        "diplomatic_focus": 0.425,
+        "economic_focus": 0.575,
+        "culpability_bias": 0.425
+      }
+    }
+  },
+  {
+    "date": "2026-04-07",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.5,
+        "humanitarian_focus": 0.44,
+        "diplomatic_focus": 0.6,
+        "economic_focus": 0.42,
+        "culpability_bias": 0.56
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.333,
+        "humanitarian_focus": 0.117,
+        "diplomatic_focus": 0.533,
+        "economic_focus": 0.5,
+        "culpability_bias": 0.383
+      }
+    }
+  },
+  {
+    "date": "2026-04-08",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.444,
+        "humanitarian_focus": 0.311,
+        "diplomatic_focus": 0.622,
+        "economic_focus": 0.489,
+        "culpability_bias": 0.478
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.412,
+        "humanitarian_focus": 0.338,
+        "diplomatic_focus": 0.475,
+        "economic_focus": 0.512,
+        "culpability_bias": 0.488
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.182,
+        "humanitarian_focus": 0.036,
+        "diplomatic_focus": 0.391,
+        "economic_focus": 0.627,
+        "culpability_bias": 0.255
+      }
+    }
+  },
+  {
+    "date": "2026-04-09",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.162,
+        "humanitarian_focus": 0.238,
+        "diplomatic_focus": 0.375,
+        "economic_focus": 0.425,
+        "culpability_bias": 0.35
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.6,
+        "humanitarian_focus": 0.4,
+        "diplomatic_focus": 0.5,
+        "economic_focus": 0.6,
+        "culpability_bias": 0.7
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.16,
+        "humanitarian_focus": 0.16,
+        "diplomatic_focus": 0.66,
+        "economic_focus": 0.36,
+        "culpability_bias": 0.16
+      }
+    }
+  },
+  {
+    "date": "2026-04-10",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.244,
+        "humanitarian_focus": 0.267,
+        "diplomatic_focus": 0.511,
+        "economic_focus": 0.489,
+        "culpability_bias": 0.389
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.0,
+        "humanitarian_focus": 0.033,
+        "diplomatic_focus": 0.0,
+        "economic_focus": 0.333,
+        "culpability_bias": 0.1
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.1,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.9,
+        "culpability_bias": 0.2
+      }
+    }
+  },
+  {
+    "date": "2026-04-11",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.225,
+        "humanitarian_focus": 0.25,
+        "diplomatic_focus": 0.35,
+        "economic_focus": 0.425,
+        "culpability_bias": 0.425
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.2,
+        "humanitarian_focus": 0.6,
+        "diplomatic_focus": 0.4,
+        "economic_focus": 0.7,
+        "culpability_bias": 0.3
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.133,
+        "humanitarian_focus": 0.117,
+        "diplomatic_focus": 0.8,
+        "economic_focus": 0.15,
+        "culpability_bias": 0.15
+      }
+    }
+  },
+  {
+    "date": "2026-04-12",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.32,
+        "humanitarian_focus": 0.2,
+        "diplomatic_focus": 0.4,
+        "economic_focus": 0.52,
+        "culpability_bias": 0.5
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.1,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.2,
+        "economic_focus": 0.9,
+        "culpability_bias": 0.2
+      }
+    }
+  },
+  {
+    "date": "2026-04-13",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.2,
+        "humanitarian_focus": 0.15,
+        "diplomatic_focus": 0.338,
+        "economic_focus": 0.562,
+        "culpability_bias": 0.3
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.4,
+        "humanitarian_focus": 0.4,
+        "diplomatic_focus": 0.3,
+        "economic_focus": 0.7,
+        "culpability_bias": 0.35
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.15,
+        "humanitarian_focus": 0.05,
+        "diplomatic_focus": 0.475,
+        "economic_focus": 0.85,
+        "culpability_bias": 0.125
+      }
+    }
+  },
+  {
+    "date": "2026-04-14",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.183,
+        "humanitarian_focus": 0.217,
+        "diplomatic_focus": 0.15,
+        "economic_focus": 0.733,
+        "culpability_bias": 0.267
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.05,
+        "humanitarian_focus": 0.2,
+        "diplomatic_focus": 0.15,
+        "economic_focus": 0.45,
+        "culpability_bias": 0.25
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.167,
+        "humanitarian_focus": 0.067,
+        "diplomatic_focus": 0.367,
+        "economic_focus": 0.9,
+        "culpability_bias": 0.2
+      }
+    }
+  },
+  {
+    "date": "2026-04-15",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.2,
+        "humanitarian_focus": 0.36,
+        "diplomatic_focus": 0.56,
+        "economic_focus": 0.34,
+        "culpability_bias": 0.4
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.217,
+        "humanitarian_focus": 0.133,
+        "diplomatic_focus": 0.45,
+        "economic_focus": 0.6,
+        "culpability_bias": 0.333
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.1,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.55,
+        "economic_focus": 0.9,
+        "culpability_bias": 0.1
+      }
+    }
+  },
+  {
+    "date": "2026-04-16",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.18,
+        "humanitarian_focus": 0.16,
+        "diplomatic_focus": 0.26,
+        "economic_focus": 0.46,
+        "culpability_bias": 0.31
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.207,
+        "humanitarian_focus": 0.307,
+        "diplomatic_focus": 0.221,
+        "economic_focus": 0.707,
+        "culpability_bias": 0.25
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.26,
+        "humanitarian_focus": 0.02,
+        "diplomatic_focus": 0.32,
+        "economic_focus": 0.78,
+        "culpability_bias": 0.24
+      }
+    }
+  },
+  {
+    "date": "2026-04-17",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.217,
+        "humanitarian_focus": 0.15,
+        "diplomatic_focus": 0.533,
+        "economic_focus": 0.583,
+        "culpability_bias": 0.367
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.325,
+        "diplomatic_focus": 0.5,
+        "economic_focus": 0.5,
+        "culpability_bias": 0.35
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.1,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.167,
+        "economic_focus": 0.9,
+        "culpability_bias": 0.133
+      }
+    }
+  },
+  {
+    "date": "2026-04-18",
+    "outlets": {
+      "apnews.com": {
+        "kinetic_focus": 0.125,
+        "humanitarian_focus": 0.25,
+        "diplomatic_focus": 0.375,
+        "economic_focus": 0.575,
+        "culpability_bias": 0.25
+      },
+      "bbc.com": {
+        "kinetic_focus": 0.233,
+        "humanitarian_focus": 0.367,
+        "diplomatic_focus": 0.4,
+        "economic_focus": 0.833,
+        "culpability_bias": 0.233
+      },
+      "reuters.com": {
+        "kinetic_focus": 0.0,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.4,
+        "economic_focus": 0.8,
+        "culpability_bias": 0.1
+      }
+    }
+  },
+  {
+    "date": "2026-04-20",
+    "outlets": {
+      "bbc.com": {
+        "kinetic_focus": 0.35,
+        "humanitarian_focus": 0.35,
+        "diplomatic_focus": 0.25,
+        "economic_focus": 0.7,
+        "culpability_bias": 0.25
+      }
+    }
+  },
+  {
+    "date": "NaT",
+    "outlets": {
+      "aljazeera.com": {
+        "kinetic_focus": 0.525,
+        "humanitarian_focus": 0.329,
+        "diplomatic_focus": 0.475,
+        "economic_focus": 0.429,
+        "culpability_bias": 0.558
+      }
+    }
+  }
+]
