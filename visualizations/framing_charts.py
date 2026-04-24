@@ -28,6 +28,7 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
 
     legend_order = (
         daily_long.groupby('dimension', as_index=False)['average_score']
+        .mean()
         .sort_values('average_score', ascending=False)['dimension']
         .tolist()
     )

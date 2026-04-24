@@ -153,8 +153,7 @@ def make_outlet_framing_heatmap(df):
         color_continuous_scale='Blues',
         text_auto='.2f',
         aspect='auto',
-        labels={'x': '', 'y': '', 'color': 'Average Score'},
-        title=''
+        labels={'x': '', 'y': '', 'color': 'Average Score'}
     )
 
     fig.update_traces(textfont={'size': 10, 'color': '#264050'})
