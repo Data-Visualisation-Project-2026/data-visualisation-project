@@ -40,6 +40,13 @@ def _build_outlet_event_timeline_html():
         flags=re.DOTALL,
     )
 
+    # Patch ScrollTrigger to explicitly use the iframe's scroll container
+    # and ensure pinSpacing creates the spacer that preserves section height.
+    main_js = main_js.replace(
+        'pin: "#timeline-inner",',
+        'pin: "#timeline-inner",\n      pinSpacing: true,\n      scroller: document.documentElement,',
+    )
+
     # iframe-specific CSS — hides scrollbar, lets GSAP control layout.
     iframe_css = """
 /* Hide scrollbar — scrolling still works, GSAP reads it */
@@ -51,9 +58,30 @@ html { scrollbar-width: none; overflow-y: scroll; }
 #outro  { height: 50vh; min-height: 50vh; }
 
 /* Let GSAP control the timeline — no overflow-x overrides */
-#timeline-section { height: 400vh; }
+#timeline-section { height: 400vh; position: relative; }
 #timeline-inner   { height: 100vh; overflow: hidden; }
 #timeline-track   { will-change: transform; }
+"""
+
+    # JS fallback: set section height in px in case vh units misbehave in iframe.
+    height_fix = """
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const vh = window.innerHeight;
+  const ts = document.getElementById('timeline-section');
+  if (ts) ts.style.minHeight = (vh * 4) + 'px';
+
+  // Debug dimensions
+  window.addEventListener('load', () => {
+    console.log('VH:', vh, 'innerWidth:', window.innerWidth);
+    console.log('timeline-section height:', ts ? ts.offsetHeight : 'not found');
+    const ti = document.getElementById('timeline-inner');
+    console.log('timeline-inner height:', ti ? ti.offsetHeight : 'not found');
+    const svg = document.getElementById('timeline-svg');
+    console.log('svg:', svg ? svg.getAttribute('width') + 'x' + svg.getAttribute('height') : 'not found');
+  });
+});
+</script>
 """
 
     return f"""<!DOCTYPE html>
@@ -71,6 +99,7 @@ html { scrollbar-width: none; overflow-y: scroll; }
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
 <script>{main_js}</script>
+{height_fix}
 </body>
 </html>
 """

@@ -1,6 +1,0 @@
-streamlit
-pandas
-plotly
-pyarrow
-fastparquet
-scikit-learn
