@@ -219,13 +219,13 @@ score_labels = {
 
 df['publish_date'] = pd.to_datetime(df['indexed_date'])
 
-dimension_order = (
-    df[score_cols]
-    .mean()
-    .sort_values(ascending=False)
-    .index.map(score_labels.get)
-    .tolist()
-)
+dimension_order = [
+    'Kinetic',
+    'Humanitarian',
+    'Diplomatic',
+    'Economic',
+    'Culpability Bias'
+]
 
 st.sidebar.markdown('## Navigation')
 page = st.sidebar.radio(
@@ -256,7 +256,8 @@ if page == 'Overview':
     highlighted_dimensions = st.multiselect(
         'Use the dropdown to show or hide dimensions:',
         options=dimension_order,
-        default=dimension_order
+        default=dimension_order,
+        key='overview_dimension_selector_v2'
     )
 
     # Build and display the framing-over-time chart.

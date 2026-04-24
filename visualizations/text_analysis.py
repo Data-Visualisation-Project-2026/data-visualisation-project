@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 from sklearn.feature_extraction.text import CountVectorizer, ENGLISH_STOP_WORDS
 
 
@@ -148,25 +149,37 @@ def make_outlet_framing_heatmap(df):
     row_order = outlet_heatmap_raw.mean(axis=1).sort_values(ascending=False).index.tolist()
     outlet_heatmap = outlet_heatmap_raw.loc[row_order, column_order]
 
-    fig = px.imshow(
-        outlet_heatmap,
-        color_continuous_scale='Blues',
-        text_auto='.2f',
-        aspect='auto',
-        labels={'x': '', 'y': '', 'color': 'Average Score'}
+    fig = go.Figure(
+        data=go.Heatmap(
+            z=outlet_heatmap.values,
+            x=outlet_heatmap.columns.tolist(),
+            y=outlet_heatmap.index.tolist(),
+            colorscale='Blues',
+            zmin=float(outlet_heatmap.values.min()),
+            zmax=float(outlet_heatmap.values.max()),
+            colorbar={'title': 'Average Score'},
+            text=np.round(outlet_heatmap.values, 2),
+            texttemplate='%{text:.2f}',
+            textfont={'size': 9, 'color': '#2f4a5f'},
+            hovertemplate='%{y}<br>%{x}: %{z:.2f}<extra></extra>'
+        )
     )
-
-    fig.update_traces(textfont={'size': 9})
 
     fig.update_layout(
         paper_bgcolor='white',
         plot_bgcolor='white',
-        margin={'l': 40, 'r': 40, 't': 110, 'b': 90},
-        font={'color': '#263746'},
-        coloraxis_colorbar={'title': 'Average Score'}
+        margin={'l': 40, 'r': 40, 't': 30, 'b': 90},
+        font={'color': '#263746'}
     )
 
-    fig.update_xaxes(side='bottom', tickangle=0, automargin=True)
+    fig.update_xaxes(
+        side='bottom',
+        tickangle=0,
+        automargin=True,
+        showgrid=False,
+        ticks=''
+    )
+    fig.update_yaxes(showgrid=False, ticks='')
 
     return fig
 
