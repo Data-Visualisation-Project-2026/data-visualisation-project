@@ -197,8 +197,8 @@ st.markdown(
 )
 
 # Load the clustered article framing data.
-df = pd.read_parquet('iran_war_media_framing_scores_clustered.parquet', engine='pyarrow')
-df_five_sources = pd.read_parquet('iran_war_media_framing_scores2_clustered.parquet', engine='pyarrow')
+df = pd.read_parquet('iran_war_media_framing_scores_clustered.parquet', engine='fastparquet')
+df_five_sources = pd.read_parquet('iran_war_media_framing_scores2_clustered.parquet', engine='fastparquet')
 
 # Columns containing the LLM-generated framing scores.
 score_cols = [
