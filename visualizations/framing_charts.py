@@ -24,9 +24,9 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
     color_map = {
         'Kinetic': '#4E79A7',
         'Humanitarian': '#F28E2B',
-        'Diplomatic': '#E15759',
-        'Economic': '#76B7B2',
-        'Culpability Bias': '#59A14F'
+        'Diplomatic': '#76B7B2',
+        'Economic': '#59A14F',
+        'Culpability Bias': '#E15759'
     }
 
     legend_order = [
@@ -161,9 +161,9 @@ def make_international_framing_chart(timeline_path, highlighted_dimensions):
     color_map = {
         'Kinetic': '#4E79A7',
         'Humanitarian': '#F28E2B',
-        'Diplomatic': '#E15759',
-        'Economic': '#76B7B2',
-        'Culpability Bias': '#59A14F',
+        'Diplomatic': '#76B7B2',
+        'Economic': '#59A14F',
+        'Culpability Bias': '#E15759',
     }
     legend_order = ['Culpability Bias', 'Kinetic', 'Economic', 'Diplomatic', 'Humanitarian']
 

@@ -90,9 +90,9 @@ meta.outlets.forEach(outlet => {
 const DIM_COLORS = {
     kinetic_focus:      '#4E79A7',
     humanitarian_focus: '#F28E2B',
-    diplomatic_focus:   '#E15759',
-    economic_focus:     '#76B7B2',
-    culpability_bias:   '#59A14F',
+    diplomatic_focus:   '#76B7B2',
+    economic_focus:     '#59A14F',
+    culpability_bias:   '#E15759',
 };
 const DIM_LABELS = {
     kinetic_focus:      'Kinetic',
