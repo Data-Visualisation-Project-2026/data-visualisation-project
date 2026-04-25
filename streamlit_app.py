@@ -22,14 +22,17 @@ st.markdown(
         --primary-color: #2f4a5f;
     }
 
+    html, body, .stApp, [data-testid="stAppViewContainer"], p, span, div, label {
+        font-family: 'Georgia', serif !important;
+    }
+
     .stApp {
         color: #263746;
     }
 
     [data-testid="stSidebar"] {
-        background: #dfeaf2;
-        border-right: 2px solid #9eb2c3;
-        box-shadow: 2px 0 10px rgba(47, 74, 95, 0.08);
+        background: #f2f2f2;
+        border-right: 1px solid #d9d9d9;
     }
 
     [data-testid="stSidebar"] > div:first-child {
@@ -55,30 +58,28 @@ st.markdown(
 
     [data-testid="stSidebar"] div[role="radiogroup"] label {
         align-items: center;
-        background: rgba(255, 255, 255, 0.72);
-        border: 1px solid #b4c5d2;
-        border-radius: 10px;
+        background: #ffffff;
+        border: 1px solid #d9d9d9;
+        border-radius: 8px;
         color: #2f4a5f;
         font-size: 1.02rem;
-        font-weight: 650;
+        font-weight: 600;
         margin-bottom: 0.7rem;
         padding: 0.8rem 0.85rem;
-        transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+        transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
     [data-testid="stSidebar"] div[role="radiogroup"] label:hover {
-        background: #f7fbff;
-        border-color: #6f8fa8;
-        box-shadow: 0 4px 12px rgba(47, 74, 95, 0.12);
-        transform: translateY(-1px);
+        background: #ffffff;
+        border-color: #aaaaaa;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     }
 
     [data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked) {
-        background: #eef5fa;
+        background: #ffffff;
         border-color: #2f4a5f;
-        border-left: 5px solid #2f4a5f;
-        box-shadow: 0 5px 14px rgba(47, 74, 95, 0.16);
-        color: #22394c;
+        border-left: 4px solid #2f4a5f;
+        color: #1a1a1a;
         font-weight: 800;
     }
 
@@ -98,36 +99,40 @@ st.markdown(
         margin-bottom: 2rem;
     }
 
-    div[data-baseweb="select"] > div {
-        border-color: #c4d2de;
+    /* Search / select input background */
+    div[data-baseweb="select"] > div,
+    div[data-baseweb="input"] > div,
+    div[data-baseweb="base-input"] {
+        background-color: #f2f2f2 !important;
+        border-color: #d9d9d9 !important;
     }
 
+    /* Tags */
     div[data-baseweb="select"] div[data-baseweb="tag"],
     div[data-baseweb="popover"] div[data-baseweb="tag"],
     span[data-baseweb="tag"] {
-        background: #2f4a5f !important;
-        background-color: #2f4a5f !important;
-        border-color: #2f4a5f !important;
+        background: #e0e0e0 !important;
+        background-color: #e0e0e0 !important;
+        border-color: #cccccc !important;
     }
-
 
     div[data-baseweb="select"] div[data-baseweb="tag"] span,
     div[data-baseweb="popover"] div[data-baseweb="tag"] span,
     span[data-baseweb="tag"] span {
-        color: #ffffff !important;
+        color: #1a1a1a !important;
     }
 
     div[data-baseweb="select"] div[data-baseweb="tag"] svg,
     div[data-baseweb="popover"] div[data-baseweb="tag"] svg,
     span[data-baseweb="tag"] svg {
-        color: #ffffff !important;
-        fill: #ffffff !important;
+        color: #555555 !important;
+        fill: #555555 !important;
     }
 
     div[data-baseweb="select"] div[data-baseweb="tag"] path,
     div[data-baseweb="popover"] div[data-baseweb="tag"] path,
     span[data-baseweb="tag"] path {
-        fill: #ffffff !important;
+        fill: #555555 !important;
     }
 
     div[data-baseweb="checkbox"] label,
