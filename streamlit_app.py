@@ -5,7 +5,7 @@ import streamlit as st
 
 from visualizations.embedded_visuals import render_outlet_event_timeline
 from visualizations.embedded_network import render_media_clusters
-from visualizations.framing_charts import make_framing_over_time_chart, make_international_framing_chart
+from visualizations.framing_charts import make_framing_over_time_chart, make_international_framing_chart, make_combined_aggregate_chart
 from visualizations.text_analysis import (
     get_top_cluster_bigrams,
     make_cluster_bigram_charts,
@@ -233,13 +233,12 @@ dimension_order = [
 st.sidebar.markdown('## Navigation')
 page = st.sidebar.radio(
     'Navigation',
-    ['Overview', 'Narrative Over Time', 'Media Clusters', 'Media Differences', 'Data & Methods'],
+    ['Overview', 'Media Clusters', 'Media Differences', 'Data & Methods'],
     label_visibility='collapsed',
     key='main_navigation_v4'
 )
 
 if page == 'Overview':
-    # Intro section for the project overview page.
     st.markdown(
         """
         This project explores how media outlets framed the 2026 Iran War across time, media sources, and narrative dimensions. We analyze how coverage varies across five framing dimensions:
@@ -252,61 +251,32 @@ if page == 'Overview':
         """
     )
 
-    st.subheader('Overall Framing Trends During the Iran War')
-    st.caption('Feb 27–Mar 30, 2026 · Based on 1,925 articles from 77 media outlets')
+    st.subheader('Two Media Universes, One War')
+    st.caption('Feb 27–Apr 20, 2026 · 77 US outlets (top) vs. AP, Reuters, BBC, Al Jazeera (bottom)')
 
-    # Choose which framing dimensions to highlight in the chart.
     highlighted_dimensions = st.multiselect(
-        'Use the dropdown to show or hide dimensions:',
+        'Highlight dimensions:',
         options=dimension_order,
         default=dimension_order,
         key='overview_dimension_selector_v2'
     )
 
-    # Build and display the framing-over-time chart.
-    chart = make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimensions)
-    st.plotly_chart(chart, use_container_width=True)
+    combined_chart = make_combined_aggregate_chart(
+        df, score_cols, score_labels,
+        'iran-war-framing/data/timeline.json',
+        highlighted_dimensions
+    )
+    st.plotly_chart(combined_chart, use_container_width=True)
 
     st.markdown(
         """
-        The overall pattern suggests that coverage was driven mainly by military action and responsibility/blame. Kinetic framing stayed high for much of the period, while Culpability Bias remained consistently prominent, showing that many articles framed the war not only through what happened, but also through who was responsible.
-        Humanitarian framing stayed lower overall, suggesting that civilian suffering and human impacts were present but less central in the aggregate coverage.
-
-        Moreover, the emphasis shift over time. Diplomatic framing was unusually high at the beginning, likely reflecting early attention to official statements, international reactions, and political responses. After that, it dropped and stayed relatively low. Later, Economic framing becomes more visible, especially around moments linked to energy and regional escalation.
-
-        Taken together, the five lines show that media framing was not fixed: as the war developed, coverage moved between military, political, economic, and blame-centered narratives.
+        US domestic coverage was driven mainly by culpability and kinetic framing — who was responsible and what happened militarily. International wire services tell a different story: economic framing rises sharply after mid-March, while kinetic framing is more muted. The two universes diverge most visibly around the Saudi base attack (Mar 27) and the ceasefire (Apr 8), where international outlets shifted toward diplomatic and economic frames while US outlets stayed focused on blame.
         """
     )
 
-elif page == 'Narrative Over Time':
-    st.subheader('US Media vs. International Wire Services')
-    st.caption('Comparing aggregate framing across two distinct media universes')
-
-    st.markdown('**77 US Outlets** — domestic media aggregate')
-    highlighted_us = st.multiselect(
-        'Highlight dimensions (US):',
-        options=dimension_order,
-        default=dimension_order,
-        key='us_dimension_selector'
-    )
-    us_chart = make_framing_over_time_chart(df, score_cols, score_labels, highlighted_us)
-    us_chart.update_layout(height=380, margin={'l': 40, 'r': 140, 't': 40, 'b': 50})
-    st.plotly_chart(us_chart, use_container_width=True)
-
-    st.markdown('**AP, Reuters, BBC, Al Jazeera** — international wire aggregate')
-    highlighted_intl = st.multiselect(
-        'Highlight dimensions (International):',
-        options=dimension_order,
-        default=dimension_order,
-        key='intl_dimension_selector'
-    )
-    intl_chart = make_international_framing_chart(
-        'iran-war-framing/data/timeline.json', highlighted_intl
-    )
-    st.plotly_chart(intl_chart, use_container_width=True)
-
     st.divider()
-    st.markdown('**Individual outlet breakdown** — scroll to follow where the four outlets diverged')
+    st.subheader('Individual Outlet Breakdown')
+    st.caption('Scroll to follow where AP, Reuters, BBC, and Al Jazeera diverged from each other')
     render_outlet_event_timeline()
 
 elif page == 'Media Clusters':
