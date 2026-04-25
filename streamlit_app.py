@@ -11,6 +11,7 @@ from visualizations.text_analysis import (
     make_cluster_bigram_charts,
     make_outlet_framing_heatmap,
 )
+from visualizations.dataset_overview import make_article_count_chart, _load_data
 
 # Set up the Streamlit page and main title.
 st.set_page_config(layout='wide')
@@ -18,6 +19,8 @@ st.set_page_config(layout='wide')
 st.markdown(
     """
     <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap');
+
     :root {
         --primary-color: #2f4a5f;
     }
@@ -34,7 +37,7 @@ st.markdown(
     .stApp h1 {
         font-family: 'Georgia', serif !important;
         font-size: clamp(2rem, 5vw, 4rem) !important;
-        font-weight: normal !important;
+        font-weight: bold !important;
         line-height: 1.1 !important;
         color: #1a1a1a !important;
         margin-bottom: 1.2rem !important;
@@ -54,6 +57,13 @@ st.markdown(
         color: #555555 !important;
         line-height: 1.7 !important;
         max-width: 680px;
+    }
+
+    /* Dimension labels in bullet lists */
+    .dim-label {
+        font-family: 'Roboto', sans-serif !important;
+        font-weight: 600 !important;
+        font-size: 1.0rem !important;
     }
 
     [data-testid="stSidebar"] {
@@ -231,13 +241,20 @@ if page == 'Overview':
     st.markdown(
         """
         This project explores how media outlets framed the 2026 Iran War across time, media sources, and narrative dimensions. We analyze how coverage varies across five framing dimensions:
-
-        - **Kinetic Focus:** emphasis on military action, strikes, weapons, and strategy.
-        - **Humanitarian Focus:** emphasis on civilian suffering, refugees, and casualties.
-        - **Diplomatic Focus:** emphasis on negotiations, international organizations, and political responses.
-        - **Economic Focus:** emphasis on oil, trade, markets, and broader economic effects.
-        - **Culpability Bias:** the extent to which coverage uses strong or active language to assign blame.
+        """,
+        unsafe_allow_html=True
+    )
+    st.markdown(
         """
+        <ul style="line-height:2.0; max-width:680px;">
+          <li><span class="dim-label" style="color:#4E79A7;">Kinetic Focus:</span> <span style="font-family:Georgia,serif;color:#555;font-size:1.05rem;">emphasis on military action, strikes, weapons, and strategy.</span></li>
+          <li><span class="dim-label" style="color:#F28E2B;">Humanitarian Focus:</span> <span style="font-family:Georgia,serif;color:#555;font-size:1.05rem;">emphasis on civilian suffering, refugees, and casualties.</span></li>
+          <li><span class="dim-label" style="color:#76B7B2;">Diplomatic Focus:</span> <span style="font-family:Georgia,serif;color:#555;font-size:1.05rem;">emphasis on negotiations, international organizations, and political responses.</span></li>
+          <li><span class="dim-label" style="color:#59A14F;">Economic Focus:</span> <span style="font-family:Georgia,serif;color:#555;font-size:1.05rem;">emphasis on oil, trade, markets, and broader economic effects.</span></li>
+          <li><span class="dim-label" style="color:#E15759;">Culpability Bias:</span> <span style="font-family:Georgia,serif;color:#555;font-size:1.05rem;">the extent to which coverage uses strong or active language to assign blame.</span></li>
+        </ul>
+        """,
+        unsafe_allow_html=True
     )
 
     st.subheader('Overall Framing Trends During the Iran War')
@@ -301,13 +318,20 @@ elif page == 'Story Arc':
     st.markdown(
         """
         This project explores how media outlets framed the 2026 Iran War across time, media sources, and narrative dimensions. We analyze how coverage varies across five framing dimensions:
-
-        - **Kinetic Focus:** emphasis on military action, strikes, weapons, and strategy.
-        - **Humanitarian Focus:** emphasis on civilian suffering, refugees, and casualties.
-        - **Diplomatic Focus:** emphasis on negotiations, international organizations, and political responses.
-        - **Economic Focus:** emphasis on oil, trade, markets, and broader economic effects.
-        - **Culpability Bias:** the extent to which coverage uses strong or active language to assign blame.
+        """,
+        unsafe_allow_html=True
+    )
+    st.markdown(
         """
+        <ul style="line-height:2.0; max-width:680px;">
+          <li><span class="dim-label" style="color:#4E79A7;">Kinetic Focus:</span> <span style="font-family:Georgia,serif;color:#555;font-size:1.05rem;">emphasis on military action, strikes, weapons, and strategy.</span></li>
+          <li><span class="dim-label" style="color:#F28E2B;">Humanitarian Focus:</span> <span style="font-family:Georgia,serif;color:#555;font-size:1.05rem;">emphasis on civilian suffering, refugees, and casualties.</span></li>
+          <li><span class="dim-label" style="color:#76B7B2;">Diplomatic Focus:</span> <span style="font-family:Georgia,serif;color:#555;font-size:1.05rem;">emphasis on negotiations, international organizations, and political responses.</span></li>
+          <li><span class="dim-label" style="color:#59A14F;">Economic Focus:</span> <span style="font-family:Georgia,serif;color:#555;font-size:1.05rem;">emphasis on oil, trade, markets, and broader economic effects.</span></li>
+          <li><span class="dim-label" style="color:#E15759;">Culpability Bias:</span> <span style="font-family:Georgia,serif;color:#555;font-size:1.05rem;">the extent to which coverage uses strong or active language to assign blame.</span></li>
+        </ul>
+        """,
+        unsafe_allow_html=True
     )
 
     st.subheader('Two Media Universes, One War')
@@ -374,4 +398,46 @@ elif page == 'Media Differences':
     st.plotly_chart(make_outlet_framing_heatmap(df_five_sources), use_container_width=True)
 
 elif page == 'Data & Methods':
-    st.markdown(Path('methodology.md').read_text())
+    # ── Dataset stats ────────────────────────────────────────────────────────
+    st.markdown(
+        """
+        <div style="display:flex;gap:36px;margin-bottom:28px;flex-wrap:wrap;align-items:baseline;">
+          <div>
+            <div style="font-size:2rem;font-weight:700;color:#263746;font-family:Georgia,'Times New Roman',serif;">82</div>
+            <div style="font-size:0.78rem;color:#5a7185;text-transform:uppercase;letter-spacing:.06em;margin-top:1px;">Outlets</div>
+          </div>
+          <div>
+            <div style="font-size:2rem;font-weight:700;color:#263746;font-family:Georgia,'Times New Roman',serif;">2,867</div>
+            <div style="font-size:0.78rem;color:#5a7185;text-transform:uppercase;letter-spacing:.06em;margin-top:1px;">Articles</div>
+          </div>
+          <div>
+            <div style="font-size:2rem;font-weight:700;color:#263746;font-family:Georgia,'Times New Roman',serif;">76</div>
+            <div style="font-size:0.78rem;color:#5a7185;text-transform:uppercase;letter-spacing:.06em;margin-top:1px;">US outlets</div>
+          </div>
+          <div>
+            <div style="font-size:2rem;font-weight:700;color:#263746;font-family:Georgia,'Times New Roman',serif;">6</div>
+            <div style="font-size:0.78rem;color:#5a7185;text-transform:uppercase;letter-spacing:.06em;margin-top:1px;">Non-US outlets</div>
+          </div>
+          <div>
+            <div style="font-size:2rem;font-weight:700;color:#263746;font-family:Georgia,'Times New Roman',serif;">Feb 27 – Apr 20</div>
+            <div style="font-size:0.78rem;color:#5a7185;text-transform:uppercase;letter-spacing:.06em;margin-top:1px;">Date range</div>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    # ── Methodology text: split around Article Extraction section ────────────
+    methodology = Path('methodology.md').read_text()
+    split_marker = '#### AI Scoring and Dimensionality'
+    before_scoring, after_scoring = methodology.split(split_marker, 1)
+
+    # Render Data Preparation header + Article Extraction text
+    st.markdown(before_scoring)
+
+    # ── Articles per outlet chart ────────────────────────────────────────────
+    combined = _load_data()
+    st.plotly_chart(make_article_count_chart(combined), use_container_width=True)
+
+    # ── Rest of methodology ──────────────────────────────────────────────────
+    st.markdown(split_marker + after_scoring)
