@@ -111,26 +111,29 @@ const legend = svg.append("g").attr("transform", `translate(${MARGIN.left}, ${sv
     .text(meta.outlet_labels[outlet]);                                                                                                                                               
  });                                                                                                                                                                                    
                                                                                                                                                                                          
-// ── GSAP horizontal scroll ────────────────────────────────────────────────
+// ── Horizontal scroll driven directly by window.scroll ───────────────────
+// GSAP ScrollTrigger trigger-position maths are unreliable inside an iframe.
+// Instead: make #timeline-section tall enough to scroll, use CSS sticky on
+// #timeline-inner, then translate #timeline-track ourselves on each scroll event.
+
 const scrollDistance = totalW - window.innerWidth + MARGIN.left + MARGIN.right;
 
-// Set section height to exactly viewport + scroll distance so the GSAP trigger
-// range maps 1:1 to the horizontal scroll distance.
 const timelineSection = document.getElementById('timeline-section');
+const track = document.getElementById('timeline-track');
+
+// Height = one viewport of "sticky" space + the full horizontal travel.
 if (timelineSection) timelineSection.style.height = (window.innerHeight + scrollDistance) + 'px';
 
-// Force ScrollTrigger to re-measure after we mutated the DOM height.
-ScrollTrigger.refresh();
+function updateTrack() {
+    if (!timelineSection || !track) return;
+    const sectionTop = timelineSection.getBoundingClientRect().top + window.scrollY;
+    const progress = Math.max(0, Math.min(1,
+        (window.scrollY - sectionTop) / scrollDistance
+    ));
+    track.style.transform = `translateX(${-scrollDistance * progress}px)`;
+}
 
-gsap.to("#timeline-track", {
-    x: -scrollDistance,
-    ease: "none",
-    scrollTrigger: {
-        trigger: "#timeline-section",
-        start: "top top",
-        end: () => "+=" + scrollDistance,
-        scrub: true,
-    }
-});
+window.addEventListener('scroll', updateTrack, { passive: true });
+updateTrack(); // set initial position
 
 })();
