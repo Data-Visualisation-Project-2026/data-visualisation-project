@@ -9,6 +9,7 @@ import pandas as pd
 import plotly.graph_objects as go
 from sklearn.decomposition import PCA
 from sklearn.neighbors import NearestNeighbors
+import networkx as nx
 
 # Load the clustered data
 df = pd.read_parquet('iran_war_outlet_averages_clustered.parquet')
@@ -17,11 +18,11 @@ df = pd.read_parquet('iran_war_outlet_averages_clustered.parquet')
 df['cluster_label'] = 'Cluster ' + df['media_cluster'].astype(str)
 
 color_map = {
-    0: '#636EFA',
-    1: '#EF553B',
-    2: '#00CC96',
-    3: '#AB63FA',
-    4: '#FFA15A'
+    0: '#895EFF',
+    1: '#59A14F',
+    2: '#F28E2B',
+    3: '#76B7B2',
+    4: '#4E79A7'
 }
 
 # Perform PCA 
@@ -76,7 +77,7 @@ for i in range(5):
             opacity=0.10, 
             color=color,
             legendgroup='polygon_group', 
-            name='Toggle all cluster bubbles', 
+            name='Toggle all cluster bubbles (Enable Hover Info)', 
             showlegend=show_master_legend, 
             hoverinfo='skip'  
         ))
@@ -87,7 +88,7 @@ fig.add_trace(go.Scatter3d(
     x=edge_x, y=edge_y, z=edge_z,
     mode='lines',
     line=dict(
-        color='rgba(255, 255, 255, 0.20)', 
+        color='rgba(105,105,105,0.7)', 
         width=1.5
     ),
     hoverinfo='skip', 
@@ -108,12 +109,12 @@ for i in range(5):
         name=cluster_name,
         text=group['media_name'],
         textposition='top center',
-        textfont=dict(color='white', size=11),
+        textfont=dict(color='black', size=11),
         marker=dict(
             size=14, 
             color=color, 
             opacity=1.0,
-            line=dict(width=1.5, color='white') 
+            line=dict(width=1.5, color='grey') 
         ),
         customdata=group[features], 
         hovertemplate=(
@@ -129,24 +130,24 @@ for i in range(5):
     ))
 
 # Format the UI
-dark_navy = '#0B1121'
+color = 'white'
 
 fig.update_layout(
     title=dict(
-        text=f"Media Outlet Ideological Clustering (5-Axis PCA Projection)<br><span style='font-size:13px; color:lightgrey;'>Total Variance Captured: {variance_total:.2f}%</span>",
-        font=dict(color='white')
+        text=f"Media Outlet Ideological Clustering (5-Axis PCA Projection)<br><span style='font-size:13px; color:grey;'>Total Variance Captured: {variance_total:.2f}%, edges drawn to 3 closest neighbors along the 5 axes.</span><br><span style='font-size:13px; color:grey;'>Articles from 2026 February 27 - March 29</span>",
+        font=dict(color='black')
     ),
-    paper_bgcolor=dark_navy,
-    plot_bgcolor=dark_navy,
+    paper_bgcolor=color,
+    plot_bgcolor=color,
     scene=dict(
-        bgcolor=dark_navy,
+        bgcolor=color,
         xaxis=dict(visible=False),
         yaxis=dict(visible=False),
         zaxis=dict(visible=False),
     ),
     legend=dict(
         title='Interactive Controls',
-        font=dict(color='white'),
+        font=dict(color='black'),
         itemsizing='constant',
         traceorder='normal',
         y=0.9
@@ -155,34 +156,48 @@ fig.update_layout(
     margin=dict(l=0, r=280, b=0, t=65),
     hovermode='closest', 
     hoverdistance=100,
-    
-
-    annotations=[
-        dict(
-            x=1.12,
-            y=0.45,
-            xref='paper',
-            yref='paper',
-            text=(
-                '<b>Cluster Definitions:</b><br><br>'
-                '<b>0:</b> Mainstream (Moderate)<br>'
-                '<b>1:</b> Dissident/Left Wing (High Culpability)<br>'
-                '<b>2:</b> Smaller Mainstream (Diplo/Humanitarian)<br>'
-                '<b>3:</b> Business (High Economic)<br>'
-                '<b>4:</b> Right Wing/Military (High Kinetic)'
-            ),
-            showarrow=False,
-            align='left',
-            font=dict(color='lightgrey', size=12),
-            bgcolor='rgba(255, 255, 255, 0.05)', # Subtle translucent background
-            bordercolor='rgba(255, 255, 255, 0.2)',
-            borderwidth=1,
-            borderpad=12
-        )
-    ]
 )
 
 # Save file
 html_filename = 'media_cluster_3d_pca.html'
 fig.write_html(html_filename)
 print('Success')
+
+# Calculating centralities via networkx
+G = nx.Graph()
+
+for idx, row in df.iterrows():
+    G.add_node(idx, name=row['media_name'])
+
+# Add the exact same edges from the Plotly graph
+for i in range(len(df)):
+    for j in range(1, 4): 
+        neighbor_idx = indices[i, j]
+        G.add_edge(i, neighbor_idx)
+
+# Calculate Centralities
+degree_centrality = nx.degree_centrality(G)
+eigenvector_centrality = nx.eigenvector_centrality(G, max_iter=1000) 
+betweenness_centrality = nx.betweenness_centrality(G)
+
+def get_top_5(metric_dict):
+    sorted_items = sorted(metric_dict.items(), key=lambda item: item[1], reverse=True)
+    return [(G.nodes[idx]['name'], score) for idx, score in sorted_items[:5]]
+
+# Print the results to the console
+print("\n" + "="*40)
+print("TOP 5 NODES BY CENTRALITY METRICS")
+print("="*40)
+
+print("DEGREE CENTRALITY:")
+for name, score in get_top_5(degree_centrality):
+    print(f"  - {name}: {score:.4f}")
+
+print("\nEIGENVECTOR CENTRALITY:")
+for name, score in get_top_5(eigenvector_centrality):
+    print(f"  - {name}: {score:.4f}")
+
+print("\nBETWEENNESS CENTRALITY:")
+for name, score in get_top_5(betweenness_centrality):
+    print(f"  - {name}: {score:.4f}")
+print("="*40 + "\n")
