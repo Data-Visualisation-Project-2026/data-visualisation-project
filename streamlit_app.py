@@ -293,7 +293,6 @@ elif page == 'Narrative Across Media':
     st.subheader('Distinctive Phrases by Media Cluster')
     st.write(
         'These charts show the most unique phrases in each media cluster. '
-        'The clusters were created using K-means based on framing-score patterns, and the phrases were identified using c-TF-IDF.'
     )
 
     # Compute and display cluster-specific bigram charts.

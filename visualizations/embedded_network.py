@@ -8,11 +8,11 @@ def render_media_clusters():
     """Render the self-contained media cluster network HTML inside Streamlit."""
     html = Path('media_cluster_3d_pca.html').read_text(encoding='utf-8')
     html = _build_media_clusters_html(html)
-    components.html(html, height=950, scrolling=False)
+    components.html(html, height=850, scrolling=False)
 
 
 def _build_media_clusters_html(html):
-    """Patch the exported Plotly HTML so the graph fills a taller embed area."""
+    """Patch the exported Plotly HTML so the graph fills the embed area cleanly."""
     graph_id_match = re.search(r'<div id="([^"]+)" class="plotly-graph-div"', html)
     graph_id = graph_id_match.group(1) if graph_id_match else None
 
@@ -26,12 +26,13 @@ html, body {
 }
 
 body > div {
-  height: 950px;
+  height: 850px;
 }
 
 .plotly-graph-div {
   width: 100% !important;
-  height: 950px !important;
+  max-width: 100% !important;
+  height: 850px !important;
 }
 </style>
 """
@@ -40,14 +41,21 @@ body > div {
     if graph_id:
         relayout_script = f"""
 <script>
-window.addEventListener('load', function () {{
+function resizeEmbeddedPlot() {{
   const gd = document.getElementById('{graph_id}');
   if (gd && window.Plotly) {{
+    const container = gd.parentElement;
+    const width = container ? container.clientWidth : window.innerWidth;
     Plotly.relayout(gd, {{
-      height: 950
+      width: width,
+      height: 850
     }});
+    Plotly.Plots.resize(gd);
   }}
-}});
+}}
+
+window.addEventListener('load', resizeEmbeddedPlot);
+window.addEventListener('resize', resizeEmbeddedPlot);
 </script>
 """
 

@@ -58,9 +58,8 @@ html { scrollbar-width: none; overflow-y: scroll; }
 #intro  { height: 50vh; min-height: 50vh; }
 #outro  { height: 50vh; min-height: 50vh; }
 
-/* Reset any inherited overrides; GSAP needs position:relative + 400vh */
+/* Let the page script control section height dynamically. */
 #timeline-section {
-  height: 400vh !important;
   position: relative !important;
   overflow: visible !important;
   display: block !important;
@@ -90,6 +89,9 @@ window.addEventListener('load', () => {
   console.log('timeline-section height:', ts ? ts.offsetHeight : 'not found');
   console.log('timeline-inner height:', ti ? ti.offsetHeight : 'not found');
   console.log('svg:', svg ? svg.getAttribute('width') + 'x' + svg.getAttribute('height') : 'not found');
+  if (window.ScrollTrigger) {
+    window.ScrollTrigger.refresh();
+  }
 });
 </script>
 """
