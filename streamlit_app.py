@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pandas as pd
 import streamlit as st
 
@@ -231,7 +233,7 @@ dimension_order = [
 st.sidebar.markdown('## Navigation')
 page = st.sidebar.radio(
     'Navigation',
-    ['Overview', 'Narrative Over Time', 'Media Clusters', 'Media Differences'],
+    ['Overview', 'Narrative Over Time', 'Media Clusters', 'Media Differences', 'Data & Methods'],
     label_visibility='collapsed',
     key='main_navigation_v4'
 )
@@ -289,6 +291,8 @@ elif page == 'Media Clusters':
 
     render_media_clusters()
 
+    st.markdown(Path('network_analysis/networkvis_interpretation.md').read_text())
+
 elif page == 'Media Differences':
     st.subheader('Distinctive Phrases by Media Cluster')
     st.write(
@@ -312,3 +316,7 @@ elif page == 'Media Differences':
     st.caption('Based on 1,736 articles from 5 major media outlets')
     
     st.plotly_chart(make_outlet_framing_heatmap(df_five_sources), use_container_width=True)
+
+elif page == 'Data & Methods':
+    st.subheader('Data & Methods')
+    st.markdown(Path('network_analysis/methodology.md').read_text())

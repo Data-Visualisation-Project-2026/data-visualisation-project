@@ -6,7 +6,7 @@ import streamlit.components.v1 as components
 
 def render_media_clusters():
     """Render the self-contained media cluster network HTML inside Streamlit."""
-    html = Path('media_cluster_3d_pca.html').read_text(encoding='utf-8')
+    html = Path('network_analysis/media_cluster_3d_pca.html').read_text(encoding='utf-8')
     html = _build_media_clusters_html(html)
     components.html(html, height=850, scrolling=False)
 
