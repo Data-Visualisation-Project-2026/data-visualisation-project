@@ -282,32 +282,28 @@ elif page == 'Narrative Over Time':
     st.subheader('US Media vs. International Wire Services')
     st.caption('Comparing aggregate framing across two distinct media universes')
 
-    col1, col2 = st.columns(2)
+    st.markdown('**77 US Outlets** — domestic media aggregate')
+    highlighted_us = st.multiselect(
+        'Highlight dimensions (US):',
+        options=dimension_order,
+        default=dimension_order,
+        key='us_dimension_selector'
+    )
+    us_chart = make_framing_over_time_chart(df, score_cols, score_labels, highlighted_us)
+    us_chart.update_layout(height=380, margin={'l': 40, 'r': 140, 't': 40, 'b': 50})
+    st.plotly_chart(us_chart, use_container_width=True)
 
-    with col1:
-        st.markdown('**77 US Outlets** — domestic media aggregate')
-        highlighted_us = st.multiselect(
-            'Highlight dimensions (US):',
-            options=dimension_order,
-            default=dimension_order,
-            key='us_dimension_selector'
-        )
-        us_chart = make_framing_over_time_chart(df, score_cols, score_labels, highlighted_us)
-        us_chart.update_layout(height=380, margin={'l': 40, 'r': 140, 't': 40, 'b': 50})
-        st.plotly_chart(us_chart, use_container_width=True)
-
-    with col2:
-        st.markdown('**AP, Reuters, BBC, Al Jazeera** — international wire aggregate')
-        highlighted_intl = st.multiselect(
-            'Highlight dimensions (International):',
-            options=dimension_order,
-            default=dimension_order,
-            key='intl_dimension_selector'
-        )
-        intl_chart = make_international_framing_chart(
-            'iran-war-framing/data/timeline.json', highlighted_intl
-        )
-        st.plotly_chart(intl_chart, use_container_width=True)
+    st.markdown('**AP, Reuters, BBC, Al Jazeera** — international wire aggregate')
+    highlighted_intl = st.multiselect(
+        'Highlight dimensions (International):',
+        options=dimension_order,
+        default=dimension_order,
+        key='intl_dimension_selector'
+    )
+    intl_chart = make_international_framing_chart(
+        'iran-war-framing/data/timeline.json', highlighted_intl
+    )
+    st.plotly_chart(intl_chart, use_container_width=True)
 
     st.divider()
     st.markdown('**Individual outlet breakdown** — scroll to follow where the four outlets diverged')
