@@ -30,6 +30,32 @@ st.markdown(
         color: #263746;
     }
 
+    /* Main title */
+    .stApp h1 {
+        font-family: 'Georgia', serif !important;
+        font-size: clamp(2rem, 5vw, 4rem) !important;
+        font-weight: normal !important;
+        line-height: 1.1 !important;
+        color: #1a1a1a !important;
+        margin-bottom: 1.2rem !important;
+    }
+
+    /* Subheaders */
+    .stApp h2, .stApp h3 {
+        font-family: 'Georgia', serif !important;
+        font-weight: normal !important;
+        color: #1a1a1a !important;
+    }
+
+    /* Body / paragraph text */
+    .stApp p, .stMarkdown p, .stMarkdown li {
+        font-family: 'Georgia', serif !important;
+        font-size: 1.05rem !important;
+        color: #555555 !important;
+        line-height: 1.7 !important;
+        max-width: 680px;
+    }
+
     [data-testid="stSidebar"] {
         background: #f2f2f2;
         border-right: 1px solid #d9d9d9;
