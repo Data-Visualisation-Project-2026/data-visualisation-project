@@ -8,7 +8,7 @@ def render_media_clusters():
     """Render the self-contained media cluster network HTML inside Streamlit."""
     html = Path('media_cluster_3d_pca.html').read_text(encoding='utf-8')
     html = _build_media_clusters_html(html)
-    components.html(html, height=1050, scrolling=False)
+    components.html(html, height=950, scrolling=False)
 
 
 def _build_media_clusters_html(html):
@@ -26,12 +26,12 @@ html, body {
 }
 
 body > div {
-  height: 1050px;
+  height: 950px;
 }
 
 .plotly-graph-div {
   width: 100% !important;
-  height: 1050px !important;
+  height: 950px !important;
 }
 </style>
 """
@@ -44,7 +44,7 @@ window.addEventListener('load', function () {{
   const gd = document.getElementById('{graph_id}');
   if (gd && window.Plotly) {{
     Plotly.relayout(gd, {{
-      height: 1050
+      height: 950
     }});
   }}
 }});
