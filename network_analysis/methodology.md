@@ -1,4 +1,4 @@
-## Data Preparation:
+### Data Preparation:
 
 #### Article Extraction
 
@@ -54,7 +54,7 @@ This analysis proved valuable with results that largely match general intuition 
 
 This Gemma processing step took around 40 hours of computation time on a device with an RTX 3070 (8 GB VRAM) and 32 GB of RAM on a quantized version of the Gemma model. With stronger hardware, or a higher budget to use paid APIs, it would be better to extract all of the relevant article text such that the random sample doesn't skew certain outlets a certain way by chance. 25 articles is not necessarily enough to be representative of a media outlet as a whole, and it is possible that we extracted a small set of articles that are more aligned with one axis vs. another.
 
-## Clustering and Network Analysis:
+### Clustering and Network Analysis:
 
 For the clustering step, we merged the two sets of articles into one dataframe, and used Scikit-Learn's KMeans clustering method to Cluster each article along the 5 axes with n clusters set to 5. 5 clusters were chosen because it provided the most interesting and interpretable result. We additionally did outlet-level clustering by averaging the scores along the 5 axes for each outlet, and using the same Scikit-Learn KMeans clustering method. After this, the datasets were split again, so that the clusters are matched at the aggregate level, but separate analysis is still possible given the different ways the data was prepared.
 
