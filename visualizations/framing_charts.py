@@ -317,10 +317,10 @@ def make_combined_aggregate_chart(df, score_cols, score_labels, timeline_path, h
         height=1150,
         hovermode='x unified',
         legend={
-            'orientation': 'v', 'yanchor': 'middle', 'y': 0.5,
-            'xanchor': 'left', 'x': 1.02,
+            'orientation': 'h', 'yanchor': 'bottom', 'y': 1.02,
+            'xanchor': 'center', 'x': 0.5,
         },
-        margin={'l': 40, 'r': 160, 't': 80, 'b': 50},
+        margin={'l': 40, 'r': 40, 't': 100, 'b': 50},
     )
     fig.update_yaxes(range=[0, 0.8], showgrid=False)
     fig.update_xaxes(showgrid=False, tickformat='%b %d',
