@@ -205,8 +205,8 @@ def make_international_framing_chart(timeline_path, highlighted_dimensions):
                              font={'size': 11, 'color': 'rgba(70,70,70,0.9)'})
 
     chart.update_layout(
-        height=400,
-        yaxis_range=[0, 0.7],
+        height=450,
+        yaxis_range=[0, 0.8],
         hovermode='x unified',
         title_text='',
         legend={'orientation': 'v', 'yanchor': 'top', 'y': 1, 'xanchor': 'left', 'x': 1.02},
