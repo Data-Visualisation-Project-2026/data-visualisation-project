@@ -40,11 +40,29 @@ def _build_outlet_event_timeline_html():
         flags=re.DOTALL,
     )
 
+    # Inside Streamlit's iframe, ScrollTrigger benefits from an explicit scroll container.
+    main_js = main_js.replace(
+        'pin: "#timeline-inner",',
+        'pin: "#timeline-inner",\n        scroller: document.scrollingElement || document.documentElement,',
+    )
+
     # iframe-specific CSS — hides scrollbar, lets GSAP control layout.
     iframe_css = """
 /* Hide scrollbar — scrolling still works, GSAP reads it */
-html, body { background: #ffffff !important; }
-html { scrollbar-width: none; overflow-y: scroll; }
+html, body {
+  background: #ffffff !important;
+  margin: 0;
+  padding: 0;
+}
+html {
+  scrollbar-width: none;
+  overflow-y: scroll;
+}
+body {
+  min-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 ::-webkit-scrollbar { display: none; }
 
 /* Tighten intro/outro */
@@ -75,15 +93,17 @@ html { scrollbar-width: none; overflow-y: scroll; }
     height_fix = """
 <script>
 window.addEventListener('load', () => {
+  const scroller = document.scrollingElement || document.documentElement;
   console.log('VH:', window.innerHeight, 'innerWidth:', window.innerWidth);
   const ts = document.getElementById('timeline-section');
   const ti = document.getElementById('timeline-inner');
   const svg = document.getElementById('timeline-svg');
+  console.log('scroller:', scroller ? scroller.tagName : 'not found');
   console.log('timeline-section height:', ts ? ts.offsetHeight : 'not found');
   console.log('timeline-inner height:', ti ? ti.offsetHeight : 'not found');
   console.log('svg:', svg ? svg.getAttribute('width') + 'x' + svg.getAttribute('height') : 'not found');
   if (window.ScrollTrigger) {
-    window.ScrollTrigger.refresh();
+    requestAnimationFrame(() => window.ScrollTrigger.refresh());
   }
 });
 </script>
