@@ -2,9 +2,9 @@
   {
     "id": "first-strikes",
     "date": "2026-03-01",
-    "label": "First Strikes",
-    "description": "US-Israeli strikes hit Iran. Only AP is on the ground \u2014 kinetic framing peaks at 0.70, the highest single-day score in the dataset. The wire services aren't there yet.",
-    "divergence_note": "Early framing is entirely US-centric. No Reuters, no BBC \u2014 a single editorial voice sets the initial narrative.",
+    "label": "Opening Strikes",
+    "description": "US-Israeli strikes hit Iran. Only AP is on the ground — kinetic framing peaks at 0.70, the highest single-day score in the dataset.",
+    "divergence_note": "Early framing is entirely US-centric. No Reuters, no BBC — a single editorial voice sets the initial narrative.",
     "outlet_scores": {
       "apnews.com": {
         "kinetic_focus": 0.7,
@@ -17,8 +17,8 @@
     "snippets": {
       "apnews.com": [
         {
-          "title": "How the AP decided to describe joint US-Israeli strikes on Iran, and Iran\u2019s retaliation, as a war",
-          "snippet": "The Associated Press is using the word \u201cwar\u201d to refer to the joint U.S.-Israeli strikes on Iran, and Iran\u2019s retaliation. This reflects the scope and intensity of the fighting.\n\nThe United States and Israel attacked key military targets and killed Supreme Leader Ayatollah Ali Kham",
+          "title": "How the AP decided to describe joint US-Israeli strikes on Iran, and Iran’s retaliation, as a war",
+          "snippet": "The Associated Press is using the word “war” to refer to the joint U.S.-Israeli strikes on Iran, and Iran’s retaliation. This reflects the scope and intensity of the fighting.\n\nThe United States and Israel attacked key military targets and killed Supreme Leader Ayatollah Ali Kham",
           "url": "https://apnews.com/article/israel-united-states-iran-war-ap-style-aa89b7f21e35b73a11ad7afddd1ff185",
           "kinetic": 0.7,
           "humanitarian": 0.1,
@@ -32,7 +32,7 @@
     "id": "oil-breaks-100",
     "date": "2026-03-08",
     "label": "Oil Breaks $100",
-    "description": "Crude oil surpasses $100 a barrel as the war disrupts production and shipping. A humanitarian co-spike \u2014 civilian suffering and market shock arrive simultaneously.",
+    "description": "Crude oil surpasses $100 a barrel as the war disrupts production and shipping. A humanitarian co-spike — civilian suffering and market shock arrive simultaneously.",
     "divergence_note": "AP leads with succession crisis in Tehran (culpability frame). Reuters covers a Lebanese civilian displacement story (humanitarian). Two outlets, same day, opposite frames.",
     "outlet_scores": {
       "apnews.com": {
@@ -53,8 +53,8 @@
     "snippets": {
       "apnews.com": [
         {
-          "title": "A son of Iran\u2019s late supreme leader is chosen to replace his father as war rages",
-          "snippet": "DUBAI, United Arab Emirates (AP) \u2014 Mojtaba Khamenei, a son of Iran\u2019s late Supreme Leader Ayatollah Ali Khamenei who was named as his successor Sunday, had long been considered a contender to the post even before an Israeli strike killed his father and despite the fact he had neve",
+          "title": "A son of Iran’s late supreme leader is chosen to replace his father as war rages",
+          "snippet": "DUBAI, United Arab Emirates (AP) — Mojtaba Khamenei, a son of Iran’s late Supreme Leader Ayatollah Ali Khamenei who was named as his successor Sunday, had long been considered a contender to the post even before an Israeli strike killed his father and despite the fact he had neve",
           "url": "https://apnews.com/article/iran-united-states-israel-supreme-leader-mojtaba-khamenei-209cec036068b40fcfcba2be7ac7e2b0",
           "kinetic": 0.6,
           "humanitarian": 0.2,
@@ -63,7 +63,7 @@
         },
         {
           "title": "Russia sits back as the Iran war escalates, expecting long-term gains",
-          "snippet": "\u25b6 Follow AP\u2019s live updates on the Iran war\n\nMOSCOW (AP) \u2014 As U.S. and Israeli missiles and bombs rain on Iran, Russia has responded with words of indignation but no visible action to support its Middle Eastern ally.\n\nThat cautious stance is driven by President Vladimir Putin\u2019s fo",
+          "snippet": "▶ Follow AP’s live updates on the Iran war\n\nMOSCOW (AP) — As U.S. and Israeli missiles and bombs rain on Iran, Russia has responded with words of indignation but no visible action to support its Middle Eastern ally.\n\nThat cautious stance is driven by President Vladimir Putin’s fo",
           "url": "https://apnews.com/article/russia-iran-war-putin-ukraine-oil-8a6af4989692d66a1e5bed1bc1922efa",
           "kinetic": 0.7,
           "humanitarian": 0.3,
@@ -72,7 +72,7 @@
         },
         {
           "title": "Oil built the Persian Gulf. Desalinated water keeps it alive. War could threaten both",
-          "snippet": "\u25b6 Follow AP\u2019s live updates on the Iran war\n\nAs missiles and drones curtail energy production across the Persian Gulf, analysts warn that water, not oil, may be the resource most at risk in the energy-rich but arid region.\n\nOn Sunday, Bahrain accused Iran of damaging one of its de",
+          "snippet": "▶ Follow AP’s live updates on the Iran war\n\nAs missiles and drones curtail energy production across the Persian Gulf, analysts warn that water, not oil, may be the resource most at risk in the energy-rich but arid region.\n\nOn Sunday, Bahrain accused Iran of damaging one of its de",
           "url": "https://apnews.com/article/iran-war-desalination-water-oil-middle-east-12b23f2fa26ed5c4a10f80c4077e61ce",
           "kinetic": 0.6,
           "humanitarian": 0.7,
@@ -83,7 +83,7 @@
       "reuters.com": [
         {
           "title": "Lebanese man flees hometown, months after repairing home damaged in last war",
-          "snippet": "HAZMIEH, Lebanon, March 8 (Reuters) - Just days ago, Hussain Khrais was proudly showing off his newly restored home in south \u200bLebanon, fixed up after being badly damaged in 2024 clashes between Israel and Hezbollah. But a new war has since erupted \u200cand his home is in the line of",
+          "snippet": "HAZMIEH, Lebanon, March 8 (Reuters) - Just days ago, Hussain Khrais was proudly showing off his newly restored home in south ​Lebanon, fixed up after being badly damaged in 2024 clashes between Israel and Hezbollah. But a new war has since erupted ‌and his home is in the line of",
           "url": "https://www.reuters.com/world/middle-east/lebanese-man-flees-hometown-months-after-repairing-home-damaged-last-war-2026-03-08/",
           "kinetic": 0.6,
           "humanitarian": 0.9,
@@ -94,93 +94,30 @@
     }
   },
   {
-    "id": "economics-take-hold",
-    "date": "2026-03-20",
-    "label": "The Economics Take Hold",
-    "description": "BBC enters the dataset and immediately skews economic (0.70). Reuters stays near zero on economic framing. AP holds kinetic and culpability.",
-    "divergence_note": "The largest economic framing spread in the three-outlet period. BBC depoliticizes \u2014 markets, trade routes, energy futures. Reuters and AP stay in the conflict frame.",
+    "id": "saudi-base-attack",
+    "date": "2026-03-27",
+    "label": "Iran Strikes US Base in Saudi Arabia",
+    "description": "Iran hits Prince Sultan Air Base with 6 ballistic missiles and 29 drones, wounding 15 US troops and destroying an E-3 Sentry AWACS. Happens the day after Trump declared Iran’s military “neutralized.”",
+    "divergence_note": "One month into the war, AP frames the strike through domestic political division (CPAC conservatives split on the war). International outlets had no same-day coverage in this dataset.",
     "outlet_scores": {
       "apnews.com": {
-        "kinetic_focus": 0.3,
-        "humanitarian_focus": 0.33,
-        "diplomatic_focus": 0.16,
-        "economic_focus": 0.06,
-        "culpability_bias": 0.5
-      },
-      "reuters.com": {
-        "kinetic_focus": 0.6,
-        "humanitarian_focus": 0.0,
-        "diplomatic_focus": 0.3,
-        "economic_focus": 0.0,
-        "culpability_bias": 0.4
-      },
-      "bbc.com": {
-        "kinetic_focus": 0.3,
-        "humanitarian_focus": 0.05,
-        "diplomatic_focus": 0.2,
-        "economic_focus": 0.7,
-        "culpability_bias": 0.25
+        "kinetic_focus": 0.283,
+        "humanitarian_focus": 0.408,
+        "diplomatic_focus": 0.35,
+        "economic_focus": 0.583,
+        "culpability_bias": 0.367
       }
     },
     "snippets": {
       "apnews.com": [
         {
-          "title": "Israel strikes Iran\u2019s feared Basij from commanders down to street level, but its grip remains strong",
-          "snippet": "BEIRUT (AP) \u2014 Hours after Israel killed the top commander of Iran\u2019s Basij this week, it struck again -- this time at the rank and file of the feared force that helped crush widespread protests this year. A drone blasted one of the Basij\u2019s many temporary roadblocks erected around",
-          "url": "https://apnews.com/article/iran-us-israel-war-basij-security-protests-0f6d38e55743aff6d3fe536ea233ee11",
-          "kinetic": 0.6,
-          "humanitarian": 0.65,
-          "economic": 0.0,
-          "culpability": 0.7
-        },
-        {
-          "title": "Exiled Iranian Kurds in Iraq say they will return only if Iran\u2019s theocracy falls",
-          "snippet": "QUSHTAPA, Iraq (AP) \u2014 They fled Iran as children and now, living in Iraq as adults, they express guarded hope that the U.S.\u2013Israeli war with Iran will weaken the theocracy that forced them into exile decades ago.\n\nBehind that hope is the longing of Iranian Kurds in Iraq that they",
-          "url": "https://apnews.com/article/iran-war-kurds-iraq-b330da59ccef665fc0db18d33b106083",
-          "kinetic": 0.6,
-          "humanitarian": 0.5,
-          "economic": 0.1,
-          "culpability": 0.4
-        },
-        {
-          "title": "Pete Hegseth\u2019s Christian rhetoric draws renewed scrutiny after the US goes to war with Iran",
-          "snippet": "WASHINGTON (AP) \u2014 Since becoming defense secretary, Pete Hegseth has found no shortage of ways to bring his strand of conservative evangelicalism into the Pentagon.\n\nHe hosts monthly Christian worship services for employees. His department\u2019s promotional videos have displayed Bibl",
-          "url": "https://apnews.com/article/pete-hegseth-pentagon-christian-nationalism-iran-war-f246bca60f2927336b5d06b2c9daee80",
-          "kinetic": 0.1,
-          "humanitarian": 0.1,
-          "economic": 0.0,
-          "culpability": 0.7
-        }
-      ],
-      "reuters.com": [
-        {
-          "title": "Trump says there are no leaders in Iran left to talk to",
-          "snippet": "WASHINGTON, March 20 (Reuters) - U.S. \u200bPresident Donald \u200cTrump said \u200bon \u200bFriday that there \u2060are \u200bno leaders \u200bleft in Iran to \u200btalk \u200bto about the \u200cwar, \u2060with military strikes \u200bcontinuing \u200bto \u2060target Iranian \u200bofficials.",
-          "url": "https://www.reuters.com/world/trump-says-there-are-no-leaders-iran-left-talk-2026-03-20/",
-          "kinetic": 0.6,
-          "humanitarian": 0.0,
-          "economic": 0.0,
-          "culpability": 0.4
-        }
-      ],
-      "bbc.com": [
-        {
-          "title": "Netanyahu says idea Israel dragged US into Iran war 'fake news'",
-          "snippet": "Israeli Prime Minister Netanyahu has rejected accusations that he dragged US President Trump into the war with Iran.\n\nSpeaking at a news conference on Thursday, Benjamin Netanyahu also denied he \"misled\" Trump, saying that no-one could tell the US leader what to do.\n\nIsrael's str",
-          "url": "https://www.bbc.com/news/videos/ce99r6l6w4po",
-          "kinetic": 0.5,
-          "humanitarian": 0.0,
+          "title": "Analysis: 1 month into war, Iran is using insurgent tactics and holding the world economy hostage",
+          "snippet": "One month into their war with Iran, the United States and Israel find themselves confronting an opponent that fights more like an insurgency than a nation — using insurgent tactics while holding the world economy hostage through its control of the Strait of Hormuz.",
+          "url": "https://apnews.com/article/iran-us-israel-war-analysis-23fb5978ef583308f0da4228a9a02c66",
+          "kinetic": 0.7,
+          "humanitarian": 0.3,
           "economic": 0.6,
-          "culpability": 0.4
-        },
-        {
-          "title": "Iran war unleashes 'world energy shock' and 'King of the coast'",
-          "snippet": "A series of strikes on energy infrastructure across the Middle East could unleash a \"mortgage shock for millions\", according to the Daily Mail. The paper warns of the prospect of three interest rate rises this year.\n\nThe Daily Express says the Bank of England stands ready to ramp",
-          "url": "https://www.bbc.com/news/articles/c80me79xlvjo",
-          "kinetic": 0.1,
-          "humanitarian": 0.1,
-          "economic": 0.8,
-          "culpability": 0.1
+          "culpability": 0.5
         }
       ]
     }
@@ -189,7 +126,7 @@
     "id": "escalation-returns",
     "date": "2026-04-05",
     "label": "Escalation Returns",
-    "description": "A second kinetic surge. Reuters spikes to 0.85 kinetic. BBC drops to nearly zero on kinetic and humanitarian \u2014 and pivots to pure economic framing (0.90). AP stays in the middle.",
+    "description": "A second kinetic surge. Reuters spikes to 0.85 kinetic. BBC drops to nearly zero on kinetic and humanitarian — and pivots to pure economic framing (0.90). AP stays in the middle.",
     "divergence_note": "Biggest kinetic spread in the dataset (0.85 gap between Reuters and BBC). The same escalation produces opposite editorial instincts: Reuters goes to war, BBC goes to markets.",
     "outlet_scores": {
       "apnews.com": {
@@ -217,8 +154,8 @@
     "snippets": {
       "apnews.com": [
         {
-          "title": "Trump issues an expletive-filled threat against Iran as details of US aviator\u2019s rescue emerge",
-          "snippet": "TEHRAN, Iran (AP) \u2014 U.S. President Donald Trump on Sunday made expletive-filled threats against Iran and its infrastructure if it doesn\u2019t open the Strait of Hormuz by his Tuesday deadline, after American forces rescued a wounded aviator whose Iran-downed plane fell behind enemy l",
+          "title": "Trump issues an expletive-filled threat against Iran as details of US aviator’s rescue emerge",
+          "snippet": "TEHRAN, Iran (AP) — U.S. President Donald Trump on Sunday made expletive-filled threats against Iran and its infrastructure if it doesn’t open the Strait of Hormuz by his Tuesday deadline, after American forces rescued a wounded aviator whose Iran-downed plane fell behind enemy l",
           "url": "https://apnews.com/article/iran-us-israel-trump-lebanon-april-5-2026-pilot-cf4a792196259d6e9c066d0be1c57962",
           "kinetic": 0.9,
           "humanitarian": 0.9,
@@ -227,7 +164,7 @@
         },
         {
           "title": "A long Mideast war could take away from support for Ukraine, Zelenskyy tells the AP",
-          "snippet": "ISTANBUL (AP) \u2014 Ukrainian President Volodymyr Zelenskyy expressed concern that a prolonged U.S.-Israeli war on Iran could further erode America\u2019s support for Ukraine as Washington\u2019s global priorities shift and Kyiv braces for reduced deliveries of critically needed Patriot air de",
+          "snippet": "ISTANBUL (AP) — Ukrainian President Volodymyr Zelenskyy expressed concern that a prolonged U.S.-Israeli war on Iran could further erode America’s support for Ukraine as Washington’s global priorities shift and Kyiv braces for reduced deliveries of critically needed Patriot air de",
           "url": "https://apnews.com/article/zelenskyy-russia-ukraine-iran-patriot-missiles-584e73848c0ca1008824c399b8026487",
           "kinetic": 0.6,
           "humanitarian": 0.4,
@@ -235,8 +172,8 @@
           "culpability": 0.5
         },
         {
-          "title": "Displaced by war, Lebanon\u2019s Christians mark Easter far from their homes and churches",
-          "snippet": "JDEIDEH, Lebanon (AP) \u2014 It was not how the Rev. Maroun Ghafari had envisioned this Holy Week \u2014 for years, he had held Easter sermons in his predominantly Christian village of Alma al-Shaab in southern Lebanon, near the border with Israel.\n\nThis year, he is preaching from a Beirut",
+          "title": "Displaced by war, Lebanon’s Christians mark Easter far from their homes and churches",
+          "snippet": "JDEIDEH, Lebanon (AP) — It was not how the Rev. Maroun Ghafari had envisioned this Holy Week — for years, he had held Easter sermons in his predominantly Christian village of Alma al-Shaab in southern Lebanon, near the border with Israel.\n\nThis year, he is preaching from a Beirut",
           "url": "https://apnews.com/article/lebanon-christians-easter-hezbollah-israel-war-936e2d8636610149ef1700f6fccdd7c4",
           "kinetic": 0.4,
           "humanitarian": 0.7,
@@ -247,7 +184,7 @@
       "reuters.com": [
         {
           "title": "Audacious rescue took place in 'treacherous mountains' of Iran",
-          "snippet": "WASHINGTON, April 5 (Reuters) - U.S. forces staged the audacious rescue of an \u200bairman behind enemy lines after Iran downed his fighter jet, officials said on Sunday, resolving a crisis for President Donald Trump as he \u200cweighs escalating the war, now in its sixth week.\n\nThe airman",
+          "snippet": "WASHINGTON, April 5 (Reuters) - U.S. forces staged the audacious rescue of an ​airman behind enemy lines after Iran downed his fighter jet, officials said on Sunday, resolving a crisis for President Donald Trump as he ‌weighs escalating the war, now in its sixth week.\n\nThe airman",
           "url": "https://www.reuters.com/world/middle-east/us-rescues-airman-whose-f-15-was-downed-iran-us-officials-say-2026-04-05/",
           "kinetic": 0.9,
           "humanitarian": 0.3,
@@ -256,7 +193,7 @@
         },
         {
           "title": "Audacious rescue took place in 'treacherous mountains' of Iran",
-          "snippet": "WASHINGTON, April 5 (Reuters) - U.S. forces staged the audacious rescue of an \u200bairman behind enemy lines after Iran downed his fighter jet, officials said on Sunday, resolving a crisis for President Donald Trump as he \u200cweighs escalating the war, now in its sixth week.\n\nThe airman",
+          "snippet": "WASHINGTON, April 5 (Reuters) - U.S. forces staged the audacious rescue of an ​airman behind enemy lines after Iran downed his fighter jet, officials said on Sunday, resolving a crisis for President Donald Trump as he ‌weighs escalating the war, now in its sixth week.\n\nThe airman",
           "url": "https://www.reuters.com/world/middle-east/us-rescues-airman-whose-f-15-was-downed-iran-us-officials-say-2026-04-05/",
           "kinetic": 0.8,
           "humanitarian": 0.3,
@@ -279,38 +216,24 @@
   },
   {
     "id": "blame-question",
-    "date": "2026-04-09",
-    "label": "The Blame Question",
-    "description": "BBC culpability score: 0.70. Reuters culpability score: 0.16. Same day, same conflict \u2014 maximum moral framing divergence.",
-    "divergence_note": "BBC assigns blame directly (high culpability + high kinetic). Reuters reaches for diplomacy (0.66 diplomatic, lowest culpability). AP sits between them.",
+    "date": "2026-04-08",
+    "label": "Ceasefire",
+    "description": "A two-week ceasefire brokered by Pakistan takes effect. Hormuz remains closed as Iran asserts control. AP leads with diplomatic framing (0.62), while culpability divergence between outlets remains high.",
+    "divergence_note": "Reuters focuses on economic fallout (Hormuz near standstill). AP covers European diplomatic pressure. BBC questions whether the US achieved its war objectives — three outlets, three entirely different ceasefire stories.",
     "outlet_scores": {
       "apnews.com": {
-        "kinetic_focus": 0.163,
-        "humanitarian_focus": 0.237,
-        "diplomatic_focus": 0.375,
-        "economic_focus": 0.425,
-        "culpability_bias": 0.35
-      },
-      "reuters.com": {
-        "kinetic_focus": 0.16,
-        "humanitarian_focus": 0.16,
-        "diplomatic_focus": 0.66,
-        "economic_focus": 0.36,
-        "culpability_bias": 0.16
-      },
-      "bbc.com": {
-        "kinetic_focus": 0.6,
-        "humanitarian_focus": 0.4,
-        "diplomatic_focus": 0.5,
-        "economic_focus": 0.6,
-        "culpability_bias": 0.7
+        "kinetic_focus": 0.444,
+        "humanitarian_focus": 0.311,
+        "diplomatic_focus": 0.622,
+        "economic_focus": 0.489,
+        "culpability_bias": 0.478
       }
     },
     "snippets": {
       "apnews.com": [
         {
-          "title": "Rutte the \u2018Trump whisperer\u2019 faces a fresh test as the US leader turns on NATO over Iran",
-          "snippet": "BRUSSELS (AP) \u2014 NATO Secretary-General Mark Rutte declined to say Thursday whether President Donald Trump had repeated his threat to quit the military organization, saying only that the U.S. leader was disappointed in some allies for being too slow to help with the Iran war.\n\nRut",
+          "title": "Rutte the ‘Trump whisperer’ faces a fresh test as the US leader turns on NATO over Iran",
+          "snippet": "BRUSSELS (AP) — NATO Secretary-General Mark Rutte declined to say Thursday whether President Donald Trump had repeated his threat to quit the military organization, saying only that the U.S. leader was disappointed in some allies for being too slow to help with the Iran war.\n\nRut",
           "url": "https://apnews.com/article/nato-iran-rutte-trump-hormuz-support-e43e774a64341e3ad8d1b73823f07298",
           "kinetic": 0.4,
           "humanitarian": 0.1,
@@ -319,7 +242,7 @@
         },
         {
           "title": "European leaders urge a negotiated settlement as Iran closes the Strait of Hormuz",
-          "snippet": "LONDON (AP) \u2014 European leaders remained on the sidelines of the U.S.-Israel war with Iran on Thursday but tried to make their voices heard to help shore up a shaky ceasefire, quell fighting in Lebanon and reopen the Strait of Hormuz.\n\nThe war has put Europe in an uneasy position",
+          "snippet": "LONDON (AP) — European leaders remained on the sidelines of the U.S.-Israel war with Iran on Thursday but tried to make their voices heard to help shore up a shaky ceasefire, quell fighting in Lebanon and reopen the Strait of Hormuz.\n\nThe war has put Europe in an uneasy position",
           "url": "https://apnews.com/article/iran-europe-eu-hormuz-lebanon-macron-meloni-merz-5c49b81c89bc694207db8e07ceba70ea",
           "kinetic": 0.3,
           "humanitarian": 0.4,
@@ -327,7 +250,7 @@
           "culpability": 0.5
         },
         {
-          "title": "After Trump\u2019s Iran ultimatum and a fragile ceasefire, Iranian Americans brace for what\u2019s next",
+          "title": "After Trump’s Iran ultimatum and a fragile ceasefire, Iranian Americans brace for what’s next",
           "snippet": "Zainab Haider was making the drive home after work with her two young children Tuesday as she contemplated what might come from the deadline President Donald Trump had set for Iran to concede to U.S. demands. Would her relatives in Iran be safe or would they be wiped off the map?",
           "url": "https://apnews.com/article/iran-diaspora-war-bombing-threats-protests-299b68562c4741bb433acbc64b2f0065",
           "kinetic": 0.1,
@@ -339,7 +262,7 @@
       "reuters.com": [
         {
           "title": "Halt to Iran attacks means Netanyahu's corruption trial will resume on Sunday",
-          "snippet": "JERUSALEM, April 9 (Reuters) - Israeli Prime Minister Benjamin Netanyahu's long-running corruption trial \u200cwill resume on Sunday, the courts' spokesperson said on Thursday, hours after Israel lifted a state of emergency imposed over its war with Iran.\n\nIran began targeting Israel",
+          "snippet": "JERUSALEM, April 9 (Reuters) - Israeli Prime Minister Benjamin Netanyahu's long-running corruption trial ‌will resume on Sunday, the courts' spokesperson said on Thursday, hours after Israel lifted a state of emergency imposed over its war with Iran.\n\nIran began targeting Israel",
           "url": "https://www.reuters.com/world/middle-east/halt-iran-attacks-means-netanyahus-corruption-trial-will-resume-sunday-2026-04-09/",
           "kinetic": 0.3,
           "humanitarian": 0.1,
@@ -348,7 +271,7 @@
         },
         {
           "title": "Hormuz at near standstill as Iran warns ships to keep to its waters",
-          "snippet": "LONDON, April 9 (Reuters) - Ship traffic through the Strait of Hormuz stood at well below 10% of normal volumes on Thursday \u200bdespite a U.S.-Iran ceasefire as Tehran asserted its control by warning ships to keep to its territorial waters while doing so.\n\nHundreds of tankers \u200cand o",
+          "snippet": "LONDON, April 9 (Reuters) - Ship traffic through the Strait of Hormuz stood at well below 10% of normal volumes on Thursday ​despite a U.S.-Iran ceasefire as Tehran asserted its control by warning ships to keep to its territorial waters while doing so.\n\nHundreds of tankers ‌and o",
           "url": "https://www.reuters.com/world/middle-east/shipping-traffic-through-hormuz-virtual-standstill-despite-ceasefire-data-shows-2026-04-09/",
           "kinetic": 0.1,
           "humanitarian": 0.1,
@@ -357,7 +280,7 @@
         },
         {
           "title": "Simsek says Turkey ready with new economic steps if war shock persists",
-          "snippet": "ISTANBUL, April 9 (Reuters) - The impact on Turkey's economy of the conflict in the Middle East may be temporary and reversible if the recent ceasefire holds, and authorities \u200bare ready with \"a different set of tools\" if the shock persists, Finance Minister \u200cMehmet Simsek said on",
+          "snippet": "ISTANBUL, April 9 (Reuters) - The impact on Turkey's economy of the conflict in the Middle East may be temporary and reversible if the recent ceasefire holds, and authorities ​are ready with \"a different set of tools\" if the shock persists, Finance Minister ‌Mehmet Simsek said on",
           "url": "https://www.reuters.com/world/middle-east/simsek-says-turkey-ready-with-other-measures-if-war-shock-persists-2026-04-09/",
           "kinetic": 0.2,
           "humanitarian": 0.0,
