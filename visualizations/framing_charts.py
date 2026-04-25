@@ -314,7 +314,7 @@ def make_combined_aggregate_chart(df, score_cols, score_labels, timeline_path, h
         )
 
     fig.update_layout(
-        height=680,
+        height=1150,
         hovermode='x unified',
         legend={
             'orientation': 'v', 'yanchor': 'top', 'y': 1,
@@ -322,7 +322,7 @@ def make_combined_aggregate_chart(df, score_cols, score_labels, timeline_path, h
         },
         margin={'l': 40, 'r': 160, 't': 80, 'b': 50},
     )
-    fig.update_yaxes(range=[0, 0.7], showgrid=False)
+    fig.update_yaxes(range=[0, 0.8], showgrid=False)
     fig.update_xaxes(showgrid=False, tickformat='%b %d',
                      dtick=4 * 24 * 60 * 60 * 1000)
 
