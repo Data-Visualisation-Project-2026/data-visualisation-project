@@ -111,29 +111,36 @@ const legend = svg.append("g").attr("transform", `translate(${MARGIN.left}, ${sv
     .text(meta.outlet_labels[outlet]);                                                                                                                                               
  });                                                                                                                                                                                    
                                                                                                                                                                                          
-// ── Horizontal scroll driven directly by window.scroll ───────────────────
-// GSAP ScrollTrigger trigger-position maths are unreliable inside an iframe.
-// Instead: make #timeline-section tall enough to scroll, use CSS sticky on
-// #timeline-inner, then translate #timeline-track ourselves on each scroll event.
+// ── Horizontal scroll via position:fixed + scroll listener ───────────────
+// #timeline-inner is position:fixed so it never moves vertically.
+// #timeline-section is tall enough to scroll the full horizontal distance.
+// We show the fixed panel only while scroll is within the section, and
+// translate #timeline-track left proportionally to scroll progress.
 
 const scrollDistance = totalW - window.innerWidth + MARGIN.left + MARGIN.right;
 
 const timelineSection = document.getElementById('timeline-section');
-const track = document.getElementById('timeline-track');
+const timelineInner   = document.getElementById('timeline-inner');
+const track           = document.getElementById('timeline-track');
 
-// Height = one viewport of "sticky" space + the full horizontal travel.
+// Make section tall enough: one viewport of padding + full horizontal travel.
 if (timelineSection) timelineSection.style.height = (window.innerHeight + scrollDistance) + 'px';
 
+// Cache section offset — constant unless the page layout changes.
+const sectionTop = timelineSection ? timelineSection.offsetTop : 0;
+
 function updateTrack() {
-    if (!timelineSection || !track) return;
-    const sectionTop = timelineSection.getBoundingClientRect().top + window.scrollY;
-    const progress = Math.max(0, Math.min(1,
-        (window.scrollY - sectionTop) / scrollDistance
-    ));
-    track.style.transform = `translateX(${-scrollDistance * progress}px)`;
+    const sy = window.scrollY;
+    if (sy < sectionTop || sy > sectionTop + scrollDistance) {
+        if (timelineInner) timelineInner.style.visibility = 'hidden';
+    } else {
+        if (timelineInner) timelineInner.style.visibility = 'visible';
+        const progress = (sy - sectionTop) / scrollDistance;
+        if (track) track.style.transform = `translateX(${-scrollDistance * progress}px)`;
+    }
 }
 
 window.addEventListener('scroll', updateTrack, { passive: true });
-updateTrack(); // set initial position
+updateTrack();
 
 })();

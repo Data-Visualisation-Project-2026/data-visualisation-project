@@ -60,10 +60,12 @@ html { scrollbar-width: none; overflow-y: scroll; }
   display: block !important;
 }
 
-/* Sticky viewport that GSAP will pin */
+/* Fixed viewport — stays locked while section scrolls behind it */
 #timeline-inner {
-  position: sticky !important;
+  position: fixed !important;
   top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
   height: 100vh !important;
   overflow: hidden !important;
   display: flex !important;
