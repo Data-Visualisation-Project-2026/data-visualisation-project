@@ -105,9 +105,9 @@ st.markdown(
     div[data-baseweb="select"] div[data-baseweb="tag"],
     div[data-baseweb="popover"] div[data-baseweb="tag"],
     span[data-baseweb="tag"] {
-        background: #557086 !important;
-        background-color: #557086 !important;
-        border-color: #557086 !important;
+        background: #888888 !important;
+        background-color: #888888 !important;
+        border-color: #888888 !important;
     }
 
 
@@ -162,9 +162,13 @@ st.markdown("""
 
     function colorTags() {
         document.querySelectorAll('[data-baseweb="tag"]').forEach(tag => {
-            const span = tag.querySelector('span[class]');
-            if (!span) return;
-            const label = span.textContent.trim();
+            // Find the label span — it's the one that has no SVG child
+            let label = '';
+            tag.querySelectorAll('span').forEach(s => {
+                if (!s.querySelector('svg') && s.textContent.trim().length > 1) {
+                    label = s.textContent.trim();
+                }
+            });
             const color = COLOR_MAP[label];
             if (color) {
                 tag.style.setProperty('background', color, 'important');
@@ -175,7 +179,7 @@ st.markdown("""
     }
 
     const observer = new MutationObserver(colorTags);
-    observer.observe(document.body, { childList: true, subtree: true });
+    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
     colorTags();
 })();
 </script>
