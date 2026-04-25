@@ -25,7 +25,7 @@ st.markdown(
         --primary-color: #2f4a5f;
     }
 
-    html, body, .stApp, [data-testid="stAppViewContainer"], p, span, div, label {
+    html, body, .stApp, [data-testid="stAppViewContainer"] {
         font-family: 'Georgia', serif !important;
     }
 
@@ -141,11 +141,16 @@ st.markdown(
     div[data-baseweb="base-input"] {
         background-color: #f2f2f2 !important;
         border-color: #d9d9d9 !important;
-        font-family: 'Roboto', sans-serif !important;
     }
 
-    div[data-baseweb="select"] *,
-    div[data-baseweb="popover"] * {
+    [data-testid="stMultiSelect"] label,
+    [data-testid="stMultiSelect"] span,
+    [data-testid="stMultiSelect"] div,
+    [data-testid="stMultiSelect"] input,
+    [data-testid="stMultiSelect"] p,
+    div[data-baseweb="popover"] li,
+    div[data-baseweb="popover"] span,
+    div[data-baseweb="popover"] div {
         font-family: 'Roboto', sans-serif !important;
     }
 
