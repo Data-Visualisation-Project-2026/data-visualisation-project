@@ -110,50 +110,6 @@ st.markdown(
         border-color: #557086 !important;
     }
 
-    div[data-baseweb="select"] div[data-baseweb="tag"]:nth-of-type(1),
-    div[data-baseweb="select"] div[data-baseweb="tag"]:nth-child(1),
-    span[data-baseweb="tag"]:nth-of-type(1),
-    span[data-baseweb="tag"]:nth-child(1) {
-        background: #E15759 !important;
-        background-color: #E15759 !important;
-        border-color: #E15759 !important;
-    }
-
-    div[data-baseweb="select"] div[data-baseweb="tag"]:nth-of-type(2),
-    div[data-baseweb="select"] div[data-baseweb="tag"]:nth-child(2),
-    span[data-baseweb="tag"]:nth-of-type(2),
-    span[data-baseweb="tag"]:nth-child(2) {
-        background: #4E79A7 !important;
-        background-color: #4E79A7 !important;
-        border-color: #4E79A7 !important;
-    }
-
-    div[data-baseweb="select"] div[data-baseweb="tag"]:nth-of-type(3),
-    div[data-baseweb="select"] div[data-baseweb="tag"]:nth-child(3),
-    span[data-baseweb="tag"]:nth-of-type(3),
-    span[data-baseweb="tag"]:nth-child(3) {
-        background: #59A14F !important;
-        background-color: #59A14F !important;
-        border-color: #59A14F !important;
-    }
-
-    div[data-baseweb="select"] div[data-baseweb="tag"]:nth-of-type(4),
-    div[data-baseweb="select"] div[data-baseweb="tag"]:nth-child(4),
-    span[data-baseweb="tag"]:nth-of-type(4),
-    span[data-baseweb="tag"]:nth-child(4) {
-        background: #76B7B2 !important;
-        background-color: #76B7B2 !important;
-        border-color: #76B7B2 !important;
-    }
-
-    div[data-baseweb="select"] div[data-baseweb="tag"]:nth-of-type(5),
-    div[data-baseweb="select"] div[data-baseweb="tag"]:nth-child(5),
-    span[data-baseweb="tag"]:nth-of-type(5),
-    span[data-baseweb="tag"]:nth-child(5) {
-        background: #F28E2B !important;
-        background-color: #F28E2B !important;
-        border-color: #F28E2B !important;
-    }
 
     div[data-baseweb="select"] div[data-baseweb="tag"] span,
     div[data-baseweb="popover"] div[data-baseweb="tag"] span,
@@ -192,6 +148,38 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
+st.markdown("""
+<script>
+(function() {
+    const COLOR_MAP = {
+        'Culpability Bias': '#E15759',
+        'Kinetic':          '#4E79A7',
+        'Economic':         '#59A14F',
+        'Diplomatic':       '#76B7B2',
+        'Humanitarian':     '#F28E2B',
+    };
+
+    function colorTags() {
+        document.querySelectorAll('[data-baseweb="tag"]').forEach(tag => {
+            const span = tag.querySelector('span[class]');
+            if (!span) return;
+            const label = span.textContent.trim();
+            const color = COLOR_MAP[label];
+            if (color) {
+                tag.style.setProperty('background', color, 'important');
+                tag.style.setProperty('background-color', color, 'important');
+                tag.style.setProperty('border-color', color, 'important');
+            }
+        });
+    }
+
+    const observer = new MutationObserver(colorTags);
+    observer.observe(document.body, { childList: true, subtree: true });
+    colorTags();
+})();
+</script>
+""", unsafe_allow_html=True)
 
 st.title('Media Framing of the 2026 Iran War')
 st.markdown(
