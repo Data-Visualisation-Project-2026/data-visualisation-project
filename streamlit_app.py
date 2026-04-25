@@ -318,4 +318,4 @@ elif page == 'Media Differences':
     st.plotly_chart(make_outlet_framing_heatmap(df_five_sources), use_container_width=True)
 
 elif page == 'Data & Methods':
-    st.markdown(Path('network_analysis/methodology.md').read_text())
+    st.markdown(Path('methodology.md').read_text())
