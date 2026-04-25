@@ -1,5 +1,8 @@
+import json
+
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 
 
 def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimensions):
@@ -120,6 +123,96 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
         showgrid=False
     )
 
+    chart.update_yaxes(showgrid=False)
+
+    return chart
+
+
+def make_international_framing_chart(timeline_path, highlighted_dimensions):
+    """5-dimension line chart averaged across the 4 international/wire outlets."""
+    with open(timeline_path) as f:
+        timeline = json.load(f)
+
+    DIMS = ['kinetic_focus', 'humanitarian_focus', 'diplomatic_focus',
+            'economic_focus', 'culpability_bias']
+    OUTLETS = ['apnews.com', 'reuters.com', 'bbc.com', 'aljazeera.com']
+
+    rows = []
+    for entry in timeline:
+        date = pd.Timestamp(entry['date'])
+        outlet_vals = [entry['outlets'][o] for o in OUTLETS if o in entry['outlets'] and entry['outlets'][o]]
+        if not outlet_vals:
+            continue
+        avg = {dim: sum(o[dim] for o in outlet_vals if o.get(dim) is not None) /
+                    max(1, sum(1 for o in outlet_vals if o.get(dim) is not None))
+               for dim in DIMS}
+        avg['date'] = date
+        rows.append(avg)
+
+    daily = pd.DataFrame(rows).set_index('date')
+
+    score_labels = {
+        'kinetic_focus': 'Kinetic',
+        'humanitarian_focus': 'Humanitarian',
+        'diplomatic_focus': 'Diplomatic',
+        'economic_focus': 'Economic',
+        'culpability_bias': 'Culpability Bias',
+    }
+    color_map = {
+        'Kinetic': '#4E79A7',
+        'Humanitarian': '#F28E2B',
+        'Diplomatic': '#E15759',
+        'Economic': '#76B7B2',
+        'Culpability Bias': '#59A14F',
+    }
+    legend_order = ['Culpability Bias', 'Kinetic', 'Economic', 'Diplomatic', 'Humanitarian']
+
+    daily_long = daily.reset_index().melt(
+        id_vars='date', value_vars=DIMS, var_name='dimension', value_name='average_score'
+    )
+    daily_long['dimension'] = daily_long['dimension'].map(score_labels)
+
+    chart = px.line(
+        daily_long, x='date', y='average_score', color='dimension',
+        labels={'date': '', 'average_score': 'Average Score', 'dimension': 'Dimension'},
+        color_discrete_map=color_map,
+        category_orders={'dimension': legend_order},
+    )
+
+    for trace in chart.data:
+        is_highlighted = trace.name in highlighted_dimensions
+        trace.update(
+            line={'width': 3.5 if is_highlighted else 1.5},
+            opacity=1.0 if is_highlighted else 0.25,
+            hovertemplate=f'{trace.name}: %{{y:.2f}}<extra></extra>',
+        )
+
+    events = [
+        ('2026-03-01', 'Opening Strikes', 'right'),
+        ('2026-03-08', 'Oil Breaks $100', 'right'),
+        ('2026-03-27', 'Iran Strikes US Base in Saudi Arabia', 'right'),
+        ('2026-04-05', 'Escalation Returns', 'right'),
+        ('2026-04-08', 'Ceasefire', 'right'),
+    ]
+    for event_date, label, anchor in events:
+        ts = pd.Timestamp(event_date)
+        chart.add_shape(type='line', xref='x', yref='paper',
+                        x0=ts, x1=ts, y0=0, y1=1,
+                        line={'width': 1, 'dash': 'dash', 'color': 'rgba(90,90,90,0.55)'})
+        chart.add_annotation(x=ts, y=1.02, xref='x', yref='paper',
+                             text=label, showarrow=False,
+                             xanchor=anchor, yanchor='bottom',
+                             font={'size': 11, 'color': 'rgba(70,70,70,0.9)'})
+
+    chart.update_layout(
+        height=400,
+        yaxis_range=[0, 0.7],
+        hovermode='x unified',
+        title_text='',
+        legend={'orientation': 'v', 'yanchor': 'top', 'y': 1, 'xanchor': 'left', 'x': 1.02},
+        margin={'l': 40, 'r': 140, 't': 60, 'b': 50},
+    )
+    chart.update_xaxes(dtick=4 * 24 * 60 * 60 * 1000, tickformat='%b %d', showgrid=False)
     chart.update_yaxes(showgrid=False)
 
     return chart
