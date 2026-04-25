@@ -11,7 +11,7 @@ from visualizations.text_analysis import (
     make_cluster_bigram_charts,
     make_outlet_framing_heatmap,
 )
-from visualizations.dataset_overview import make_article_count_chart, _load_data
+from visualizations.dataset_overview import make_article_count_chart, make_gantt_chart, _load_data
 
 # Set up the Streamlit page and main title.
 st.set_page_config(layout='wide')
@@ -257,12 +257,12 @@ if page == 'Overview':
     )
     st.markdown(
         """
-        <ul style="line-height:2.0; max-width:680px;">
-          <li><span class="dim-label" style="color:#4E79A7;">Kinetic Focus:</span> <span style="font-family:Georgia,serif;color:#555;font-size:1.05rem;">emphasis on military action, strikes, weapons, and strategy.</span></li>
-          <li><span class="dim-label" style="color:#F28E2B;">Humanitarian Focus:</span> <span style="font-family:Georgia,serif;color:#555;font-size:1.05rem;">emphasis on civilian suffering, refugees, and casualties.</span></li>
-          <li><span class="dim-label" style="color:#76B7B2;">Diplomatic Focus:</span> <span style="font-family:Georgia,serif;color:#555;font-size:1.05rem;">emphasis on negotiations, international organizations, and political responses.</span></li>
-          <li><span class="dim-label" style="color:#59A14F;">Economic Focus:</span> <span style="font-family:Georgia,serif;color:#555;font-size:1.05rem;">emphasis on oil, trade, markets, and broader economic effects.</span></li>
-          <li><span class="dim-label" style="color:#E15759;">Culpability Bias:</span> <span style="font-family:Georgia,serif;color:#555;font-size:1.05rem;">the extent to which coverage uses strong or active language to assign blame.</span></li>
+        <ul style="line-height:2.0; max-width:680px; font-family:'Roboto',sans-serif; font-size:1.0rem; color:#555;">
+          <li><span class="dim-label" style="color:#4E79A7;">Kinetic Focus:</span> emphasis on military action, strikes, weapons, and strategy.</li>
+          <li><span class="dim-label" style="color:#F28E2B;">Humanitarian Focus:</span> emphasis on civilian suffering, refugees, and casualties.</li>
+          <li><span class="dim-label" style="color:#76B7B2;">Diplomatic Focus:</span> emphasis on negotiations, international organizations, and political responses.</li>
+          <li><span class="dim-label" style="color:#59A14F;">Economic Focus:</span> emphasis on oil, trade, markets, and broader economic effects.</li>
+          <li><span class="dim-label" style="color:#E15759;">Culpability Bias:</span> the extent to which coverage uses strong or active language to assign blame.</li>
         </ul>
         """,
         unsafe_allow_html=True
@@ -334,12 +334,12 @@ elif page == 'Story Arc':
     )
     st.markdown(
         """
-        <ul style="line-height:2.0; max-width:680px;">
-          <li><span class="dim-label" style="color:#4E79A7;">Kinetic Focus:</span> <span style="font-family:Georgia,serif;color:#555;font-size:1.05rem;">emphasis on military action, strikes, weapons, and strategy.</span></li>
-          <li><span class="dim-label" style="color:#F28E2B;">Humanitarian Focus:</span> <span style="font-family:Georgia,serif;color:#555;font-size:1.05rem;">emphasis on civilian suffering, refugees, and casualties.</span></li>
-          <li><span class="dim-label" style="color:#76B7B2;">Diplomatic Focus:</span> <span style="font-family:Georgia,serif;color:#555;font-size:1.05rem;">emphasis on negotiations, international organizations, and political responses.</span></li>
-          <li><span class="dim-label" style="color:#59A14F;">Economic Focus:</span> <span style="font-family:Georgia,serif;color:#555;font-size:1.05rem;">emphasis on oil, trade, markets, and broader economic effects.</span></li>
-          <li><span class="dim-label" style="color:#E15759;">Culpability Bias:</span> <span style="font-family:Georgia,serif;color:#555;font-size:1.05rem;">the extent to which coverage uses strong or active language to assign blame.</span></li>
+        <ul style="line-height:2.0; max-width:680px; font-family:'Roboto',sans-serif; font-size:1.0rem; color:#555;">
+          <li><span class="dim-label" style="color:#4E79A7;">Kinetic Focus:</span> emphasis on military action, strikes, weapons, and strategy.</li>
+          <li><span class="dim-label" style="color:#F28E2B;">Humanitarian Focus:</span> emphasis on civilian suffering, refugees, and casualties.</li>
+          <li><span class="dim-label" style="color:#76B7B2;">Diplomatic Focus:</span> emphasis on negotiations, international organizations, and political responses.</li>
+          <li><span class="dim-label" style="color:#59A14F;">Economic Focus:</span> emphasis on oil, trade, markets, and broader economic effects.</li>
+          <li><span class="dim-label" style="color:#E15759;">Culpability Bias:</span> the extent to which coverage uses strong or active language to assign blame.</li>
         </ul>
         """,
         unsafe_allow_html=True
@@ -412,7 +412,7 @@ elif page == 'Data & Methods':
     # ── Dataset stats ────────────────────────────────────────────────────────
     st.markdown(
         """
-        <div style="display:flex;gap:36px;margin-bottom:28px;flex-wrap:wrap;align-items:baseline;">
+        <div style="display:flex;gap:64px;margin-bottom:28px;flex-wrap:wrap;align-items:baseline;">
           <div>
             <div style="font-size:2rem;font-weight:700;color:#263746;font-family:Georgia,'Times New Roman',serif;">82</div>
             <div style="font-size:0.78rem;color:#5a7185;text-transform:uppercase;letter-spacing:.06em;margin-top:1px;font-family:'Roboto',sans-serif;">Outlets</div>
@@ -438,17 +438,31 @@ elif page == 'Data & Methods':
         unsafe_allow_html=True,
     )
 
-    # ── Methodology text: split around Article Extraction section ────────────
-    methodology = Path('methodology.md').read_text()
-    split_marker = '#### AI Scoring and Dimensionality'
-    before_scoring, after_scoring = methodology.split(split_marker, 1)
-
-    # Render Data Preparation header + Article Extraction text
-    st.markdown(before_scoring)
-
-    # ── Articles per outlet chart ────────────────────────────────────────────
+    # ── Load data + shared date range ────────────────────────────────────────
     combined = _load_data()
+    dates = combined["date"].dropna()
+    import pandas as _pd
+    date_range = [
+        (dates.min() - _pd.Timedelta(days=2)).isoformat(),
+        (dates.max() + _pd.Timedelta(days=2)).isoformat(),
+    ]
+
+    # ── Split methodology at two seams ───────────────────────────────────────
+    methodology = Path('methodology.md').read_text()
+    before_extraction, from_extraction = methodology.split('#### Article Extraction', 1)
+    extraction_body, after_extraction  = from_extraction.split('#### AI Scoring and Dimensionality', 1)
+
+    # Data Preparation header (just the ### line)
+    st.markdown(before_extraction)
+
+    # Articles per outlet chart — between "Data Preparation" and "Article Extraction"
     st.plotly_chart(make_article_count_chart(combined), use_container_width=True)
 
-    # ── Rest of methodology ──────────────────────────────────────────────────
-    st.markdown(split_marker + after_scoring)
+    # Article Extraction text
+    st.markdown('#### Article Extraction' + extraction_body)
+
+    # Coverage window chart — after Article Extraction, before AI Scoring
+    st.plotly_chart(make_gantt_chart(combined, date_range=date_range), use_container_width=True)
+
+    # Rest of methodology
+    st.markdown('#### AI Scoring and Dimensionality' + after_extraction)
