@@ -40,12 +40,6 @@ def _build_outlet_event_timeline_html():
         flags=re.DOTALL,
     )
 
-    # Tell ScrollTrigger to use the iframe's own scroll container.
-    # CSS sticky on #timeline-inner handles visual pinning; no GSAP pin needed.
-    main_js = main_js.replace(
-        'scrub: true,',
-        'scrub: true,\n      scroller: document.documentElement,',
-    )
 
 
     # iframe-specific CSS — hides scrollbar, lets GSAP control layout.

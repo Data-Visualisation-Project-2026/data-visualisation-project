@@ -114,11 +114,13 @@ const legend = svg.append("g").attr("transform", `translate(${MARGIN.left}, ${sv
 // ── GSAP horizontal scroll ────────────────────────────────────────────────
 const scrollDistance = totalW - window.innerWidth + MARGIN.left + MARGIN.right;
 
-// Set section height to exactly viewport + scroll distance.
-// CSS sticky on #timeline-inner handles visual pinning; GSAP handles only the x translation.
-// This avoids GSAP pin/pinSpacing which don't reliably create spacers inside an iframe.
+// Set section height to exactly viewport + scroll distance so the GSAP trigger
+// range maps 1:1 to the horizontal scroll distance.
 const timelineSection = document.getElementById('timeline-section');
 if (timelineSection) timelineSection.style.height = (window.innerHeight + scrollDistance) + 'px';
+
+// Force ScrollTrigger to re-measure after we mutated the DOM height.
+ScrollTrigger.refresh();
 
 gsap.to("#timeline-track", {
     x: -scrollDistance,
@@ -126,7 +128,7 @@ gsap.to("#timeline-track", {
     scrollTrigger: {
         trigger: "#timeline-section",
         start: "top top",
-        end: "bottom bottom",
+        end: () => "+=" + scrollDistance,
         scrub: true,
     }
 });
