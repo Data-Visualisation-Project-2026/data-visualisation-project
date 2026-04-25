@@ -6,19 +6,19 @@ from sklearn.feature_extraction.text import CountVectorizer, ENGLISH_STOP_WORDS
 
 
 CLUSTER_NAMES = {
-    0: 'Mainstream Generalist Media',
-    1: 'Critical / Opposition-Leaning Media',
-    2: 'Humanitarian-Diplomatic Media',
-    3: 'Economically Focused Media',
-    4: 'Militarized / Blame-Oriented Media'
+    0: 'Mainstream Moderate Media',
+    1: 'Dissident / Left-Wing Media',
+    2: 'Smaller Mainstream Media',
+    3: 'Business-Focused Media',
+    4: 'Right-Wing / Military Media'
 }
 
 CLUSTER_COLORS = {
-    'Cluster 0: Mainstream Generalist Media': '#4E79A7',
-    'Cluster 1: Critical / Opposition-Leaning Media': '#A0CBE8',
-    'Cluster 2: Humanitarian-Diplomatic Media': '#76B7B2',
-    'Cluster 3: Economically Focused Media': '#59A14F',
-    'Cluster 4: Militarized / Blame-Oriented Media': '#8CD17D'
+    'Cluster 0: Mainstream Moderate Media': '#4E79A7',
+    'Cluster 1: Dissident / Left-Wing Media': '#A0CBE8',
+    'Cluster 2: Smaller Mainstream Media': '#76B7B2',
+    'Cluster 3: Business-Focused Media': '#59A14F',
+    'Cluster 4: Right-Wing / Military Media': '#8CD17D'
 }
 
 DOMAIN_STOP_WORDS = {
@@ -160,7 +160,7 @@ def make_outlet_framing_heatmap(df):
             colorbar={'title': 'Average Score'},
             text=np.round(outlet_heatmap.values, 2),
             texttemplate='%{text:.2f}',
-            textfont={'size': 9, 'color': '#2f4a5f'},
+            textfont={'size': 9},
             hovertemplate='%{y}<br>%{x}: %{z:.2f}<extra></extra>'
         )
     )

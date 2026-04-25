@@ -2,6 +2,7 @@ import pandas as pd
 import streamlit as st
 
 from visualizations.embedded_visuals import render_outlet_event_timeline
+from visualizations.embedded_network import render_media_clusters
 from visualizations.framing_charts import make_framing_over_time_chart
 from visualizations.text_analysis import (
     get_top_cluster_bigrams,
@@ -230,9 +231,9 @@ dimension_order = [
 st.sidebar.markdown('## Navigation')
 page = st.sidebar.radio(
     'Navigation',
-    ['Overview', 'Narrative Over Time', 'Narrative Across Media'],
+    ['Overview', 'Narrative Over Time', 'Media Clusters', 'Narrative Across Media'],
     label_visibility='collapsed',
-    key='main_navigation_v3'
+    key='main_navigation_v4'
 )
 
 if page == 'Overview':
@@ -278,6 +279,15 @@ if page == 'Overview':
 elif page == 'Narrative Over Time':
     # Display the embedded outlet event timeline.
     render_outlet_event_timeline()
+
+elif page == 'Media Clusters':
+    st.subheader('Media Clusters')
+    st.write(
+        'This 3D network visualization shows how media outlets cluster based on their '
+        'average framing patterns across the five narrative dimensions.'
+    )
+
+    render_media_clusters()
 
 elif page == 'Narrative Across Media':
     st.subheader('Distinctive Phrases by Media Cluster')
