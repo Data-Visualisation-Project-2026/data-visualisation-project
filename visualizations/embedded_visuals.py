@@ -51,7 +51,7 @@ html { scrollbar-width: none; overflow-y: scroll; }
 #intro  { height: 50vh; min-height: 50vh; }
 #outro  { height: 50vh; min-height: 50vh; }
 
-/* Let the page script control section height dynamically. */
+/* Height is set by JS after scrollDistance is computed — no CSS override here */
 #timeline-section {
   position: relative !important;
   overflow: visible !important;

@@ -126,7 +126,7 @@ gsap.to("#timeline-track", {
         trigger: "#timeline-section",
         start: "top top",
         end: () => `+=${scrollDistance * 1.5}`,                                                                                                                                            
-        scrub: 1,
+        scrub: true,
         pin: "#timeline-inner",                                                                                                                                                            
         }                                                                                                                                                                                  
     });
