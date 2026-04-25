@@ -1123,17 +1123,5 @@
         "culpability_bias": 0.25
       }
     }
-  },
-  {
-    "date": "NaT",
-    "outlets": {
-      "aljazeera.com": {
-        "kinetic_focus": 0.525,
-        "humanitarian_focus": 0.329,
-        "diplomatic_focus": 0.475,
-        "economic_focus": 0.429,
-        "culpability_bias": 0.558
-      }
-    }
   }
 ]

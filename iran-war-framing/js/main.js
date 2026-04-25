@@ -114,21 +114,21 @@ const legend = svg.append("g").attr("transform", `translate(${MARGIN.left}, ${sv
 // ── GSAP horizontal scroll ────────────────────────────────────────────────
 const scrollDistance = totalW - window.innerWidth + MARGIN.left + MARGIN.right;
 
-// Give #timeline-section exactly enough height for the full GSAP animation.
-// pinSpacing may not create the spacer reliably inside an iframe, so we do it manually.
+// Set section height to exactly viewport + scroll distance.
+// CSS sticky on #timeline-inner handles visual pinning; GSAP handles only the x translation.
+// This avoids GSAP pin/pinSpacing which don't reliably create spacers inside an iframe.
 const timelineSection = document.getElementById('timeline-section');
-if (timelineSection) timelineSection.style.height = (window.innerHeight + scrollDistance * 1.5) + 'px';
+if (timelineSection) timelineSection.style.height = (window.innerHeight + scrollDistance) + 'px';
 
-gsap.to("#timeline-track", {                                                                                                                                                           
-    x: -scrollDistance,                                                                                                                                                                  
-    ease: "none",                                                                                                                                                                        
-    scrollTrigger: {                                                                                                                                                                   
+gsap.to("#timeline-track", {
+    x: -scrollDistance,
+    ease: "none",
+    scrollTrigger: {
         trigger: "#timeline-section",
         start: "top top",
-        end: () => `+=${scrollDistance * 1.5}`,                                                                                                                                            
+        end: "bottom bottom",
         scrub: true,
-        pin: "#timeline-inner",                                                                                                                                                            
-        }                                                                                                                                                                                  
-    });
+    }
+});
 
 })();
