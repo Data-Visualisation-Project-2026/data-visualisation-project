@@ -62,7 +62,7 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
     events = [
         ('2026-02-28', 'Opening Strikes', 'left'),
         ('2026-03-08', 'Oil Breaks $100', 'right'),
-        ('2026-03-18', 'Energy Escalation', 'left'),
+        ('2026-03-18', 'Energy Escalation', 'right'),
         ('2026-03-27', 'Iran Strikes US Base in Saudi Arabia', 'right'),
     ]
 
