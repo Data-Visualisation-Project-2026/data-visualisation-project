@@ -105,19 +105,10 @@ const DIMS = Object.keys(DIM_COLORS);
 const BAND_H = 40;
 const BAND_Y = -(BAND_H + 16); // sits in the top margin, above the chart area
 
-// Average outlet scores per day, find dominant dimension
+// Dominant framing per day from the 77 US outlets (Overview signal)
 const bandData = timeline
-    .filter(d => parseDate(d.date) !== null)
-    .map(d => {
-        const outletVals = Object.values(d.outlets).filter(Boolean);
-        const avg = {};
-        DIMS.forEach(dim => {
-            const vals = outletVals.map(o => o[dim]).filter(v => v != null);
-            avg[dim] = vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
-        });
-        const dominant = DIMS.reduce((a, b) => avg[a] > avg[b] ? a : b);
-        return { date: parseDate(d.date), dominant, avg };
-    });
+    .filter(d => parseDate(d.date) !== null && d.us_dominant)
+    .map(d => ({ date: parseDate(d.date), dominant: d.us_dominant }));
 
 // Band background
 g.append('rect')
