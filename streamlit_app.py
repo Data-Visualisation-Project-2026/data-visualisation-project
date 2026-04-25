@@ -44,9 +44,15 @@ st.markdown(
     }
 
     /* Subheaders */
-    .stApp h2, .stApp h3 {
+    .stApp h2 {
         font-family: 'Georgia', serif !important;
         font-weight: normal !important;
+        color: #1a1a1a !important;
+    }
+
+    .stApp h3, .stApp h4 {
+        font-family: 'Georgia', serif !important;
+        font-weight: bold !important;
         color: #1a1a1a !important;
     }
 
@@ -409,6 +415,8 @@ elif page == 'Media Differences':
     st.plotly_chart(make_outlet_framing_heatmap(df_five_sources), use_container_width=True)
 
 elif page == 'Data & Methods':
+    st.markdown('<hr style="border:none;border-top:1px solid #e0e0e0;margin:0.5rem 0 1.5rem 0;">', unsafe_allow_html=True)
+
     # ── Dataset stats ────────────────────────────────────────────────────────
     st.markdown(
         """
@@ -446,6 +454,8 @@ elif page == 'Data & Methods':
         (dates.min() - _pd.Timedelta(days=2)).isoformat(),
         (dates.max() + _pd.Timedelta(days=2)).isoformat(),
     ]
+
+    st.markdown('<hr style="border:none;border-top:1px solid #e0e0e0;margin:1.5rem 0;">', unsafe_allow_html=True)
 
     # ── Split methodology at two seams ───────────────────────────────────────
     methodology = Path('methodology.md').read_text()
