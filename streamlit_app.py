@@ -135,12 +135,18 @@ st.markdown(
         margin-bottom: 2rem;
     }
 
-    /* Search / select input background */
+    /* Search / select input background and font */
     div[data-baseweb="select"] > div,
     div[data-baseweb="input"] > div,
     div[data-baseweb="base-input"] {
         background-color: #f2f2f2 !important;
         border-color: #d9d9d9 !important;
+        font-family: 'Roboto', sans-serif !important;
+    }
+
+    div[data-baseweb="select"] *,
+    div[data-baseweb="popover"] * {
+        font-family: 'Roboto', sans-serif !important;
     }
 
     /* Tags */
@@ -404,23 +410,23 @@ elif page == 'Data & Methods':
         <div style="display:flex;gap:36px;margin-bottom:28px;flex-wrap:wrap;align-items:baseline;">
           <div>
             <div style="font-size:2rem;font-weight:700;color:#263746;font-family:Georgia,'Times New Roman',serif;">82</div>
-            <div style="font-size:0.78rem;color:#5a7185;text-transform:uppercase;letter-spacing:.06em;margin-top:1px;">Outlets</div>
+            <div style="font-size:0.78rem;color:#5a7185;text-transform:uppercase;letter-spacing:.06em;margin-top:1px;font-family:'Roboto',sans-serif;">Outlets</div>
           </div>
           <div>
             <div style="font-size:2rem;font-weight:700;color:#263746;font-family:Georgia,'Times New Roman',serif;">2,867</div>
-            <div style="font-size:0.78rem;color:#5a7185;text-transform:uppercase;letter-spacing:.06em;margin-top:1px;">Articles</div>
+            <div style="font-size:0.78rem;color:#5a7185;text-transform:uppercase;letter-spacing:.06em;margin-top:1px;font-family:'Roboto',sans-serif;">Articles</div>
           </div>
           <div>
             <div style="font-size:2rem;font-weight:700;color:#263746;font-family:Georgia,'Times New Roman',serif;">76</div>
-            <div style="font-size:0.78rem;color:#5a7185;text-transform:uppercase;letter-spacing:.06em;margin-top:1px;">US outlets</div>
+            <div style="font-size:0.78rem;color:#5a7185;text-transform:uppercase;letter-spacing:.06em;margin-top:1px;font-family:'Roboto',sans-serif;">US outlets</div>
           </div>
           <div>
             <div style="font-size:2rem;font-weight:700;color:#263746;font-family:Georgia,'Times New Roman',serif;">6</div>
-            <div style="font-size:0.78rem;color:#5a7185;text-transform:uppercase;letter-spacing:.06em;margin-top:1px;">Non-US outlets</div>
+            <div style="font-size:0.78rem;color:#5a7185;text-transform:uppercase;letter-spacing:.06em;margin-top:1px;font-family:'Roboto',sans-serif;">Non-US outlets</div>
           </div>
           <div>
             <div style="font-size:2rem;font-weight:700;color:#263746;font-family:Georgia,'Times New Roman',serif;">Feb 27 – Apr 20</div>
-            <div style="font-size:0.78rem;color:#5a7185;text-transform:uppercase;letter-spacing:.06em;margin-top:1px;">Date range</div>
+            <div style="font-size:0.78rem;color:#5a7185;text-transform:uppercase;letter-spacing:.06em;margin-top:1px;font-family:'Roboto',sans-serif;">Date range</div>
           </div>
         </div>
         """,
