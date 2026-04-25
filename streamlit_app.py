@@ -231,7 +231,7 @@ dimension_order = [
 st.sidebar.markdown('## Navigation')
 page = st.sidebar.radio(
     'Navigation',
-    ['Overview', 'Narrative Over Time', 'Media Clusters', 'Narrative Across Media'],
+    ['Overview', 'Narrative Over Time', 'Media Clusters', 'Media Differences'],
     label_visibility='collapsed',
     key='main_navigation_v4'
 )
@@ -289,7 +289,7 @@ elif page == 'Media Clusters':
 
     render_media_clusters()
 
-elif page == 'Narrative Across Media':
+elif page == 'Media Differences':
     st.subheader('Distinctive Phrases by Media Cluster')
     st.write(
         'These charts show the most unique phrases in each media cluster. '

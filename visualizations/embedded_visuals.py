@@ -40,13 +40,6 @@ def _build_outlet_event_timeline_html():
         flags=re.DOTALL,
     )
 
-    # Patch ScrollTrigger to explicitly use the iframe's scroll container
-    # and ensure pinSpacing creates the spacer that preserves section height.
-    main_js = main_js.replace(
-        'pin: "#timeline-inner",',
-        'pin: "#timeline-inner",\n      pinSpacing: true,\n      scroller: document.documentElement,',
-    )
-
     # iframe-specific CSS — hides scrollbar, lets GSAP control layout.
     iframe_css = """
 /* Hide scrollbar — scrolling still works, GSAP reads it */
