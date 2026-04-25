@@ -10,7 +10,7 @@ def render_outlet_event_timeline():
     html = _build_outlet_event_timeline_html()
     # Height ~900px acts as the iframe viewport; content scrolls inside it.
     # Scrollbar is hidden via CSS but scrolling is active.
-    components.html(html, height=900, scrolling=True)
+    components.html(html, height=700, scrolling=True)
 
 
 def _build_outlet_event_timeline_html():

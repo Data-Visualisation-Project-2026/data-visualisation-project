@@ -12,13 +12,13 @@ gsap.registerPlugin(ScrollTrigger);
     console.log("outlets:", meta.outlets);
 
 // --- Dimension Setup ---
-const MARGIN = { top: 40, right: 20, bottom: 40, left: 20 };
-const VH = window.innerHeight;
-const DAY_WIDTH = Math.ceil(window.innerWidth * 4 / timeline.length); 
+const MARGIN = { top: 72, right: 20, bottom: 48, left: 48 };
+const VH = Math.round(window.innerHeight * 0.82);
+const DAY_WIDTH = Math.ceil(window.innerWidth * 4 / timeline.length);
 const chartH = VH - MARGIN.top - MARGIN.bottom;
-const totalW = timeline.length * DAY_WIDTH; 
-const svgW = totalW + MARGIN.left + MARGIN.right; 
-const svgH = VH; 
+const totalW = timeline.length * DAY_WIDTH;
+const svgW = totalW + MARGIN.left + MARGIN.right;
+const svgH = VH;
 
 // --- Scale Setup ---
 const parseDate = d3.timeParse("%Y-%m-%d");
@@ -95,7 +95,7 @@ events.forEach(event => {
     .attr("stroke-dasharray", "4,4").attr("opacity", 0.7);
 
     g.append("text")
-    .attr("x", x + 6).attr("y", 16).attr("fill", "#777")
+    .attr("x", x + 6).attr("y", -10).attr("fill", "#777")
     .attr("font-size", "11px").attr("font-family", "monospace")
     .text(event.label);
 });                                                                                                                                                                                  
