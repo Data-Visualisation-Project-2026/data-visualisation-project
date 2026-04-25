@@ -112,45 +112,45 @@ st.markdown(
     div[data-baseweb="select"] div[data-baseweb="tag"]:nth-child(1),
     span[data-baseweb="tag"]:nth-of-type(1),
     span[data-baseweb="tag"]:nth-child(1) {
-        background: #4E79A7 !important;
-        background-color: #4E79A7 !important;
-        border-color: #4E79A7 !important;
+        background: #59A14F !important;
+        background-color: #59A14F !important;
+        border-color: #59A14F !important;
     }
 
     div[data-baseweb="select"] div[data-baseweb="tag"]:nth-of-type(2),
     div[data-baseweb="select"] div[data-baseweb="tag"]:nth-child(2),
     span[data-baseweb="tag"]:nth-of-type(2),
     span[data-baseweb="tag"]:nth-child(2) {
-        background: #F28E2B !important;
-        background-color: #F28E2B !important;
-        border-color: #F28E2B !important;
+        background: #4E79A7 !important;
+        background-color: #4E79A7 !important;
+        border-color: #4E79A7 !important;
     }
 
     div[data-baseweb="select"] div[data-baseweb="tag"]:nth-of-type(3),
     div[data-baseweb="select"] div[data-baseweb="tag"]:nth-child(3),
     span[data-baseweb="tag"]:nth-of-type(3),
     span[data-baseweb="tag"]:nth-child(3) {
-        background: #E15759 !important;
-        background-color: #E15759 !important;
-        border-color: #E15759 !important;
+        background: #76B7B2 !important;
+        background-color: #76B7B2 !important;
+        border-color: #76B7B2 !important;
     }
 
     div[data-baseweb="select"] div[data-baseweb="tag"]:nth-of-type(4),
     div[data-baseweb="select"] div[data-baseweb="tag"]:nth-child(4),
     span[data-baseweb="tag"]:nth-of-type(4),
     span[data-baseweb="tag"]:nth-child(4) {
-        background: #76B7B2 !important;
-        background-color: #76B7B2 !important;
-        border-color: #76B7B2 !important;
+        background: #E15759 !important;
+        background-color: #E15759 !important;
+        border-color: #E15759 !important;
     }
 
     div[data-baseweb="select"] div[data-baseweb="tag"]:nth-of-type(5),
     div[data-baseweb="select"] div[data-baseweb="tag"]:nth-child(5),
     span[data-baseweb="tag"]:nth-of-type(5),
     span[data-baseweb="tag"]:nth-child(5) {
-        background: #59A14F !important;
-        background-color: #59A14F !important;
-        border-color: #59A14F !important;
+        background: #F28E2B !important;
+        background-color: #F28E2B !important;
+        border-color: #F28E2B !important;
     }
 
     div[data-baseweb="select"] div[data-baseweb="tag"] span,
@@ -221,11 +221,11 @@ score_labels = {
 df['publish_date'] = pd.to_datetime(df['indexed_date'])
 
 dimension_order = [
+    'Culpability Bias',
     'Kinetic',
-    'Humanitarian',
-    'Diplomatic',
     'Economic',
-    'Culpability Bias'
+    'Diplomatic',
+    'Humanitarian'
 ]
 
 st.sidebar.markdown('## Navigation')

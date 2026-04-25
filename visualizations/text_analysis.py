@@ -6,19 +6,19 @@ from sklearn.feature_extraction.text import CountVectorizer, ENGLISH_STOP_WORDS
 
 
 CLUSTER_NAMES = {
-    0: 'Mainstream Moderate Media',
-    1: 'Dissident / Left-Wing Media',
-    2: 'Smaller Mainstream Media',
-    3: 'Business-Focused Media',
-    4: 'Right-Wing / Military Media'
+    0: 'Mainstream / Moderate',
+    1: 'Dissident / Left-Wing',
+    2: 'Smaller Mainstream',
+    3: 'Business-Focused',
+    4: 'Right-Wing / Military'
 }
 
 CLUSTER_COLORS = {
-    'Cluster 0: Mainstream Moderate Media': '#4E79A7',
-    'Cluster 1: Dissident / Left-Wing Media': '#A0CBE8',
-    'Cluster 2: Smaller Mainstream Media': '#76B7B2',
-    'Cluster 3: Business-Focused Media': '#59A14F',
-    'Cluster 4: Right-Wing / Military Media': '#8CD17D'
+    'Cluster 0: Mainstream / Moderate': '#895EFF',
+    'Cluster 1: Dissident / Left-Wing': '#59A14F',
+    'Cluster 2: Smaller Mainstream': '#F28E2B',
+    'Cluster 3: Business-Focused': '#76B7B2',
+    'Cluster 4: Right-Wing / Military': '#4E79A7'
 }
 
 DOMAIN_STOP_WORDS = {
@@ -77,7 +77,7 @@ def make_cluster_bigram_charts(top_terms):
 def make_cluster_bigram_chart(cluster_label, top_terms):
     """Create a horizontal bar chart for one article cluster's top bigrams."""
     chart_data = top_terms[top_terms['cluster'] == cluster_label].sort_values('ctfidf_score')
-    short_title = cluster_label.split(': ', 1)[-1]
+    short_title = cluster_label
 
     fig = px.bar(
         chart_data,

@@ -26,7 +26,13 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
         'Culpability Bias': '#59A14F'
     }
 
-    legend_order = list(color_map.keys())
+    legend_order = [
+        'Culpability Bias',
+        'Kinetic',
+        'Economic',
+        'Diplomatic',
+        'Humanitarian'
+    ]
 
     # Define the interactive line chart and its visual settings.
     chart = px.line(
