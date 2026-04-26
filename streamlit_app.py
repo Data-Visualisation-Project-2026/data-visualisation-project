@@ -213,6 +213,7 @@ st.markdown(
     '<div class="project-author">By Adeline Setiawan, Maximilian Chelminski, and Yixiao Liu</div>',
     unsafe_allow_html=True
 )
+st.divider()
 
 # Load the clustered article framing data.
 df = pd.read_parquet('iran_war_media_framing_scores_clustered.parquet', engine='fastparquet')
@@ -351,6 +352,8 @@ elif page == 'Story Arc':
         unsafe_allow_html=True
     )
 
+    st.divider()
+
     # ── US aggregate chart ───────────────────────────────────────────────────
     st.subheader('77 US Outlets — Domestic Media')
     st.caption('Feb 27–Apr 20, 2026 · average framing score across 77 US outlets')
@@ -365,12 +368,14 @@ elif page == 'Story Arc':
         unsafe_allow_html=True
     )
 
+    st.divider()
+
     # ── US individual outlet D3 breakdown ────────────────────────────────────
     st.subheader('US Outlets — Individual Breakdown')
     st.caption('Feb 27–Mar 30, 2026 · NYT, Fox News, CNN, Bloomberg, NPR, Breitbart, NBC News, USA Today')
     render_us_outlet_event_timeline()
 
-    st.markdown('<hr style="border:none;border-top:1px solid #e0e0e0;margin:1.5rem 0;">', unsafe_allow_html=True)
+    st.divider()
 
     # ── International aggregate chart ────────────────────────────────────────
     st.subheader('AP · Reuters · BBC · Al Jazeera — International Wire Services')
