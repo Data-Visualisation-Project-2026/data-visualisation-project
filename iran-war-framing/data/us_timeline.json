@@ -1,0 +1,1198 @@
+[
+  {
+    "date": "2026-02-27",
+    "outlets": {
+      "nytimes.com": null,
+      "foxnews.com": {
+        "kinetic_focus": 0.1,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.2
+      },
+      "cnn.com": null,
+      "bloomberg.com": null,
+      "npr.org": null,
+      "breitbart.com": null,
+      "nbcnews.com": null,
+      "usatoday.com": null
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-02-28",
+    "outlets": {
+      "nytimes.com": null,
+      "foxnews.com": {
+        "kinetic_focus": 0.9,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.2,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.95
+      },
+      "cnn.com": {
+        "kinetic_focus": 0.8,
+        "humanitarian_focus": 0.2,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.6
+      },
+      "bloomberg.com": {
+        "kinetic_focus": 0.25,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.6,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.15
+      },
+      "npr.org": {
+        "kinetic_focus": 0.6,
+        "humanitarian_focus": 0.4,
+        "diplomatic_focus": 0.7,
+        "economic_focus": 0.1,
+        "culpability_bias": 0.5
+      },
+      "breitbart.com": null,
+      "nbcnews.com": null,
+      "usatoday.com": {
+        "kinetic_focus": 0.6,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.7,
+        "economic_focus": 0.1,
+        "culpability_bias": 0.6
+      }
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-01",
+    "outlets": {
+      "nytimes.com": {
+        "kinetic_focus": 0.6,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.1,
+        "culpability_bias": 0.5
+      },
+      "foxnews.com": {
+        "kinetic_focus": 0.64,
+        "humanitarian_focus": 0.18,
+        "diplomatic_focus": 0.34,
+        "economic_focus": 0.22,
+        "culpability_bias": 0.66
+      },
+      "cnn.com": null,
+      "bloomberg.com": {
+        "kinetic_focus": 0.45,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.1667,
+        "economic_focus": 0.2167,
+        "culpability_bias": 0.3333
+      },
+      "npr.org": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.4,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.9,
+        "culpability_bias": 0.5
+      },
+      "breitbart.com": null,
+      "nbcnews.com": {
+        "kinetic_focus": 0.6,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.25,
+        "economic_focus": 0.1,
+        "culpability_bias": 0.4
+      },
+      "usatoday.com": {
+        "kinetic_focus": 0.8,
+        "humanitarian_focus": 0.5,
+        "diplomatic_focus": 0.3,
+        "economic_focus": 0.4,
+        "culpability_bias": 0.6
+      }
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-02",
+    "outlets": {
+      "nytimes.com": {
+        "kinetic_focus": 0.85,
+        "humanitarian_focus": 0.2,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.05,
+        "culpability_bias": 0.65
+      },
+      "foxnews.com": {
+        "kinetic_focus": 1.0,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.0,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.8
+      },
+      "cnn.com": null,
+      "bloomberg.com": {
+        "kinetic_focus": 0.5556,
+        "humanitarian_focus": 0.0444,
+        "diplomatic_focus": 0.1889,
+        "economic_focus": 0.5333,
+        "culpability_bias": 0.3778
+      },
+      "npr.org": null,
+      "breitbart.com": {
+        "kinetic_focus": 0.7,
+        "humanitarian_focus": 0.2667,
+        "diplomatic_focus": 0.3667,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.7333
+      },
+      "nbcnews.com": {
+        "kinetic_focus": 0.9,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.5,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.7
+      },
+      "usatoday.com": {
+        "kinetic_focus": 0.5,
+        "humanitarian_focus": 0.1333,
+        "diplomatic_focus": 0.0667,
+        "economic_focus": 0.3,
+        "culpability_bias": 0.4
+      }
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-03",
+    "outlets": {
+      "nytimes.com": {
+        "kinetic_focus": 0.45,
+        "humanitarian_focus": 0.35,
+        "diplomatic_focus": 0.35,
+        "economic_focus": 0.1,
+        "culpability_bias": 0.4
+      },
+      "foxnews.com": {
+        "kinetic_focus": 0.4,
+        "humanitarian_focus": 0.2667,
+        "diplomatic_focus": 0.3,
+        "economic_focus": 0.2,
+        "culpability_bias": 0.4667
+      },
+      "cnn.com": {
+        "kinetic_focus": 0.7,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.2,
+        "economic_focus": 0.6,
+        "culpability_bias": 0.4
+      },
+      "bloomberg.com": {
+        "kinetic_focus": 0.5,
+        "humanitarian_focus": 0.0125,
+        "diplomatic_focus": 0.1375,
+        "economic_focus": 0.4875,
+        "culpability_bias": 0.3125
+      },
+      "npr.org": null,
+      "breitbart.com": {
+        "kinetic_focus": 0.6,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.0,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.8
+      },
+      "nbcnews.com": {
+        "kinetic_focus": 0.6,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.2,
+        "economic_focus": 0.5,
+        "culpability_bias": 0.4
+      },
+      "usatoday.com": {
+        "kinetic_focus": 0.6,
+        "humanitarian_focus": 0.2,
+        "diplomatic_focus": 0.2,
+        "economic_focus": 0.55,
+        "culpability_bias": 0.4
+      }
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-04",
+    "outlets": {
+      "nytimes.com": {
+        "kinetic_focus": 0.45,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.35,
+        "economic_focus": 0.15,
+        "culpability_bias": 0.4
+      },
+      "foxnews.com": {
+        "kinetic_focus": 0.9,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.2,
+        "economic_focus": 0.2,
+        "culpability_bias": 0.8
+      },
+      "cnn.com": {
+        "kinetic_focus": 0.1,
+        "humanitarian_focus": 0.7,
+        "diplomatic_focus": 0.0,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.3
+      },
+      "bloomberg.com": null,
+      "npr.org": {
+        "kinetic_focus": 0.2,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.0,
+        "economic_focus": 0.9,
+        "culpability_bias": 0.1
+      },
+      "breitbart.com": {
+        "kinetic_focus": 0.675,
+        "humanitarian_focus": 0.4,
+        "diplomatic_focus": 0.4,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.7
+      },
+      "nbcnews.com": {
+        "kinetic_focus": 0.7,
+        "humanitarian_focus": 0.7,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.2
+      },
+      "usatoday.com": null
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-05",
+    "outlets": {
+      "nytimes.com": {
+        "kinetic_focus": 0.6,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.4,
+        "economic_focus": 0.1,
+        "culpability_bias": 0.3
+      },
+      "foxnews.com": null,
+      "cnn.com": {
+        "kinetic_focus": 0.3333,
+        "humanitarian_focus": 0.2333,
+        "diplomatic_focus": 0.2,
+        "economic_focus": 0.3667,
+        "culpability_bias": 0.3333
+      },
+      "bloomberg.com": null,
+      "npr.org": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.4
+      },
+      "breitbart.com": {
+        "kinetic_focus": 0.4,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.5,
+        "economic_focus": 0.9,
+        "culpability_bias": 0.6
+      },
+      "nbcnews.com": {
+        "kinetic_focus": 0.5,
+        "humanitarian_focus": 0.1667,
+        "diplomatic_focus": 0.5667,
+        "economic_focus": 0.0667,
+        "culpability_bias": 0.5333
+      },
+      "usatoday.com": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.15,
+        "economic_focus": 0.6,
+        "culpability_bias": 0.45
+      }
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-06",
+    "outlets": {
+      "nytimes.com": {
+        "kinetic_focus": 0.32,
+        "humanitarian_focus": 0.28,
+        "diplomatic_focus": 0.4,
+        "economic_focus": 0.12,
+        "culpability_bias": 0.5
+      },
+      "foxnews.com": null,
+      "cnn.com": null,
+      "bloomberg.com": null,
+      "npr.org": {
+        "kinetic_focus": 0.65,
+        "humanitarian_focus": 0.55,
+        "diplomatic_focus": 0.5,
+        "economic_focus": 0.2,
+        "culpability_bias": 0.4
+      },
+      "breitbart.com": {
+        "kinetic_focus": 0.7,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.6
+      },
+      "nbcnews.com": {
+        "kinetic_focus": 0.6,
+        "humanitarian_focus": 0.6,
+        "diplomatic_focus": 0.5,
+        "economic_focus": 0.7,
+        "culpability_bias": 0.4
+      },
+      "usatoday.com": {
+        "kinetic_focus": 0.1,
+        "humanitarian_focus": 0.2,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.6
+      }
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-07",
+    "outlets": {
+      "nytimes.com": {
+        "kinetic_focus": 0.6,
+        "humanitarian_focus": 0.7,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.6
+      },
+      "foxnews.com": null,
+      "cnn.com": {
+        "kinetic_focus": 0.75,
+        "humanitarian_focus": 0.5,
+        "diplomatic_focus": 0.35,
+        "economic_focus": 0.25,
+        "culpability_bias": 0.55
+      },
+      "bloomberg.com": null,
+      "npr.org": {
+        "kinetic_focus": 0.45,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.45,
+        "economic_focus": 0.4,
+        "culpability_bias": 0.55
+      },
+      "breitbart.com": {
+        "kinetic_focus": 0.0,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.0,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.0
+      },
+      "nbcnews.com": {
+        "kinetic_focus": 0.5667,
+        "humanitarian_focus": 0.2667,
+        "diplomatic_focus": 0.3,
+        "economic_focus": 0.1333,
+        "culpability_bias": 0.4667
+      },
+      "usatoday.com": null
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-08",
+    "outlets": {
+      "nytimes.com": {
+        "kinetic_focus": 0.6,
+        "humanitarian_focus": 0.4,
+        "diplomatic_focus": 0.25,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.65
+      },
+      "foxnews.com": null,
+      "cnn.com": {
+        "kinetic_focus": 0.6,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.5,
+        "culpability_bias": 0.4
+      },
+      "bloomberg.com": null,
+      "npr.org": null,
+      "breitbart.com": null,
+      "nbcnews.com": null,
+      "usatoday.com": null
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-09",
+    "outlets": {
+      "nytimes.com": {
+        "kinetic_focus": 0.1,
+        "humanitarian_focus": 0.7,
+        "diplomatic_focus": 0.8,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.4
+      },
+      "foxnews.com": null,
+      "cnn.com": null,
+      "bloomberg.com": null,
+      "npr.org": {
+        "kinetic_focus": 0.5,
+        "humanitarian_focus": 0.25,
+        "diplomatic_focus": 0.2,
+        "economic_focus": 0.75,
+        "culpability_bias": 0.45
+      },
+      "breitbart.com": null,
+      "nbcnews.com": {
+        "kinetic_focus": 0.2,
+        "humanitarian_focus": 0.2,
+        "diplomatic_focus": 0.25,
+        "economic_focus": 0.45,
+        "culpability_bias": 0.45
+      },
+      "usatoday.com": {
+        "kinetic_focus": 0.5,
+        "humanitarian_focus": 0.4333,
+        "diplomatic_focus": 0.3333,
+        "economic_focus": 0.3,
+        "culpability_bias": 0.5
+      }
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-10",
+    "outlets": {
+      "nytimes.com": {
+        "kinetic_focus": 0.9,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.6
+      },
+      "foxnews.com": {
+        "kinetic_focus": 0.625,
+        "humanitarian_focus": 0.125,
+        "diplomatic_focus": 0.15,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.675
+      },
+      "cnn.com": {
+        "kinetic_focus": 0.6,
+        "humanitarian_focus": 0.2333,
+        "diplomatic_focus": 0.3667,
+        "economic_focus": 0.3,
+        "culpability_bias": 0.5333
+      },
+      "bloomberg.com": null,
+      "npr.org": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.7,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.2
+      },
+      "breitbart.com": null,
+      "nbcnews.com": null,
+      "usatoday.com": {
+        "kinetic_focus": 0.4,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.2,
+        "economic_focus": 0.3,
+        "culpability_bias": 0.45
+      }
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-11",
+    "outlets": {
+      "nytimes.com": null,
+      "foxnews.com": {
+        "kinetic_focus": 0.65,
+        "humanitarian_focus": 0.325,
+        "diplomatic_focus": 0.35,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.775
+      },
+      "cnn.com": {
+        "kinetic_focus": 0.6,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.2,
+        "economic_focus": 0.9,
+        "culpability_bias": 0.4
+      },
+      "bloomberg.com": null,
+      "npr.org": {
+        "kinetic_focus": 0.7,
+        "humanitarian_focus": 0.6,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.8,
+        "culpability_bias": 0.5
+      },
+      "breitbart.com": {
+        "kinetic_focus": 0.6,
+        "humanitarian_focus": 0.4,
+        "diplomatic_focus": 0.3,
+        "economic_focus": 0.2,
+        "culpability_bias": 0.7
+      },
+      "nbcnews.com": null,
+      "usatoday.com": {
+        "kinetic_focus": 0.0,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.0,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.0
+      }
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-12",
+    "outlets": {
+      "nytimes.com": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.4,
+        "diplomatic_focus": 0.6,
+        "economic_focus": 0.2,
+        "culpability_bias": 0.7
+      },
+      "foxnews.com": null,
+      "cnn.com": null,
+      "bloomberg.com": null,
+      "npr.org": {
+        "kinetic_focus": 0.6,
+        "humanitarian_focus": 0.65,
+        "diplomatic_focus": 0.35,
+        "economic_focus": 0.55,
+        "culpability_bias": 0.65
+      },
+      "breitbart.com": {
+        "kinetic_focus": 0.1,
+        "humanitarian_focus": 0.4,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.6
+      },
+      "nbcnews.com": {
+        "kinetic_focus": 0.8,
+        "humanitarian_focus": 0.25,
+        "diplomatic_focus": 0.35,
+        "economic_focus": 0.25,
+        "culpability_bias": 0.65
+      },
+      "usatoday.com": {
+        "kinetic_focus": 0.1,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.0,
+        "economic_focus": 0.9,
+        "culpability_bias": 0.1
+      }
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-13",
+    "outlets": {
+      "nytimes.com": null,
+      "foxnews.com": null,
+      "cnn.com": {
+        "kinetic_focus": 0.4,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.7,
+        "culpability_bias": 0.2
+      },
+      "bloomberg.com": null,
+      "npr.org": null,
+      "breitbart.com": {
+        "kinetic_focus": 0.85,
+        "humanitarian_focus": 0.25,
+        "diplomatic_focus": 0.4,
+        "economic_focus": 0.35,
+        "culpability_bias": 0.75
+      },
+      "nbcnews.com": null,
+      "usatoday.com": {
+        "kinetic_focus": 0.5,
+        "humanitarian_focus": 0.5,
+        "diplomatic_focus": 0.35,
+        "economic_focus": 0.35,
+        "culpability_bias": 0.55
+      }
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-14",
+    "outlets": {
+      "nytimes.com": {
+        "kinetic_focus": 0.7,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.5
+      },
+      "foxnews.com": {
+        "kinetic_focus": 0.7,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.4,
+        "economic_focus": 0.3,
+        "culpability_bias": 0.6
+      },
+      "cnn.com": null,
+      "bloomberg.com": null,
+      "npr.org": {
+        "kinetic_focus": 0.4,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.2,
+        "economic_focus": 0.3,
+        "culpability_bias": 0.4
+      },
+      "breitbart.com": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.4,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.6
+      },
+      "nbcnews.com": {
+        "kinetic_focus": 0.1,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.0,
+        "economic_focus": 0.9,
+        "culpability_bias": 0.2
+      },
+      "usatoday.com": null
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-15",
+    "outlets": {
+      "nytimes.com": {
+        "kinetic_focus": 0.8,
+        "humanitarian_focus": 0.2,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.7,
+        "culpability_bias": 0.6
+      },
+      "foxnews.com": null,
+      "cnn.com": {
+        "kinetic_focus": 0.45,
+        "humanitarian_focus": 0.05,
+        "diplomatic_focus": 0.25,
+        "economic_focus": 0.5,
+        "culpability_bias": 0.35
+      },
+      "bloomberg.com": null,
+      "npr.org": null,
+      "breitbart.com": null,
+      "nbcnews.com": null,
+      "usatoday.com": null
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-16",
+    "outlets": {
+      "nytimes.com": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.0,
+        "economic_focus": 0.3,
+        "culpability_bias": 0.1
+      },
+      "foxnews.com": null,
+      "cnn.com": {
+        "kinetic_focus": 0.8,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.3,
+        "economic_focus": 0.7,
+        "culpability_bias": 0.5
+      },
+      "bloomberg.com": null,
+      "npr.org": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.5,
+        "economic_focus": 0.7,
+        "culpability_bias": 0.4
+      },
+      "breitbart.com": null,
+      "nbcnews.com": null,
+      "usatoday.com": null
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-17",
+    "outlets": {
+      "nytimes.com": null,
+      "foxnews.com": {
+        "kinetic_focus": 0.7,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.4,
+        "economic_focus": 0.2,
+        "culpability_bias": 0.8
+      },
+      "cnn.com": {
+        "kinetic_focus": 0.6,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.2,
+        "economic_focus": 0.1,
+        "culpability_bias": 0.4
+      },
+      "bloomberg.com": null,
+      "npr.org": {
+        "kinetic_focus": 0.1,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.3,
+        "economic_focus": 0.1,
+        "culpability_bias": 0.2
+      },
+      "breitbart.com": {
+        "kinetic_focus": 0.4,
+        "humanitarian_focus": 0.05,
+        "diplomatic_focus": 0.05,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.45
+      },
+      "nbcnews.com": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.7,
+        "economic_focus": 0.6,
+        "culpability_bias": 0.5
+      },
+      "usatoday.com": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.1,
+        "culpability_bias": 0.7
+      }
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-18",
+    "outlets": {
+      "nytimes.com": null,
+      "foxnews.com": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.6
+      },
+      "cnn.com": null,
+      "bloomberg.com": null,
+      "npr.org": null,
+      "breitbart.com": null,
+      "nbcnews.com": {
+        "kinetic_focus": 0.4,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.3,
+        "economic_focus": 0.1,
+        "culpability_bias": 0.3
+      },
+      "usatoday.com": {
+        "kinetic_focus": 0.8,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.4,
+        "economic_focus": 0.8,
+        "culpability_bias": 0.6
+      }
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-19",
+    "outlets": {
+      "nytimes.com": null,
+      "foxnews.com": null,
+      "cnn.com": {
+        "kinetic_focus": 0.4,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.2,
+        "economic_focus": 0.9,
+        "culpability_bias": 0.5
+      },
+      "bloomberg.com": null,
+      "npr.org": {
+        "kinetic_focus": 0.4,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.4,
+        "economic_focus": 0.15,
+        "culpability_bias": 0.25
+      },
+      "breitbart.com": {
+        "kinetic_focus": 0.4,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.8,
+        "culpability_bias": 0.2
+      },
+      "nbcnews.com": {
+        "kinetic_focus": 0.6,
+        "humanitarian_focus": 0.2,
+        "diplomatic_focus": 0.4,
+        "economic_focus": 0.4,
+        "culpability_bias": 0.3
+      },
+      "usatoday.com": null
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-20",
+    "outlets": {
+      "nytimes.com": null,
+      "foxnews.com": null,
+      "cnn.com": null,
+      "bloomberg.com": null,
+      "npr.org": {
+        "kinetic_focus": 0.8,
+        "humanitarian_focus": 0.6,
+        "diplomatic_focus": 0.3,
+        "economic_focus": 0.7,
+        "culpability_bias": 0.5
+      },
+      "breitbart.com": {
+        "kinetic_focus": 0.95,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.05,
+        "economic_focus": 0.4,
+        "culpability_bias": 0.85
+      },
+      "nbcnews.com": null,
+      "usatoday.com": {
+        "kinetic_focus": 0.7,
+        "humanitarian_focus": 0.4,
+        "diplomatic_focus": 0.3,
+        "economic_focus": 0.6,
+        "culpability_bias": 0.7
+      }
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-21",
+    "outlets": {
+      "nytimes.com": null,
+      "foxnews.com": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.7,
+        "diplomatic_focus": 0.2,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.8
+      },
+      "cnn.com": {
+        "kinetic_focus": 0.1,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.7,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.2
+      },
+      "bloomberg.com": null,
+      "npr.org": null,
+      "breitbart.com": {
+        "kinetic_focus": 0.8,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.4,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.5
+      },
+      "nbcnews.com": {
+        "kinetic_focus": 0.8,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.4,
+        "economic_focus": 0.7,
+        "culpability_bias": 0.6
+      },
+      "usatoday.com": null
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-22",
+    "outlets": {
+      "nytimes.com": null,
+      "foxnews.com": null,
+      "cnn.com": {
+        "kinetic_focus": 0.8,
+        "humanitarian_focus": 0.7,
+        "diplomatic_focus": 0.6,
+        "economic_focus": 0.7,
+        "culpability_bias": 0.7
+      },
+      "bloomberg.com": null,
+      "npr.org": {
+        "kinetic_focus": 0.35,
+        "humanitarian_focus": 0.55,
+        "diplomatic_focus": 0.4,
+        "economic_focus": 0.1,
+        "culpability_bias": 0.6
+      },
+      "breitbart.com": null,
+      "nbcnews.com": {
+        "kinetic_focus": 0.7,
+        "humanitarian_focus": 0.3,
+        "diplomatic_focus": 0.2,
+        "economic_focus": 0.8,
+        "culpability_bias": 0.6
+      },
+      "usatoday.com": null
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-23",
+    "outlets": {
+      "nytimes.com": {
+        "kinetic_focus": 0.6,
+        "humanitarian_focus": 0.2,
+        "diplomatic_focus": 0.4,
+        "economic_focus": 0.2,
+        "culpability_bias": 0.5
+      },
+      "foxnews.com": {
+        "kinetic_focus": 0.45,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.7,
+        "economic_focus": 0.5,
+        "culpability_bias": 0.4
+      },
+      "cnn.com": null,
+      "bloomberg.com": null,
+      "npr.org": null,
+      "breitbart.com": {
+        "kinetic_focus": 0.4,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.6,
+        "economic_focus": 0.3,
+        "culpability_bias": 0.8
+      },
+      "nbcnews.com": {
+        "kinetic_focus": 0.4,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.6,
+        "economic_focus": 0.2,
+        "culpability_bias": 0.5
+      },
+      "usatoday.com": {
+        "kinetic_focus": 0.4,
+        "humanitarian_focus": 0.2,
+        "diplomatic_focus": 0.5,
+        "economic_focus": 0.6,
+        "culpability_bias": 0.3
+      }
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-24",
+    "outlets": {
+      "nytimes.com": {
+        "kinetic_focus": 0.1,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.0,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.0
+      },
+      "foxnews.com": null,
+      "cnn.com": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.5,
+        "diplomatic_focus": 0.6,
+        "economic_focus": 0.2,
+        "culpability_bias": 0.4
+      },
+      "bloomberg.com": null,
+      "npr.org": {
+        "kinetic_focus": 0.25,
+        "humanitarian_focus": 0.4,
+        "diplomatic_focus": 0.65,
+        "economic_focus": 0.2,
+        "culpability_bias": 0.25
+      },
+      "breitbart.com": {
+        "kinetic_focus": 0.1,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.5,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.7
+      },
+      "nbcnews.com": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.9,
+        "diplomatic_focus": 0.3,
+        "economic_focus": 0.1,
+        "culpability_bias": 0.8
+      },
+      "usatoday.com": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.6,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.9,
+        "culpability_bias": 0.7
+      }
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-25",
+    "outlets": {
+      "nytimes.com": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.0,
+        "economic_focus": 0.8,
+        "culpability_bias": 0.1
+      },
+      "foxnews.com": {
+        "kinetic_focus": 0.2,
+        "humanitarian_focus": 0.05,
+        "diplomatic_focus": 0.05,
+        "economic_focus": 0.1,
+        "culpability_bias": 0.4
+      },
+      "cnn.com": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.7,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.6
+      },
+      "bloomberg.com": null,
+      "npr.org": {
+        "kinetic_focus": 0.3,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.7,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.4
+      },
+      "breitbart.com": {
+        "kinetic_focus": 0.1,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.8,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.6
+      },
+      "nbcnews.com": null,
+      "usatoday.com": null
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-26",
+    "outlets": {
+      "nytimes.com": null,
+      "foxnews.com": null,
+      "cnn.com": {
+        "kinetic_focus": 0.7,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.4,
+        "economic_focus": 0.5,
+        "culpability_bias": 0.6
+      },
+      "bloomberg.com": null,
+      "npr.org": null,
+      "breitbart.com": {
+        "kinetic_focus": 0.0,
+        "humanitarian_focus": 0.7,
+        "diplomatic_focus": 0.6,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.8
+      },
+      "nbcnews.com": null,
+      "usatoday.com": null
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-27",
+    "outlets": {
+      "nytimes.com": null,
+      "foxnews.com": null,
+      "cnn.com": {
+        "kinetic_focus": 0.1,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.2,
+        "economic_focus": 0.9,
+        "culpability_bias": 0.3
+      },
+      "bloomberg.com": null,
+      "npr.org": null,
+      "breitbart.com": {
+        "kinetic_focus": 0.8,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.1,
+        "economic_focus": 0.6,
+        "culpability_bias": 0.7
+      },
+      "nbcnews.com": null,
+      "usatoday.com": null
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-28",
+    "outlets": {
+      "nytimes.com": null,
+      "foxnews.com": null,
+      "cnn.com": null,
+      "bloomberg.com": null,
+      "npr.org": null,
+      "breitbart.com": {
+        "kinetic_focus": 0.0,
+        "humanitarian_focus": 0.0,
+        "diplomatic_focus": 0.0,
+        "economic_focus": 0.0,
+        "culpability_bias": 0.0
+      },
+      "nbcnews.com": null,
+      "usatoday.com": null
+    },
+    "us_dominant": null
+  },
+  {
+    "date": "2026-03-29",
+    "outlets": {
+      "nytimes.com": null,
+      "foxnews.com": {
+        "kinetic_focus": 0.8,
+        "humanitarian_focus": 0.1,
+        "diplomatic_focus": 0.4,
+        "economic_focus": 0.6,
+        "culpability_bias": 0.7
+      },
+      "cnn.com": null,
+      "bloomberg.com": null,
+      "npr.org": null,
+      "breitbart.com": null,
+      "nbcnews.com": null,
+      "usatoday.com": {
+        "kinetic_focus": 0.7,
+        "humanitarian_focus": 0.6,
+        "diplomatic_focus": 0.5,
+        "economic_focus": 0.4,
+        "culpability_bias": 0.6
+      }
+    },
+    "us_dominant": null
+  }
+]

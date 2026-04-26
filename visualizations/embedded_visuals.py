@@ -6,14 +6,21 @@ import streamlit.components.v1 as components
 
 
 def render_outlet_event_timeline():
-    """Render the outlet event timeline inside the Streamlit app."""
+    """Render the international outlet event timeline inside the Streamlit app."""
     html = _build_outlet_event_timeline_html()
-    # Height ~900px acts as the iframe viewport; content scrolls inside it.
-    # Scrollbar is hidden via CSS but scrolling is active.
     components.html(html, height=700, scrolling=True)
 
 
-def _build_outlet_event_timeline_html():
+def render_us_outlet_event_timeline():
+    """Render the US outlet event timeline inside the Streamlit app."""
+    html = _build_outlet_event_timeline_html(
+        timeline_file='us_timeline.json',
+        meta_file='us_meta.json',
+    )
+    components.html(html, height=700, scrolling=True)
+
+
+def _build_outlet_event_timeline_html(timeline_file='timeline.json', meta_file='meta.json'):
     """Build a self-contained HTML string with GSAP scroll experience intact."""
     base_dir = Path('iran-war-framing')
 
@@ -21,9 +28,9 @@ def _build_outlet_event_timeline_html():
     style_css  = (base_dir / 'style.css').read_text()
     main_js    = (base_dir / 'js' / 'main.js').read_text()
 
-    timeline = _load_json_for_script(base_dir / 'data' / 'timeline.json')
+    timeline = _load_json_for_script(base_dir / 'data' / timeline_file)
     events   = _load_json_for_script(base_dir / 'data' / 'events.json')
-    meta     = _load_json_for_script(base_dir / 'data' / 'meta.json')
+    meta     = _load_json_for_script(base_dir / 'data' / meta_file)
 
     # Strip script tags from the original HTML body; we re-add everything inline.
     body_match = re.search(r'<body>(.*)</body>', index_html, flags=re.DOTALL)

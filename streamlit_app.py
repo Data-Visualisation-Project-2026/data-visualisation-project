@@ -3,7 +3,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from visualizations.embedded_visuals import render_outlet_event_timeline
+from visualizations.embedded_visuals import render_outlet_event_timeline, render_us_outlet_event_timeline
 from visualizations.embedded_network import render_media_clusters
 from visualizations.framing_charts import make_framing_over_time_chart, make_international_framing_chart, make_combined_aggregate_chart, make_us_framing_band_chart
 from visualizations.text_analysis import (
@@ -403,9 +403,24 @@ elif page == 'Story Arc':
 
     st.markdown('<hr style="border:none;border-top:1px solid #e0e0e0;margin:0.5rem 0 1.5rem 0;">', unsafe_allow_html=True)
 
-    # ── D3 individual outlet breakdown ───────────────────────────────────────
-    st.subheader('Individual Outlet Breakdown')
-    st.caption('Scroll to follow where AP, Reuters, BBC, and Al Jazeera diverged from each other')
+    # ── D3 US individual outlet breakdown ────────────────────────────────────
+    st.subheader('US Outlets — Individual Breakdown')
+    st.caption('Feb 27–Mar 30, 2026 · NYT, Fox, CNN, Bloomberg, NPR, Breitbart, NBC, USA Today')
+
+    st.markdown(
+        '<p style="font-family:\'Roboto\',sans-serif; font-size:0.75rem; color:#999; margin:0 0 2px 0;">Dominant framing per day — US outlets</p>',
+        unsafe_allow_html=True
+    )
+    band_chart_us2 = make_us_framing_band_chart(df, score_cols)
+    st.plotly_chart(band_chart_us2, use_container_width=True, config={'displayModeBar': False})
+
+    render_us_outlet_event_timeline()
+
+    st.markdown('<hr style="border:none;border-top:1px solid #e0e0e0;margin:0.5rem 0 1.5rem 0;">', unsafe_allow_html=True)
+
+    # ── D3 international individual outlet breakdown ──────────────────────────
+    st.subheader('International Wire Services — Individual Breakdown')
+    st.caption('Mar 1–Apr 20, 2026 · AP News, Reuters, BBC, Al Jazeera')
     render_outlet_event_timeline()
 
 elif page == 'Media Clusters':

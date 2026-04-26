@@ -247,17 +247,18 @@ def make_us_framing_band_chart(df, score_cols):
         'culpability_bias':   'Culpability Bias',
     }
 
-    daily = df.groupby('publish_date')[DIMS].mean()
+    daily = df.groupby(df['publish_date'].dt.normalize())[DIMS].mean()
     dominant = daily.idxmax(axis=1).reset_index()
     dominant.columns = ['date', 'dominant_dim']
-    dominant['color'] = dominant['dominant_dim'].map(DIM_COLORS)
-    dominant['label'] = dominant['dominant_dim'].map(DIM_LABELS)
+    dominant = dominant.dropna(subset=['dominant_dim'])
+    dominant['color'] = dominant['dominant_dim'].map(DIM_COLORS).fillna('#cccccc')
+    dominant['label'] = dominant['dominant_dim'].map(DIM_LABELS).fillna('')
     dominant['y'] = 1
 
     fig = go.Figure()
     fig.add_trace(go.Bar(
-        x=dominant['date'],
-        y=dominant['y'],
+        x=dominant['date'].tolist(),
+        y=dominant['y'].tolist(),
         marker_color=dominant['color'].tolist(),
         marker_line_width=0,
         hovertemplate='%{customdata}<extra></extra>',

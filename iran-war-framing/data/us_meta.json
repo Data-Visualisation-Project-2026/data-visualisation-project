@@ -1,0 +1,46 @@
+{
+  "outlets": [
+    "nytimes.com",
+    "foxnews.com",
+    "cnn.com",
+    "bloomberg.com",
+    "npr.org",
+    "breitbart.com",
+    "nbcnews.com",
+    "usatoday.com"
+  ],
+  "outlet_labels": {
+    "nytimes.com":  "New York Times",
+    "foxnews.com":  "Fox News",
+    "cnn.com":      "CNN",
+    "bloomberg.com":"Bloomberg",
+    "npr.org":      "NPR",
+    "breitbart.com":"Breitbart",
+    "nbcnews.com":  "NBC News",
+    "usatoday.com": "USA Today"
+  },
+  "outlet_colors": {
+    "nytimes.com":  "#1a1a2e",
+    "foxnews.com":  "#e63946",
+    "cnn.com":      "#c8192a",
+    "bloomberg.com":"#4361ee",
+    "npr.org":      "#2a9d8f",
+    "breitbart.com":"#f4a261",
+    "nbcnews.com":  "#9b5de5",
+    "usatoday.com": "#457b9d"
+  },
+  "dimensions": [
+    "kinetic_focus",
+    "humanitarian_focus",
+    "diplomatic_focus",
+    "economic_focus",
+    "culpability_bias"
+  ],
+  "dimension_labels": {
+    "kinetic_focus":      "Kinetic",
+    "humanitarian_focus": "Humanitarian",
+    "diplomatic_focus":   "Diplomatic",
+    "economic_focus":     "Economic",
+    "culpability_bias":   "Culpability"
+  }
+}
