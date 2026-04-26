@@ -377,7 +377,7 @@ elif page == 'Story Arc':
     st.divider()
 
     # ── International aggregate chart ────────────────────────────────────────
-    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">Average framing score across AP, Reuters, BBC, Al Jazeera</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">Average framing score across non-US media outlets</h1>', unsafe_allow_html=True)
     intl_chart = make_international_framing_chart('iran-war-framing/data/timeline.json', dimension_order)
     st.plotly_chart(intl_chart, use_container_width=True)
 

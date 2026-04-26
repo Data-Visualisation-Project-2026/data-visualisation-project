@@ -216,11 +216,14 @@ def make_international_framing_chart(timeline_path, highlighted_dimensions):
         legend={'orientation': 'h', 'yanchor': 'bottom', 'y': 1.09, 'xanchor': 'left', 'x': 0},
         margin={'l': 55, 'r': 20, 't': 100, 'b': 50},
     )
+    date_min = daily.index.min()
+    date_max = daily.index.max()
+
     event_dates_ts = [pd.Timestamp(d) for d, _ in events]
     event_tick_labels = [f"{pd.Timestamp(d).strftime('%b')} {pd.Timestamp(d).day}" for d, _ in events]
 
     chart.update_xaxes(
-        range=[pd.Timestamp('2026-03-01'), pd.Timestamp('2026-04-20')],
+        range=[date_min, date_max + pd.Timedelta(days=1)],
         tickvals=event_dates_ts,
         ticktext=event_tick_labels,
         showgrid=False
@@ -324,8 +327,10 @@ def make_intl_framing_band_chart(timeline_path):
         rows.append(avg)
 
     daily = pd.DataFrame(rows).set_index('date')
+    date_min = daily.index.min()
+    date_max = daily.index.max()
     # Forward-fill missing calendar dates so the band has no white gaps
-    full_range = pd.date_range(daily.index.min(), daily.index.max(), freq='D')
+    full_range = pd.date_range(date_min, date_max, freq='D')
     daily = daily.reindex(full_range).ffill()
     dominant = daily.idxmax(axis=1).reset_index()
     dominant.columns = ['date', 'dominant_dim']
@@ -334,12 +339,16 @@ def make_intl_framing_band_chart(timeline_path):
     dominant['label'] = dominant['dominant_dim'].map(DIM_LABELS).fillna('')
     dominant['y'] = 1
 
+    DAY_MS = 86_400_000
+
     fig = go.Figure()
     fig.add_trace(go.Bar(
         x=dominant['date'].tolist(),
         y=dominant['y'].tolist(),
         marker_color=dominant['color'].tolist(),
         marker_line_width=0,
+        width=DAY_MS,
+        offset=0,
         hovertemplate='%{customdata}<extra></extra>',
         customdata=dominant['label'].tolist(),
         showlegend=False,
@@ -353,7 +362,7 @@ def make_intl_framing_band_chart(timeline_path):
         xaxis=dict(
             visible=False,
             type='date',
-            range=[pd.Timestamp('2026-03-01'), pd.Timestamp('2026-04-20')],
+            range=[date_min, date_max + pd.Timedelta(days=1)],
         ),
         yaxis=dict(visible=False, range=[0, 1]),
         plot_bgcolor='white',
