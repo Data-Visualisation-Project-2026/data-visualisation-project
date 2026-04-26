@@ -45,7 +45,7 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
         color='dimension',
         labels={
             'publish_date': '',
-            'average_score': 'Average Score',
+            'average_score': 'Avg. framing score (0 = absent, 1 = present)',
             'dimension': 'Dimension'
         },
         color_discrete_map=color_map,
@@ -114,7 +114,7 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
             'xanchor': 'left',
             'x': 0,
         },
-        margin={'l': 55, 'r': 20, 't': 100, 'b': 50}
+        margin={'l': 55, 'r': 20, 't': 100, 'b': 80}
     )
 
     event_dates_ts = [pd.Timestamp(d) for d, _ in events]
@@ -178,7 +178,7 @@ def make_international_framing_chart(timeline_path, highlighted_dimensions):
 
     chart = px.line(
         daily_long, x='date', y='average_score', color='dimension',
-        labels={'date': '', 'average_score': 'Average Score', 'dimension': 'Dimension'},
+        labels={'date': '', 'average_score': 'Avg. framing score (0 = absent, 1 = present)', 'dimension': 'Dimension'},
         color_discrete_map=color_map,
         category_orders={'dimension': legend_order},
     )
@@ -214,16 +214,13 @@ def make_international_framing_chart(timeline_path, highlighted_dimensions):
         hovermode='x unified',
         title_text='',
         legend={'orientation': 'h', 'yanchor': 'bottom', 'y': 1.09, 'xanchor': 'left', 'x': 0},
-        margin={'l': 55, 'r': 20, 't': 100, 'b': 50},
+        margin={'l': 55, 'r': 20, 't': 100, 'b': 80},
     )
-    date_min = daily.index.min()
-    date_max = daily.index.max()
-
     event_dates_ts = [pd.Timestamp(d) for d, _ in events]
     event_tick_labels = [f"{pd.Timestamp(d).strftime('%b')} {pd.Timestamp(d).day}" for d, _ in events]
 
     chart.update_xaxes(
-        range=[date_min, date_max + pd.Timedelta(days=1)],
+        range=[pd.Timestamp('2026-02-27'), pd.Timestamp('2026-04-20')],
         tickvals=event_dates_ts,
         ticktext=event_tick_labels,
         showgrid=False
@@ -339,16 +336,12 @@ def make_intl_framing_band_chart(timeline_path):
     dominant['label'] = dominant['dominant_dim'].map(DIM_LABELS).fillna('')
     dominant['y'] = 1
 
-    DAY_MS = 86_400_000
-
     fig = go.Figure()
     fig.add_trace(go.Bar(
         x=dominant['date'].tolist(),
         y=dominant['y'].tolist(),
         marker_color=dominant['color'].tolist(),
         marker_line_width=0,
-        width=DAY_MS,
-        offset=0,
         hovertemplate='%{customdata}<extra></extra>',
         customdata=dominant['label'].tolist(),
         showlegend=False,
@@ -362,7 +355,7 @@ def make_intl_framing_band_chart(timeline_path):
         xaxis=dict(
             visible=False,
             type='date',
-            range=[date_min, date_max + pd.Timedelta(days=1)],
+            range=[pd.Timestamp('2026-02-27'), pd.Timestamp('2026-04-20')],
         ),
         yaxis=dict(visible=False, range=[0, 1]),
         plot_bgcolor='white',

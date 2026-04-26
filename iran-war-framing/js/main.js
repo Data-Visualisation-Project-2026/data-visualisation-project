@@ -61,30 +61,86 @@ g.append("g")
 .call(ax => ax.selectAll("line").attr("stroke", "#e0e0e0"))
 .call(ax => ax.selectAll("text").attr("fill", "#555").attr("font-size", "11px").attr("dy", "1.2em"));
 
-// --- LINES: ONE PER OUTLET x DIMENSION ---
+// --- LINES: ONE PER OUTLET, switchable by dimension ---
 const line = d3.line()
-.x(d => xScale(parseDate(d.date)))
-.y(d => yScale(d.value))
-//
-.defined(d => d.value != null)                                                                                                                                                       
-      .curve(d3.curveCatmullRom.alpha(0.5));
-                                                                                                                                                                                           
-const FOCUS_DIM = "kinetic_focus"; // start with one dimension visible                                                                                                                 
-                                                                                                                                                                                           
-meta.outlets.forEach(outlet => {                                                                                                                                                       
-    const data = timeline                                                                                                                                                              
-    .filter(d => parseDate(d.date) !== null && d.outlets[outlet])                                                                                                                                                
-    .map(d => ({ date: d.date, value: d.outlets[outlet][FOCUS_DIM] }));                                                                                                              
-                                                                                                                                                                                           
-    g.append("path")
-    .datum(data)                                                                                                                                                                       
-    .attr("class", `line outlet-${outlet.replace(".", "-")}`)                                                                                                                        
-    .attr("fill", "none")                                                                                                                                                              
-    .attr("stroke", meta.outlet_colors[outlet])
-    .attr("stroke-width", 2)                                                                                                                                                           
-    .attr("opacity", 0.85)                                                                                                                                                           
-    .attr("d", line);                                                                                                                                                                  
- });                                                                                                                                                                                  
+    .x(d => xScale(parseDate(d.date)))
+    .y(d => yScale(d.value))
+    .defined(d => d.value != null)
+    .curve(d3.curveCatmullRom.alpha(0.5));
+
+let activeDim = "kinetic_focus";
+
+const DIMS_ORDER = [
+    "kinetic_focus",
+    "humanitarian_focus",
+    "diplomatic_focus",
+    "economic_focus",
+    "culpability_bias",
+];
+const DIM_DISPLAY = {
+    kinetic_focus:      "Kinetic",
+    humanitarian_focus: "Humanitarian",
+    diplomatic_focus:   "Diplomatic",
+    economic_focus:     "Economic",
+    culpability_bias:   "Culpability",
+};
+const DIM_PALETTE = {
+    kinetic_focus:      '#4E79A7',
+    humanitarian_focus: '#F28E2B',
+    diplomatic_focus:   '#76B7B2',
+    economic_focus:     '#59A14F',
+    culpability_bias:   '#E15759',
+};
+
+function drawLines(dim) {
+    g.selectAll(".outlet-line").remove();
+    meta.outlets.forEach(outlet => {
+        const data = timeline
+            .filter(d => parseDate(d.date) !== null && d.outlets[outlet])
+            .map(d => ({ date: d.date, value: d.outlets[outlet][dim] }));
+        g.append("path")
+            .datum(data)
+            .attr("class", "outlet-line")
+            .attr("fill", "none")
+            .attr("stroke", meta.outlet_colors[outlet])
+            .attr("stroke-width", 2)
+            .attr("opacity", 0.85)
+            .attr("d", line);
+    });
+}
+drawLines(activeDim);
+
+// Dimension toggle buttons rendered into #dim-buttons (injected into the page)
+const btnContainer = document.getElementById("dim-buttons");
+if (btnContainer) {
+    DIMS_ORDER.forEach(dim => {
+        const btn = document.createElement("button");
+        btn.textContent = DIM_DISPLAY[dim];
+        btn.dataset.dim = dim;
+        btn.style.cssText = [
+            "margin:0 4px 0 0",
+            "padding:4px 10px",
+            "border-radius:4px",
+            "border:1.5px solid " + DIM_PALETTE[dim],
+            "background:" + (dim === activeDim ? DIM_PALETTE[dim] : "transparent"),
+            "color:" + (dim === activeDim ? "#fff" : DIM_PALETTE[dim]),
+            "font-size:11px",
+            "font-family:Roboto,sans-serif",
+            "cursor:pointer",
+            "transition:background 0.15s,color 0.15s",
+        ].join(";");
+        btn.addEventListener("click", () => {
+            activeDim = dim;
+            drawLines(dim);
+            btnContainer.querySelectorAll("button").forEach(b => {
+                const d = b.dataset.dim;
+                b.style.background = d === dim ? DIM_PALETTE[d] : "transparent";
+                b.style.color      = d === dim ? "#fff"          : DIM_PALETTE[d];
+            });
+        });
+        btnContainer.appendChild(btn);
+    });
+}                                                                                                                                                                                  
 
 // ── Framing bands — dominant dimension per day ────────────────────────────
 const DIM_COLORS = {
