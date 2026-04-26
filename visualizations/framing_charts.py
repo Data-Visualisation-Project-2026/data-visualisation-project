@@ -327,3 +327,8 @@ def make_combined_aggregate_chart(df, score_cols, score_labels, timeline_path, h
                      dtick=7 * 24 * 60 * 60 * 1000)
 
     return fig
+
+
+def make_us_framing_band_chart(df, score_cols, score_labels, highlighted_dimensions):
+    """Backward-compatible wrapper for deployments that still import this chart helper."""
+    return make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimensions)
