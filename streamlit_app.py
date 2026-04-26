@@ -355,8 +355,7 @@ elif page == 'Story Arc':
     st.divider()
 
     # ── US aggregate chart ───────────────────────────────────────────────────
-    st.markdown('<h2 style="font-family:Georgia,serif; font-weight:normal; color:#1a1a1a;">US Media</h2>', unsafe_allow_html=True)
-    st.markdown('<h3 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a; margin-top:-0.5rem;">Average framing score across 77 US outlets</h3>', unsafe_allow_html=True)
+    st.markdown('<h3 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">Average framing score across 77 US outlets</h3>', unsafe_allow_html=True)
     us_chart = make_framing_over_time_chart(df, score_cols, score_labels, dimension_order)
     st.plotly_chart(us_chart, use_container_width=True)
 
@@ -378,8 +377,7 @@ elif page == 'Story Arc':
     st.divider()
 
     # ── International aggregate chart ────────────────────────────────────────
-    st.markdown('<h2 style="font-family:Georgia,serif; font-weight:normal; color:#1a1a1a;">International Wire Services</h2>', unsafe_allow_html=True)
-    st.markdown('<h3 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a; margin-top:-0.5rem;">Average framing score across AP, Reuters, BBC, Al Jazeera</h3>', unsafe_allow_html=True)
+    st.markdown('<h3 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">Average framing score across AP, Reuters, BBC, Al Jazeera</h3>', unsafe_allow_html=True)
     intl_chart = make_international_framing_chart('iran-war-framing/data/timeline.json', dimension_order)
     st.plotly_chart(intl_chart, use_container_width=True)
 
