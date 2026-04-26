@@ -55,11 +55,11 @@ def _ticktext(sort_order: list, grey_names: set) -> list:
 
 def _load_data():
     base = Path(__file__).parent.parent
-    pq_root = pd.read_parquet(base / "../iran_war_media_framing_scores.parquet")
-    pq_5    = pd.read_parquet(base / "iran_war_media_framing_scores2_clustered.parquet")
-    pq_avg  = pd.read_parquet(base / "iran_war_outlet_averages_clustered.parquet")
+    pq_root = pd.read_parquet(base / "iran_war_media_framing_scores_clustered.parquet", engine="pyarrow")
+    pq_5    = pd.read_parquet(base / "iran_war_media_framing_scores2_clustered.parquet", engine="pyarrow")
+    pq_avg  = pd.read_parquet(base / "iran_war_outlet_averages_clustered.parquet", engine="pyarrow")
 
-    pq_root["date"] = pd.to_datetime(pq_root["publish_date"], errors="coerce")
+    pq_root["date"] = pd.to_datetime(pq_root["indexed_date"], errors="coerce")
     pq_5["date"]    = pd.to_datetime(pq_5["indexed_date"].astype(str), errors="coerce")
 
     pq_root["country"] = pq_root["media_name"].map(NON_US_OUTLETS).fillna("US")
