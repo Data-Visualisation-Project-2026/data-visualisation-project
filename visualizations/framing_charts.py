@@ -118,10 +118,13 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
         margin={'l': 40, 'r': 20, 't': 100, 'b': 50}
     )
 
+    event_dates_ts = [pd.Timestamp(d) for d, _ in events]
+    event_tick_labels = [f"{pd.Timestamp(d).strftime('%b')} {pd.Timestamp(d).day}" for d, _ in events]
+
     chart.update_xaxes(
         range=[pd.Timestamp('2026-02-27'), pd.Timestamp('2026-04-21')],
-        dtick=4 * 24 * 60 * 60 * 1000,
-        tickformat='%b %d',
+        tickvals=event_dates_ts,
+        ticktext=event_tick_labels,
         showgrid=False
     )
 
@@ -215,10 +218,13 @@ def make_international_framing_chart(timeline_path, highlighted_dimensions):
         legend={'orientation': 'h', 'yanchor': 'bottom', 'y': 1.09, 'xanchor': 'left', 'x': 0},
         margin={'l': 40, 'r': 20, 't': 100, 'b': 50},
     )
+    event_dates_ts = [pd.Timestamp(d) for d, _ in events]
+    event_tick_labels = [f"{pd.Timestamp(d).strftime('%b')} {pd.Timestamp(d).day}" for d, _ in events]
+
     chart.update_xaxes(
         range=[pd.Timestamp('2026-02-27'), pd.Timestamp('2026-04-21')],
-        dtick=4 * 24 * 60 * 60 * 1000,
-        tickformat='%b %d',
+        tickvals=event_dates_ts,
+        ticktext=event_tick_labels,
         showgrid=False
     )
     chart.update_yaxes(showgrid=False)
@@ -484,12 +490,14 @@ def make_combined_aggregate_chart(df, score_cols, score_labels, timeline_path):
         },
         margin={'l': 130, 'r': 40, 't': 100, 'b': 80},
     )
+    event_dates_ts = [pd.Timestamp(d) for d, _ in events]
+    event_tick_labels = [f"{pd.Timestamp(d).strftime('%b')} {pd.Timestamp(d).day}" for d, _ in events]
+
     fig.update_yaxes(range=[0, 0.8], showgrid=False)
-    # showticklabels=True shows date ticks below both charts (shared_xaxes hides row1 by default)
     fig.update_xaxes(
         showgrid=False,
-        tickformat='%b %d',
-        dtick=7 * 24 * 60 * 60 * 1000,
+        tickvals=event_dates_ts,
+        ticktext=event_tick_labels,
         showticklabels=True,
     )
 
