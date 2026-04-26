@@ -218,8 +218,58 @@ def make_international_framing_chart(timeline_path, highlighted_dimensions):
     return chart
 
 
-def make_combined_aggregate_chart(df, score_cols, score_labels, timeline_path, highlighted_dimensions):
-    """US (top) and international (bottom) aggregate as a shared-x subplot — event lines join across both."""
+def make_us_framing_band_chart(df, score_cols):
+    """Thin colored-rectangle strip showing dominant US framing per day."""
+    DIMS = score_cols
+    DIM_COLORS = {
+        'kinetic_focus':      '#4E79A7',
+        'humanitarian_focus': '#F28E2B',
+        'diplomatic_focus':   '#76B7B2',
+        'economic_focus':     '#59A14F',
+        'culpability_bias':   '#E15759',
+    }
+    DIM_LABELS = {
+        'kinetic_focus':      'Kinetic',
+        'humanitarian_focus': 'Humanitarian',
+        'diplomatic_focus':   'Diplomatic',
+        'economic_focus':     'Economic',
+        'culpability_bias':   'Culpability Bias',
+    }
+
+    daily = df.groupby('publish_date')[DIMS].mean()
+    dominant = daily.idxmax(axis=1).reset_index()
+    dominant.columns = ['date', 'dominant_dim']
+    dominant['color'] = dominant['dominant_dim'].map(DIM_COLORS)
+    dominant['label'] = dominant['dominant_dim'].map(DIM_LABELS)
+    dominant['y'] = 1
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x=dominant['date'],
+        y=dominant['y'],
+        marker_color=dominant['color'].tolist(),
+        marker_line_width=0,
+        hovertemplate='%{customdata}<extra></extra>',
+        customdata=dominant['label'].tolist(),
+        showlegend=False,
+    ))
+
+    fig.update_layout(
+        height=36,
+        margin=dict(l=0, r=0, t=0, b=0),
+        bargap=0,
+        bargroupgap=0,
+        xaxis=dict(visible=False),
+        yaxis=dict(visible=False, range=[0, 1]),
+        plot_bgcolor='white',
+        paper_bgcolor='white',
+    )
+
+    return fig
+
+
+def make_combined_aggregate_chart(df, score_cols, score_labels, timeline_path):
+    """US (top) and international (bottom) aggregate as a shared-x subplot."""
     from plotly.subplots import make_subplots
 
     DIMS = ['kinetic_focus', 'humanitarian_focus', 'diplomatic_focus',
@@ -257,73 +307,110 @@ def make_combined_aggregate_chart(df, score_cols, score_labels, timeline_path, h
         rows.append(avg)
     daily_intl = pd.DataFrame(rows)
 
-    # ── Subplot figure ─────────────────────────────────────────────────────
+    # vertical_spacing=0.28 → row1 y=[0.64, 1.0], row2 y=[0, 0.36], gap y=[0.36, 0.64]
+    # Enough gap for event markers + legend above each chart and date ticks below each.
     fig = make_subplots(
         rows=2, cols=1,
         shared_xaxes=True,
-        vertical_spacing=0.12,
-        subplot_titles=[
-            '77 US Outlets — domestic media',
-            'AP · Reuters · BBC · Al Jazeera — international wire services',
-        ],
+        vertical_spacing=0.28,
     )
 
     for dim in score_cols:
         label = score_labels[dim]
-        is_highlighted = label in highlighted_dimensions
-        color  = color_map[label]
-        width  = 3.5 if is_highlighted else 1.5
-        opacity = 1.0 if is_highlighted else 0.2
+        color = color_map[label]
 
         fig.add_trace(go.Scatter(
             x=daily_us['publish_date'], y=daily_us[dim],
             name=label, legendgroup=label, showlegend=True,
-            line=dict(color=color, width=width), opacity=opacity,
+            line=dict(color=color, width=2.0), opacity=1.0,
             hovertemplate=f'{label}: %{{y:.2f}}<extra></extra>',
         ), row=1, col=1)
 
         fig.add_trace(go.Scatter(
             x=daily_intl['date'], y=daily_intl[dim],
-            name=label, legendgroup=label, showlegend=False,
-            line=dict(color=color, width=width), opacity=opacity,
+            name=label, legendgroup=f'{label}_intl', showlegend=True,
+            legend='legend2',
+            line=dict(color=color, width=2.0), opacity=1.0,
             hovertemplate=f'{label}: %{{y:.2f}}<extra></extra>',
         ), row=2, col=1)
 
-    # ── Event lines — span both subplots via paper coordinates ────────────
+    # ── Side titles — vertical text, left of each chart ─────────────────────
+    # Row midpoints: row1=(0.64+1.0)/2=0.82, row2=(0+0.36)/2=0.18
+    for y_mid, text in [
+        (0.82, '77 US Outlets — domestic media'),
+        (0.18, 'AP · Reuters · BBC · Al Jazeera'),
+    ]:
+        fig.add_annotation(
+            x=-0.09, y=y_mid,
+            xref='paper', yref='paper',
+            text=text,
+            showarrow=False,
+            textangle=-90,
+            xanchor='center', yanchor='middle',
+            font={'size': 14, 'color': '#111111'},
+        )
+
+    # ── Event markers — dashed vlines with labels just ABOVE each chart ──────
+    # All labels anchored left (text to the RIGHT of each vertical line).
+    # Row 1 domain top = 1.0  → markers at y=1.01
+    # Row 2 domain top = 0.36 → markers at y=0.365
     events = [
-        ('2026-02-28', 'Opening Strikes',                     'left'),
-        ('2026-03-08', 'Oil Breaks $100',                     'right'),
-        ('2026-03-18', 'Energy Escalation',                   'right'),
-        ('2026-03-27', 'Iran Strikes US Base in Saudi Arabia','right'),
-        ('2026-04-05', 'Escalation Returns',                  'right'),
-        ('2026-04-08', 'Ceasefire',                           'right'),
+        ('2026-02-28', 'Opening Strikes'),
+        ('2026-03-08', 'Oil Breaks $100'),
+        ('2026-03-18', 'Energy Escalation'),
+        ('2026-03-27', 'Iran Strikes Saudi Base'),
+        ('2026-04-05', 'Escalation Returns'),
+        ('2026-04-08', 'Ceasefire'),
     ]
 
-    for event_date, label, anchor in events:
+    for event_date, label in events:
         ts = pd.Timestamp(event_date)
         fig.add_vline(
             x=ts,
             line_width=1, line_dash='dash',
             line_color='rgba(90,90,90,0.45)',
         )
+        # Just above row 1
         fig.add_annotation(
-            x=ts, y=1.04, xref='x', yref='paper',
+            x=ts, y=1.01, xref='x', yref='paper',
             text=label, showarrow=False,
-            xanchor=anchor, yanchor='bottom',
-            font={'size': 10, 'color': 'rgba(70,70,70,0.85)'},
+            xanchor='left', yanchor='bottom',
+            textangle=0,
+            font={'size': 11, 'color': 'rgba(60,60,60,0.9)'},
+        )
+        # Just above row 2 (in the gap)
+        fig.add_annotation(
+            x=ts, y=0.365, xref='x', yref='paper',
+            text=label, showarrow=False,
+            xanchor='left', yanchor='bottom',
+            textangle=0,
+            font={'size': 11, 'color': 'rgba(60,60,60,0.9)'},
         )
 
     fig.update_layout(
-        height=1150,
+        height=1100,
         hovermode='x unified',
+        # Legend for US chart — below row-1 date ticks, in the gap
         legend={
-            'orientation': 'h', 'yanchor': 'bottom', 'y': 1.02,
-            'xanchor': 'center', 'x': 0.5,
+            'orientation': 'h',
+            'yanchor': 'top', 'y': 0.60,
+            'xanchor': 'left', 'x': 0,
         },
-        margin={'l': 40, 'r': 40, 't': 100, 'b': 50},
+        # Legend for international chart — below row-2 date ticks, in bottom margin
+        legend2={
+            'orientation': 'h',
+            'yanchor': 'top', 'y': -0.03,
+            'xanchor': 'left', 'x': 0,
+        },
+        margin={'l': 130, 'r': 40, 't': 100, 'b': 80},
     )
     fig.update_yaxes(range=[0, 0.8], showgrid=False)
-    fig.update_xaxes(showgrid=False, tickformat='%b %d',
-                     dtick=7 * 24 * 60 * 60 * 1000)
+    # showticklabels=True shows date ticks below both charts (shared_xaxes hides row1 by default)
+    fig.update_xaxes(
+        showgrid=False,
+        tickformat='%b %d',
+        dtick=7 * 24 * 60 * 60 * 1000,
+        showticklabels=True,
+    )
 
     return fig
