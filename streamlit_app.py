@@ -449,6 +449,24 @@ elif page == 'Media Differences':
             with column:
                 st.plotly_chart(chart, use_container_width=True)
 
+    st.markdown(
+        """
+        These unique phrases show what each media cluster tends to bring into focus.
+
+        - **Cluster 0: Mainstream / Moderate** reads like broad general coverage. It touches regional conflict through phrases like “southern Lebanon” and “backed Hezbollah,” but also brings in oil and energy through phrases like “million barrels” and “Brent crude.” This makes the cluster feel wide-ranging rather than driven by one clear storyline.
+
+        - **Cluster 1: Dissident / Left-Wing** focuses strongly on military harm and U.S. involvement. Phrases like “troops killed,” “killed injured,” and “American forces” make the costs of military action more visible. Compared with Cluster 0, this cluster feels more focused on consequence and responsibility.
+
+        - **Cluster 2: Smaller Mainstream** is the least centered on one clear war theme. Phrases such as “religious freedom,” “Iranian hackers,” and “early elections” suggest that these outlets often connect the war to wider political, social, and security issues.
+
+        - **Cluster 3: Business-Focused** has the clearest angle. Phrases like “Brent crude,” “barrels oil,” “Dow Jones,” and “Nasdaq composite” show that this cluster mainly treats the war as an oil, energy, and market-risk story.
+
+        - **Cluster 4: Right-Wing / Military** makes the war more personal and military-centered. Names and places like “Declan Coady,” “Noah Tietjens,” and “West Des Moines” point to coverage of U.S. service members killed in the conflict, while phrases like “American forces” and “army reserve” keep the focus on military service and sacrifice.
+
+        Overall, the phrases make the cluster differences easier to feel: some outlets turn the war into a market story, some into a military-cost story, and some into a broader political event.
+        """
+    )
+
     st.subheader('How Framing Differs Across Major Media Outlets')
     st.caption('Based on 1,736 articles from 5 major media outlets')
     
