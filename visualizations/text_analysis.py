@@ -33,7 +33,8 @@ DOMAIN_STOP_WORDS = {
 
 BLOCKED_PHRASES = {
     'john yang', 'nick schifrin', 'hegseth caine', 'trump hegseth',
-    'cody khork', 'capt cody', 'class nicole', 'sgt class'
+    'cody khork', 'capt cody', 'class nicole', 'sgt class', 'episode trump',
+    'positive negative', 'group stage'
 }
 
 
