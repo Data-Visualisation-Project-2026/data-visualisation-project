@@ -367,6 +367,23 @@ elif page == 'Story Arc':
         unsafe_allow_html=True
     )
 
+    st.markdown(
+        """
+        The overall pattern suggests coverage was driven mainly by military action and responsibility/blame.
+        Kinetic framing stayed high for much of the period, while Culpability Bias remained consistently prominent —
+        many articles framed the war not only through what happened, but also through who was responsible.
+        Humanitarian framing stayed lower overall, suggesting that civilian suffering and human impacts were
+        present but less central in the aggregate coverage.
+
+        Diplomatic framing was unusually high at the beginning, likely reflecting early attention to official
+        statements, international reactions, and political responses — then dropped and stayed relatively low.
+        Economic framing becomes more visible later, especially around moments linked to energy and regional escalation.
+
+        Taken together, the five lines show that media framing was not fixed: as the war developed, coverage
+        moved between military, political, economic, and blame-centered narratives.
+        """
+    )
+
     st.divider()
 
     # ── US individual outlet D3 breakdown ────────────────────────────────────
