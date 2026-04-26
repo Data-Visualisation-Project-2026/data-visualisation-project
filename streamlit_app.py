@@ -5,7 +5,7 @@ import streamlit as st
 
 from visualizations.embedded_visuals import render_outlet_event_timeline
 from visualizations.embedded_network import render_media_clusters
-from visualizations.framing_charts import make_framing_over_time_chart, make_international_framing_chart, make_combined_aggregate_chart
+from visualizations.framing_charts import make_framing_over_time_chart, make_international_framing_chart, make_combined_aggregate_chart, make_us_framing_band_chart
 from visualizations.text_analysis import (
     get_top_cluster_bigrams,
     make_cluster_bigram_charts,
@@ -351,30 +351,59 @@ elif page == 'Story Arc':
         unsafe_allow_html=True
     )
 
-    st.subheader('Two Media Universes, One War')
-    st.caption('Feb 27–Apr 20, 2026 · 77 US outlets (top) vs. AP, Reuters, BBC, Al Jazeera (bottom)')
+    # ── US aggregate chart ───────────────────────────────────────────────────
+    st.subheader('77 US Outlets — Domestic Media')
+    st.caption('Feb 27–Apr 20, 2026 · average framing score across 77 US outlets')
+    us_chart = make_framing_over_time_chart(df, score_cols, score_labels, dimension_order)
+    st.plotly_chart(us_chart, use_container_width=True)
 
-    highlighted_dimensions_arc = st.multiselect(
-        'Highlight dimensions:',
-        options=dimension_order,
-        default=dimension_order,
-        key='story_arc_dimension_selector'
+    # ── US framing band ──────────────────────────────────────────────────────
+    st.markdown(
+        '<p style="font-family:\'Roboto\',sans-serif; font-size:0.75rem; color:#999; margin:0 0 2px 0;">Dominant framing per day — US outlets</p>',
+        unsafe_allow_html=True
+    )
+    band_chart = make_us_framing_band_chart(df, score_cols)
+    st.plotly_chart(band_chart, use_container_width=True, config={'displayModeBar': False})
+
+    # ── Explanatory text ─────────────────────────────────────────────────────
+    st.markdown(
+        """
+        <p style="max-width:720px; line-height:1.7; color:#444; margin-top:0.8rem; margin-bottom:1.5rem;">
+        The overall pattern suggests that US coverage was driven mainly by military action and responsibility/blame.
+        Kinetic framing stayed high for much of the period, while Culpability Bias remained consistently prominent —
+        reflecting a tendency to assign moral agency to specific actors throughout the conflict.
+        Humanitarian and diplomatic frames surfaced in pockets but never dominated.
+        Economic framing spiked briefly when oil crossed $100, then receded.
+        Taken together, the five lines show that media framing was not fixed: as the war developed,
+        coverage moved between military, political, economic, and blame-centered narratives.
+        </p>
+        """,
+        unsafe_allow_html=True
     )
 
-    combined_chart = make_combined_aggregate_chart(
-        df, score_cols, score_labels,
-        'iran-war-framing/data/timeline.json',
-        highlighted_dimensions_arc
-    )
-    st.plotly_chart(combined_chart, use_container_width=True)
+    st.markdown('<hr style="border:none;border-top:1px solid #e0e0e0;margin:0.5rem 0 1.5rem 0;">', unsafe_allow_html=True)
+
+    # ── International aggregate chart ────────────────────────────────────────
+    st.subheader('AP · Reuters · BBC · Al Jazeera — International Wire Services')
+    st.caption('Feb 27–Apr 20, 2026 · average framing score across 4 international outlets')
+    intl_chart = make_international_framing_chart('iran-war-framing/data/timeline.json', dimension_order)
+    st.plotly_chart(intl_chart, use_container_width=True)
 
     st.markdown(
         """
-        US domestic coverage was driven mainly by culpability and kinetic framing — who was responsible and what happened militarily. International wire services tell a different story: economic framing rises sharply after mid-March, while kinetic framing is more muted. The two universes diverge most visibly around the Saudi base attack (Mar 27) and the ceasefire (Apr 8), where international outlets shifted toward diplomatic and economic frames while US outlets stayed focused on blame.
-        """
+        <p style="max-width:720px; line-height:1.7; color:#444; margin-top:0.8rem; margin-bottom:1.5rem;">
+        International wire services tell a different story: economic framing rises sharply after mid-March,
+        while kinetic framing is more muted. The two universes diverge most visibly around the Saudi base attack (Mar 27)
+        and the ceasefire (Apr 8), where international outlets shifted toward diplomatic and economic frames
+        while US outlets stayed focused on blame.
+        </p>
+        """,
+        unsafe_allow_html=True
     )
 
-    st.divider()
+    st.markdown('<hr style="border:none;border-top:1px solid #e0e0e0;margin:0.5rem 0 1.5rem 0;">', unsafe_allow_html=True)
+
+    # ── D3 individual outlet breakdown ───────────────────────────────────────
     st.subheader('Individual Outlet Breakdown')
     st.caption('Scroll to follow where AP, Reuters, BBC, and Al Jazeera diverged from each other')
     render_outlet_event_timeline()
