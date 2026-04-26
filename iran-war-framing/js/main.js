@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
     console.log("outlets:", meta.outlets);
 
 // --- Dimension Setup ---
-const MARGIN = { top: 72, right: 20, bottom: 48, left: 48 };
+const MARGIN = { top: 112, right: 20, bottom: 48, left: 48 };
 const VH = Math.round(window.innerHeight * 0.82);
 const DAY_WIDTH = Math.ceil(window.innerWidth * 4 / timeline.length);
 const chartH = VH - MARGIN.top - MARGIN.bottom;
@@ -86,7 +86,7 @@ meta.outlets.forEach(outlet => {
     .attr("d", line);                                                                                                                                                                  
  });                                                                                                                                                                                  
 
-// ── Framing band — dominant dimension per day ────────────────────────────
+// ── Framing bands — dominant dimension per day ────────────────────────────
 const DIM_COLORS = {
     kinetic_focus:      '#4E79A7',
     humanitarian_focus: '#F28E2B',
@@ -102,39 +102,40 @@ const DIM_LABELS = {
     culpability_bias:   'Culpability',
 };
 const DIMS = Object.keys(DIM_COLORS);
-const BAND_H = 40;
-const BAND_Y = -(BAND_H + 16); // sits in the top margin, above the chart area
+const BAND_H = 36;
+const BAND_GAP = 6;
+const BAND_Y_INTL = -(BAND_H + 14);           // international band — closer to chart
+const BAND_Y_US   = -(BAND_H * 2 + BAND_GAP + 14); // US band — above international
 
-// Dominant framing per day from the 77 US outlets (Overview signal)
-const bandData = timeline
-    .filter(d => parseDate(d.date) !== null && d.us_dominant)
-    .map(d => ({ date: parseDate(d.date), dominant: d.us_dominant }));
-
-// Band background
-g.append('rect')
-    .attr('x', 0).attr('y', BAND_Y)
-    .attr('width', totalW).attr('height', BAND_H)
-    .attr('fill', '#f9f9f9').attr('rx', 3);
-
-// Coloured rectangles — one per day
-bandData.forEach((d, i) => {
-    const x0 = xScale(d.date);
-    const x1 = i < bandData.length - 1 ? xScale(bandData[i + 1].date) : x0 + DAY_WIDTH;
+function drawBand(data, bandY, key) {
     g.append('rect')
-        .attr('x', x0).attr('y', BAND_Y)
-        .attr('width', Math.max(1, x1 - x0)).attr('height', BAND_H)
-        .attr('fill', DIM_COLORS[d.dominant]).attr('opacity', 0.72);
-});
+        .attr('x', 0).attr('y', bandY)
+        .attr('width', totalW).attr('height', BAND_H)
+        .attr('fill', '#f9f9f9').attr('rx', 2);
+    data.filter(d => d[key]).forEach((d, i) => {
+        const x0 = xScale(d.date);
+        const x1 = i < data.length - 1 ? xScale(data[i + 1].date) : x0 + DAY_WIDTH;
+        g.append('rect')
+            .attr('x', x0).attr('y', bandY)
+            .attr('width', Math.max(1, x1 - x0)).attr('height', BAND_H)
+            .attr('fill', DIM_COLORS[d[key]]).attr('opacity', 0.72);
+    });
+}
 
-// Band label on the left (in the margin)
-g.append('text')
-    .attr('x', -MARGIN.left + 4).attr('y', BAND_Y + BAND_H / 2 - 5)
-    .attr('fill', '#999').attr('font-size', '9px').attr('font-family', 'monospace')
-    .text('DOMINANT');
-g.append('text')
-    .attr('x', -MARGIN.left + 4).attr('y', BAND_Y + BAND_H / 2 + 7)
-    .attr('fill', '#999').attr('font-size', '9px').attr('font-family', 'monospace')
-    .text('FRAMING');
+const allBandData = timeline
+    .filter(d => parseDate(d.date) !== null)
+    .map(d => ({ date: parseDate(d.date), us_dominant: d.us_dominant, intl_dominant: d.intl_dominant }));
+
+drawBand(allBandData, BAND_Y_US,   'us_dominant');
+drawBand(allBandData, BAND_Y_INTL, 'intl_dominant');
+
+// Band labels on the left
+[['US', BAND_Y_US], ['INTL', BAND_Y_INTL]].forEach(([label, bandY]) => {
+    g.append('text')
+        .attr('x', -MARGIN.left + 4).attr('y', bandY + BAND_H / 2 + 4)
+        .attr('fill', '#999').attr('font-size', '9px').attr('font-family', 'monospace')
+        .text(label);
+});
 
 // Dimension legend — right of outlet legend
 const dimLegend = svg.append('g')
@@ -153,12 +154,12 @@ Object.entries(DIM_LABELS).forEach(([dim, label], i) => {
 events.forEach(event => {
     const x = xScale(parseDate(event.date));
     g.append("line")
-        .attr("x1", x).attr("x2", x).attr("y1", BAND_Y).attr("y2", chartH)
+        .attr("x1", x).attr("x2", x).attr("y1", BAND_Y_US).attr("y2", chartH)
         .attr("stroke", "#555").attr("stroke-width", 1)
         .attr("stroke-dasharray", "4,4").attr("opacity", 0.5);
 
     g.append("text")
-        .attr("x", x + 6).attr("y", BAND_Y - 4).attr("fill", "#555")
+        .attr("x", x + 6).attr("y", BAND_Y_US - 4).attr("fill", "#555")
         .attr("font-size", "10px").attr("font-family", "monospace")
         .text(event.label);
 });
