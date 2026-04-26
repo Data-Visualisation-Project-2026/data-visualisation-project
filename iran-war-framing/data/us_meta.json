@@ -1,4 +1,5 @@
 {
+  "bands": ["us", "intl"],
   "outlets": [
     "nytimes.com",
     "foxnews.com",

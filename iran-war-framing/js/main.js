@@ -182,20 +182,26 @@ const allBandData = timeline
     .filter(d => parseDate(d.date) !== null)
     .map(d => ({ date: parseDate(d.date), us_dominant: d.us_dominant, intl_dominant: d.intl_dominant }));
 
-drawBand(allBandData, BAND_Y_US,   'us_dominant');
-drawBand(allBandData, BAND_Y_INTL, 'intl_dominant');
-
-// Band labels on the left
-[['US', BAND_Y_US], ['INTL', BAND_Y_INTL]].forEach(([label, bandY]) => {
+// Draw only the bands listed in meta.bands (["us","intl"] or ["intl"])
+const showBands = meta.bands || ['us', 'intl'];
+const bandConfig = [
+    { key: 'us_dominant',   bandY: BAND_Y_US,   label: 'US'   },
+    { key: 'intl_dominant', bandY: BAND_Y_INTL, label: 'INTL' },
+];
+bandConfig.filter(b => showBands.includes(b.label.toLowerCase())).forEach(b => {
+    drawBand(allBandData, b.bandY, b.key);
     g.append('text')
-        .attr('x', -MARGIN.left + 4).attr('y', bandY + BAND_H / 2 + 4)
+        .attr('x', -MARGIN.left + 4).attr('y', b.bandY + BAND_H / 2 + 4)
         .attr('fill', '#999').attr('font-size', '9px').attr('font-family', 'monospace')
-        .text(label);
+        .text(b.label);
 });
 
-// Dimension legend — right of outlet legend
+// Top of the uppermost visible band — event lines start here
+const topBandY = showBands.includes('us') ? BAND_Y_US : BAND_Y_INTL;
+
+// Dimension legend
 const dimLegend = svg.append('g')
-    .attr('transform', `translate(${MARGIN.left}, ${svgH - 32})`);
+    .attr('transform', `translate(${MARGIN.left}, ${svgH - 16})`);
 Object.entries(DIM_LABELS).forEach(([dim, label], i) => {
     const lx = i * 130;
     dimLegend.append('rect')
@@ -206,29 +212,20 @@ Object.entries(DIM_LABELS).forEach(([dim, label], i) => {
         .attr('fill', '#666').attr('font-size', '11px').text(label);
 });
 
-// ── Event markers — run through band and chart ────────────────────────────
+// ── Event markers — run through bands and chart ───────────────────────────
 events.forEach(event => {
     const x = xScale(parseDate(event.date));
     g.append("line")
-        .attr("x1", x).attr("x2", x).attr("y1", BAND_Y_US).attr("y2", chartH)
+        .attr("x1", x).attr("x2", x).attr("y1", topBandY).attr("y2", chartH)
         .attr("stroke", "#555").attr("stroke-width", 1)
         .attr("stroke-dasharray", "4,4").attr("opacity", 0.5);
 
+    const parsedEvtDate = parseDate(event.date);
+    const dateStr = d3.timeFormat("%b ")(parsedEvtDate) + parsedEvtDate.getDate();
     g.append("text")
-        .attr("x", x + 6).attr("y", BAND_Y_US - 4).attr("fill", "#555")
+        .attr("x", x + 6).attr("y", topBandY - 4).attr("fill", "#555")
         .attr("font-size", "10px").attr("font-family", "monospace")
-        .text(event.label);
-});
-
-// ── Outlet legend ────────────────────────────────────────────────────────
-const legend = svg.append("g").attr("transform", `translate(${MARGIN.left}, ${svgH - 16})`);
-meta.outlets.forEach((outlet, i) => {
-    const lx = i * 160;
-    legend.append("rect").attr("x", lx).attr("y", 0).attr("width", 12).attr("height", 12)
-        .attr("fill", meta.outlet_colors[outlet]).attr("rx", 2);
-    legend.append("text").attr("x", lx + 18).attr("y", 10)
-        .attr("fill", "#444").attr("font-size", "12px")
-        .text(meta.outlet_labels[outlet]);
+        .text(`${dateStr}. ${event.label}`);
 });                                                                                                                                                                                  
                                                                                                                                                                                          
 // ── Horizontal scroll via position:fixed + scroll listener ───────────────

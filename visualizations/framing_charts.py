@@ -110,18 +110,18 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
         legend={
             'orientation': 'h',
             'yanchor': 'bottom',
-            'y': 1.09,
+            'y': 1.18,
             'xanchor': 'left',
             'x': 0,
         },
-        margin={'l': 55, 'r': 20, 't': 100, 'b': 80}
+        margin={'l': 55, 'r': 20, 't': 130, 'b': 80}
     )
 
     event_dates_ts = [pd.Timestamp(d) for d, _ in events]
     event_tick_labels = [f"{pd.Timestamp(d).strftime('%b')} {pd.Timestamp(d).day}" for d, _ in events]
 
     chart.update_xaxes(
-        range=[pd.Timestamp('2026-02-27'), pd.Timestamp('2026-03-30')],
+        range=[pd.Timestamp('2026-02-27'), pd.Timestamp('2026-04-20')],
         tickvals=event_dates_ts,
         ticktext=event_tick_labels,
         showgrid=False
@@ -213,8 +213,8 @@ def make_international_framing_chart(timeline_path, highlighted_dimensions):
         yaxis_range=[0, 0.8],
         hovermode='x unified',
         title_text='',
-        legend={'orientation': 'h', 'yanchor': 'bottom', 'y': 1.09, 'xanchor': 'left', 'x': 0},
-        margin={'l': 55, 'r': 20, 't': 100, 'b': 80},
+        legend={'orientation': 'h', 'yanchor': 'bottom', 'y': 1.18, 'xanchor': 'left', 'x': 0},
+        margin={'l': 55, 'r': 20, 't': 130, 'b': 80},
     )
     event_dates_ts = [pd.Timestamp(d) for d, _ in events]
     event_tick_labels = [f"{pd.Timestamp(d).strftime('%b')} {pd.Timestamp(d).day}" for d, _ in events]
@@ -275,7 +275,7 @@ def make_us_framing_band_chart(df, score_cols):
         xaxis=dict(
             visible=False,
             type='date',
-            range=[pd.Timestamp('2026-02-27'), pd.Timestamp('2026-03-30')],
+            range=[pd.Timestamp('2026-02-27'), pd.Timestamp('2026-04-20')],
         ),
         yaxis=dict(visible=False, range=[0, 1]),
         plot_bgcolor='white',
