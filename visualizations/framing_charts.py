@@ -121,7 +121,7 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
     event_tick_labels = [f"{pd.Timestamp(d).strftime('%b')} {pd.Timestamp(d).day}" for d, _ in events]
 
     chart.update_xaxes(
-        range=[pd.Timestamp('2026-02-27'), pd.Timestamp('2026-03-31')],
+        range=[pd.Timestamp('2026-02-27'), pd.Timestamp('2026-03-30')],
         tickvals=event_dates_ts,
         ticktext=event_tick_labels,
         showgrid=False
@@ -220,7 +220,7 @@ def make_international_framing_chart(timeline_path, highlighted_dimensions):
     event_tick_labels = [f"{pd.Timestamp(d).strftime('%b')} {pd.Timestamp(d).day}" for d, _ in events]
 
     chart.update_xaxes(
-        range=[pd.Timestamp('2026-03-01'), pd.Timestamp('2026-04-21')],
+        range=[pd.Timestamp('2026-03-01'), pd.Timestamp('2026-04-20')],
         tickvals=event_dates_ts,
         ticktext=event_tick_labels,
         showgrid=False
@@ -256,16 +256,12 @@ def make_us_framing_band_chart(df, score_cols):
     dominant['label'] = dominant['dominant_dim'].map(DIM_LABELS).fillna('')
     dominant['y'] = 1
 
-    DAY_MS = 86400000  # one day in milliseconds
-
     fig = go.Figure()
     fig.add_trace(go.Bar(
         x=dominant['date'].tolist(),
         y=dominant['y'].tolist(),
         marker_color=dominant['color'].tolist(),
         marker_line_width=0,
-        width=DAY_MS,
-        offset=0,
         hovertemplate='%{customdata}<extra></extra>',
         customdata=dominant['label'].tolist(),
         showlegend=False,
@@ -279,7 +275,7 @@ def make_us_framing_band_chart(df, score_cols):
         xaxis=dict(
             visible=False,
             type='date',
-            range=[pd.Timestamp('2026-02-27'), pd.Timestamp('2026-03-31')],
+            range=[pd.Timestamp('2026-02-27'), pd.Timestamp('2026-03-30')],
         ),
         yaxis=dict(visible=False, range=[0, 1]),
         plot_bgcolor='white',
@@ -338,16 +334,12 @@ def make_intl_framing_band_chart(timeline_path):
     dominant['label'] = dominant['dominant_dim'].map(DIM_LABELS).fillna('')
     dominant['y'] = 1
 
-    DAY_MS = 86400000
-
     fig = go.Figure()
     fig.add_trace(go.Bar(
         x=dominant['date'].tolist(),
         y=dominant['y'].tolist(),
         marker_color=dominant['color'].tolist(),
         marker_line_width=0,
-        width=DAY_MS,
-        offset=0,
         hovertemplate='%{customdata}<extra></extra>',
         customdata=dominant['label'].tolist(),
         showlegend=False,
@@ -361,7 +353,7 @@ def make_intl_framing_band_chart(timeline_path):
         xaxis=dict(
             visible=False,
             type='date',
-            range=[pd.Timestamp('2026-03-01'), pd.Timestamp('2026-04-21')],
+            range=[pd.Timestamp('2026-03-01'), pd.Timestamp('2026-04-20')],
         ),
         yaxis=dict(visible=False, range=[0, 1]),
         plot_bgcolor='white',
