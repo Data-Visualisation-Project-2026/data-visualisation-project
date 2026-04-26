@@ -358,12 +358,12 @@ elif page == 'Story Arc':
     st.plotly_chart(us_chart, use_container_width=True)
 
     # ── US framing band ──────────────────────────────────────────────────────
-    st.markdown(
-        '<p style="font-family:\'Roboto\',sans-serif; font-size:0.75rem; color:#999; margin:0 0 2px 0;">Dominant framing per day — US outlets</p>',
-        unsafe_allow_html=True
-    )
     band_chart = make_us_framing_band_chart(df, score_cols)
     st.plotly_chart(band_chart, use_container_width=True, config={'displayModeBar': False}, key='us_band_aggregate')
+    st.markdown(
+        '<p style="font-family:\'Roboto\',sans-serif; font-size:0.72rem; color:#aaa; margin:0 0 1rem 0;">Dominant framing per day — US outlets</p>',
+        unsafe_allow_html=True
+    )
 
     # ── US individual outlet D3 breakdown ────────────────────────────────────
     st.subheader('US Outlets — Individual Breakdown')
@@ -379,12 +379,12 @@ elif page == 'Story Arc':
     st.plotly_chart(intl_chart, use_container_width=True)
 
     # ── INTL framing band ────────────────────────────────────────────────────
-    st.markdown(
-        '<p style="font-family:\'Roboto\',sans-serif; font-size:0.75rem; color:#999; margin:0 0 2px 0;">Dominant framing per day — international outlets</p>',
-        unsafe_allow_html=True
-    )
     intl_band = make_intl_framing_band_chart('iran-war-framing/data/timeline.json')
     st.plotly_chart(intl_band, use_container_width=True, config={'displayModeBar': False}, key='intl_band_aggregate')
+    st.markdown(
+        '<p style="font-family:\'Roboto\',sans-serif; font-size:0.72rem; color:#aaa; margin:0 0 1rem 0;">Dominant framing per day — international outlets</p>',
+        unsafe_allow_html=True
+    )
 
     # ── INTL individual outlet D3 breakdown ──────────────────────────────────
     st.subheader('International Wire Services — Individual Breakdown')

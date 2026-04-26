@@ -62,11 +62,10 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
         )
 
     events = [
-        ('2026-02-28', 'Opening Strikes'),
+        ('2026-03-01', 'Opening Strikes'),
         ('2026-03-08', 'Oil Breaks $100'),
-        ('2026-03-18', 'Energy Escalation'),
         ('2026-03-27', 'Iran Strikes Saudi Base'),
-        ('2026-04-05', 'Escalation'),
+        ('2026-04-05', 'Escalation Returns'),
         ('2026-04-08', 'Ceasefire'),
     ]
 
@@ -193,11 +192,10 @@ def make_international_framing_chart(timeline_path, highlighted_dimensions):
         )
 
     events = [
-        ('2026-02-28', 'Opening Strikes'),
+        ('2026-03-01', 'Opening Strikes'),
         ('2026-03-08', 'Oil Breaks $100'),
-        ('2026-03-18', 'Energy Escalation'),
         ('2026-03-27', 'Iran Strikes Saudi Base'),
-        ('2026-04-05', 'Escalation'),
+        ('2026-04-05', 'Escalation Returns'),
         ('2026-04-08', 'Ceasefire'),
     ]
     for event_date, label in events:
@@ -330,6 +328,9 @@ def make_intl_framing_band_chart(timeline_path):
         rows.append(avg)
 
     daily = pd.DataFrame(rows).set_index('date')
+    # Forward-fill missing calendar dates so the band has no white gaps
+    full_range = pd.date_range(daily.index.min(), daily.index.max(), freq='D')
+    daily = daily.reindex(full_range).ffill()
     dominant = daily.idxmax(axis=1).reset_index()
     dominant.columns = ['date', 'dominant_dim']
     dominant = dominant.dropna(subset=['dominant_dim'])
