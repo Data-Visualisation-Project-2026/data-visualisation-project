@@ -20,14 +20,14 @@
     "usatoday.com": "USA Today"
   },
   "outlet_colors": {
-    "nytimes.com":  "#1a1a2e",
-    "foxnews.com":  "#e63946",
-    "cnn.com":      "#c8192a",
-    "bloomberg.com":"#4361ee",
-    "npr.org":      "#2a9d8f",
-    "breitbart.com":"#f4a261",
-    "nbcnews.com":  "#9b5de5",
-    "usatoday.com": "#457b9d"
+    "nytimes.com":  "#59A14F",
+    "foxnews.com":  "#59A14F",
+    "cnn.com":      "#895EFF",
+    "bloomberg.com":"#76B7B2",
+    "npr.org":      "#F28E2B",
+    "breitbart.com":"#59A14F",
+    "nbcnews.com":  "#895EFF",
+    "usatoday.com": "#895EFF"
   },
   "dimensions": [
     "kinetic_focus",
