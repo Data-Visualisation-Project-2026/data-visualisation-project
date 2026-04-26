@@ -111,13 +111,13 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
         hovermode='x unified',
         title_text='',
         legend={
-            'orientation': 'v',
-            'yanchor': 'top',
-            'y': 1,
+            'orientation': 'h',
+            'yanchor': 'bottom',
+            'y': 1.09,
             'xanchor': 'left',
-            'x': 1.02
+            'x': 0,
         },
-        margin={'l': 40, 'r': 140, 't': 60, 'b': 50}
+        margin={'l': 40, 'r': 20, 't': 100, 'b': 50}
     )
 
     chart.update_xaxes(
@@ -215,8 +215,8 @@ def make_international_framing_chart(timeline_path, highlighted_dimensions):
         yaxis_range=[0, 0.8],
         hovermode='x unified',
         title_text='',
-        legend={'orientation': 'v', 'yanchor': 'top', 'y': 1, 'xanchor': 'left', 'x': 1.02},
-        margin={'l': 40, 'r': 140, 't': 60, 'b': 50},
+        legend={'orientation': 'h', 'yanchor': 'bottom', 'y': 1.09, 'xanchor': 'left', 'x': 0},
+        margin={'l': 40, 'r': 20, 't': 100, 'b': 50},
     )
     chart.update_xaxes(
         range=[pd.Timestamp('2026-02-27'), pd.Timestamp('2026-04-21')],
@@ -268,7 +268,78 @@ def make_us_framing_band_chart(df, score_cols):
 
     fig.update_layout(
         height=36,
-        margin=dict(l=0, r=0, t=0, b=0),
+        margin=dict(l=40, r=20, t=0, b=0),
+        bargap=0,
+        bargroupgap=0,
+        xaxis=dict(visible=False, range=[pd.Timestamp('2026-02-27'), pd.Timestamp('2026-04-21')]),
+        yaxis=dict(visible=False, range=[0, 1]),
+        plot_bgcolor='white',
+        paper_bgcolor='white',
+    )
+
+    return fig
+
+
+def make_intl_framing_band_chart(timeline_path):
+    """Thin strip showing dominant international framing per day (AP/Reuters/BBC/AJ)."""
+    DIMS = ['kinetic_focus', 'humanitarian_focus', 'diplomatic_focus',
+            'economic_focus', 'culpability_bias']
+    OUTLETS = ['apnews.com', 'reuters.com', 'bbc.com', 'aljazeera.com']
+    DIM_COLORS = {
+        'kinetic_focus':      '#4E79A7',
+        'humanitarian_focus': '#F28E2B',
+        'diplomatic_focus':   '#76B7B2',
+        'economic_focus':     '#59A14F',
+        'culpability_bias':   '#E15759',
+    }
+    DIM_LABELS = {
+        'kinetic_focus':      'Kinetic',
+        'humanitarian_focus': 'Humanitarian',
+        'diplomatic_focus':   'Diplomatic',
+        'economic_focus':     'Economic',
+        'culpability_bias':   'Culpability Bias',
+    }
+
+    with open(timeline_path) as f:
+        timeline = json.load(f)
+
+    rows = []
+    for entry in timeline:
+        date = pd.Timestamp(entry['date'])
+        outlet_vals = [entry['outlets'][o] for o in OUTLETS
+                       if o in entry['outlets'] and entry['outlets'][o]]
+        if not outlet_vals:
+            continue
+        avg = {
+            dim: sum(o[dim] for o in outlet_vals if o.get(dim) is not None) /
+                 max(1, sum(1 for o in outlet_vals if o.get(dim) is not None))
+            for dim in DIMS
+        }
+        avg['date'] = date
+        rows.append(avg)
+
+    daily = pd.DataFrame(rows).set_index('date')
+    dominant = daily.idxmax(axis=1).reset_index()
+    dominant.columns = ['date', 'dominant_dim']
+    dominant = dominant.dropna(subset=['dominant_dim'])
+    dominant['color'] = dominant['dominant_dim'].map(DIM_COLORS).fillna('#cccccc')
+    dominant['label'] = dominant['dominant_dim'].map(DIM_LABELS).fillna('')
+    dominant['y'] = 1
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x=dominant['date'].tolist(),
+        y=dominant['y'].tolist(),
+        marker_color=dominant['color'].tolist(),
+        marker_line_width=0,
+        hovertemplate='%{customdata}<extra></extra>',
+        customdata=dominant['label'].tolist(),
+        showlegend=False,
+    ))
+
+    fig.update_layout(
+        height=36,
+        margin=dict(l=40, r=20, t=0, b=0),
         bargap=0,
         bargroupgap=0,
         xaxis=dict(visible=False, range=[pd.Timestamp('2026-02-27'), pd.Timestamp('2026-04-21')]),

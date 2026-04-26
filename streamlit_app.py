@@ -5,7 +5,7 @@ import streamlit as st
 
 from visualizations.embedded_visuals import render_outlet_event_timeline, render_us_outlet_event_timeline
 from visualizations.embedded_network import render_media_clusters
-from visualizations.framing_charts import make_framing_over_time_chart, make_international_framing_chart, make_combined_aggregate_chart, make_us_framing_band_chart
+from visualizations.framing_charts import make_framing_over_time_chart, make_international_framing_chart, make_combined_aggregate_chart, make_us_framing_band_chart, make_intl_framing_band_chart
 from visualizations.text_analysis import (
     get_top_cluster_bigrams,
     make_cluster_bigram_charts,
@@ -388,6 +388,13 @@ elif page == 'Story Arc':
     st.caption('Feb 27–Apr 20, 2026 · average framing score across 4 international outlets')
     intl_chart = make_international_framing_chart('iran-war-framing/data/timeline.json', dimension_order)
     st.plotly_chart(intl_chart, use_container_width=True)
+
+    st.markdown(
+        '<p style="font-family:\'Roboto\',sans-serif; font-size:0.75rem; color:#999; margin:0 0 2px 0;">Dominant framing per day — international outlets</p>',
+        unsafe_allow_html=True
+    )
+    intl_band = make_intl_framing_band_chart('iran-war-framing/data/timeline.json')
+    st.plotly_chart(intl_band, use_container_width=True, config={'displayModeBar': False})
 
     st.markdown(
         """
