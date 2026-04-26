@@ -365,23 +365,12 @@ elif page == 'Story Arc':
     band_chart = make_us_framing_band_chart(df, score_cols)
     st.plotly_chart(band_chart, use_container_width=True, config={'displayModeBar': False}, key='us_band_aggregate')
 
-    # ── Explanatory text ─────────────────────────────────────────────────────
-    st.markdown(
-        """
-        <p style="max-width:720px; line-height:1.7; color:#444; margin-top:0.8rem; margin-bottom:1.5rem;">
-        The overall pattern suggests that US coverage was driven mainly by military action and responsibility/blame.
-        Kinetic framing stayed high for much of the period, while Culpability Bias remained consistently prominent —
-        reflecting a tendency to assign moral agency to specific actors throughout the conflict.
-        Humanitarian and diplomatic frames surfaced in pockets but never dominated.
-        Economic framing spiked briefly when oil crossed $100, then receded.
-        Taken together, the five lines show that media framing was not fixed: as the war developed,
-        coverage moved between military, political, economic, and blame-centered narratives.
-        </p>
-        """,
-        unsafe_allow_html=True
-    )
+    # ── US individual outlet D3 breakdown ────────────────────────────────────
+    st.subheader('US Outlets — Individual Breakdown')
+    st.caption('Feb 27–Mar 30, 2026 · NYT, Fox News, CNN, Bloomberg, NPR, Breitbart, NBC News, USA Today')
+    render_us_outlet_event_timeline()
 
-    st.markdown('<hr style="border:none;border-top:1px solid #e0e0e0;margin:0.5rem 0 1.5rem 0;">', unsafe_allow_html=True)
+    st.markdown('<hr style="border:none;border-top:1px solid #e0e0e0;margin:1.5rem 0;">', unsafe_allow_html=True)
 
     # ── International aggregate chart ────────────────────────────────────────
     st.subheader('AP · Reuters · BBC · Al Jazeera — International Wire Services')
@@ -389,6 +378,7 @@ elif page == 'Story Arc':
     intl_chart = make_international_framing_chart('iran-war-framing/data/timeline.json', dimension_order)
     st.plotly_chart(intl_chart, use_container_width=True)
 
+    # ── INTL framing band ────────────────────────────────────────────────────
     st.markdown(
         '<p style="font-family:\'Roboto\',sans-serif; font-size:0.75rem; color:#999; margin:0 0 2px 0;">Dominant framing per day — international outlets</p>',
         unsafe_allow_html=True
@@ -396,36 +386,7 @@ elif page == 'Story Arc':
     intl_band = make_intl_framing_band_chart('iran-war-framing/data/timeline.json')
     st.plotly_chart(intl_band, use_container_width=True, config={'displayModeBar': False}, key='intl_band_aggregate')
 
-    st.markdown(
-        """
-        <p style="max-width:720px; line-height:1.7; color:#444; margin-top:0.8rem; margin-bottom:1.5rem;">
-        International wire services tell a different story: economic framing rises sharply after mid-March,
-        while kinetic framing is more muted. The two universes diverge most visibly around the Saudi base attack (Mar 27)
-        and the ceasefire (Apr 8), where international outlets shifted toward diplomatic and economic frames
-        while US outlets stayed focused on blame.
-        </p>
-        """,
-        unsafe_allow_html=True
-    )
-
-    st.markdown('<hr style="border:none;border-top:1px solid #e0e0e0;margin:0.5rem 0 1.5rem 0;">', unsafe_allow_html=True)
-
-    # ── D3 US individual outlet breakdown ────────────────────────────────────
-    st.subheader('US Outlets — Individual Breakdown')
-    st.caption('Feb 27–Mar 30, 2026 · NYT, Fox, CNN, Bloomberg, NPR, Breitbart, NBC, USA Today')
-
-    st.markdown(
-        '<p style="font-family:\'Roboto\',sans-serif; font-size:0.75rem; color:#999; margin:0 0 2px 0;">Dominant framing per day — US outlets</p>',
-        unsafe_allow_html=True
-    )
-    band_chart_us2 = make_us_framing_band_chart(df, score_cols)
-    st.plotly_chart(band_chart_us2, use_container_width=True, config={'displayModeBar': False}, key='us_band_individual')
-
-    render_us_outlet_event_timeline()
-
-    st.markdown('<hr style="border:none;border-top:1px solid #e0e0e0;margin:0.5rem 0 1.5rem 0;">', unsafe_allow_html=True)
-
-    # ── D3 international individual outlet breakdown ──────────────────────────
+    # ── INTL individual outlet D3 breakdown ──────────────────────────────────
     st.subheader('International Wire Services — Individual Breakdown')
     st.caption('Mar 1–Apr 20, 2026 · AP News, Reuters, BBC, Al Jazeera')
     render_outlet_event_timeline()
