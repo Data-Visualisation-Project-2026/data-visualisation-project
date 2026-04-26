@@ -256,12 +256,16 @@ def make_us_framing_band_chart(df, score_cols):
     dominant['label'] = dominant['dominant_dim'].map(DIM_LABELS).fillna('')
     dominant['y'] = 1
 
+    DAY_MS = 86_400_000
+
     fig = go.Figure()
     fig.add_trace(go.Bar(
         x=dominant['date'].tolist(),
         y=dominant['y'].tolist(),
         marker_color=dominant['color'].tolist(),
         marker_line_width=0,
+        width=DAY_MS,
+        offset=0,
         hovertemplate='%{customdata}<extra></extra>',
         customdata=dominant['label'].tolist(),
         showlegend=False,
@@ -336,12 +340,16 @@ def make_intl_framing_band_chart(timeline_path):
     dominant['label'] = dominant['dominant_dim'].map(DIM_LABELS).fillna('')
     dominant['y'] = 1
 
+    DAY_MS = 86_400_000
+
     fig = go.Figure()
     fig.add_trace(go.Bar(
         x=dominant['date'].tolist(),
         y=dominant['y'].tolist(),
         marker_color=dominant['color'].tolist(),
         marker_line_width=0,
+        width=DAY_MS,
+        offset=0,
         hovertemplate='%{customdata}<extra></extra>',
         customdata=dominant['label'].tolist(),
         showlegend=False,
