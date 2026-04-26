@@ -114,7 +114,7 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
             'xanchor': 'left',
             'x': 0,
         },
-        margin={'l': 40, 'r': 20, 't': 100, 'b': 50}
+        margin={'l': 55, 'r': 20, 't': 100, 'b': 50}
     )
 
     event_dates_ts = [pd.Timestamp(d) for d, _ in events]
@@ -127,7 +127,7 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
         showgrid=False
     )
 
-    chart.update_yaxes(showgrid=False)
+    chart.update_yaxes(showgrid=False, automargin=False)
 
     return chart
 
@@ -214,7 +214,7 @@ def make_international_framing_chart(timeline_path, highlighted_dimensions):
         hovermode='x unified',
         title_text='',
         legend={'orientation': 'h', 'yanchor': 'bottom', 'y': 1.09, 'xanchor': 'left', 'x': 0},
-        margin={'l': 40, 'r': 20, 't': 100, 'b': 50},
+        margin={'l': 55, 'r': 20, 't': 100, 'b': 50},
     )
     event_dates_ts = [pd.Timestamp(d) for d, _ in events]
     event_tick_labels = [f"{pd.Timestamp(d).strftime('%b')} {pd.Timestamp(d).day}" for d, _ in events]
@@ -273,7 +273,7 @@ def make_us_framing_band_chart(df, score_cols):
 
     fig.update_layout(
         height=36,
-        margin=dict(l=40, r=20, t=0, b=0),
+        margin=dict(l=55, r=20, t=0, b=0),
         bargap=0,
         bargroupgap=0,
         xaxis=dict(
@@ -355,7 +355,7 @@ def make_intl_framing_band_chart(timeline_path):
 
     fig.update_layout(
         height=36,
-        margin=dict(l=40, r=20, t=0, b=0),
+        margin=dict(l=55, r=20, t=0, b=0),
         bargap=0,
         bargroupgap=0,
         xaxis=dict(
@@ -458,9 +458,8 @@ def make_combined_aggregate_chart(df, score_cols, score_labels, timeline_path):
     # Row 1 domain top = 1.0  → markers at y=1.01
     # Row 2 domain top = 0.36 → markers at y=0.365
     events = [
-        ('2026-02-28', 'Opening Strikes'),
+        ('2026-03-01', 'Opening Strikes'),
         ('2026-03-08', 'Oil Breaks $100'),
-        ('2026-03-18', 'Energy Escalation'),
         ('2026-03-27', 'Iran Strikes Saudi Base'),
         ('2026-04-05', 'Escalation'),
         ('2026-04-08', 'Ceasefire'),
