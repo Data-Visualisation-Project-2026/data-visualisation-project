@@ -414,6 +414,22 @@ elif page == 'Media Differences':
     
     st.plotly_chart(make_outlet_framing_heatmap(df_five_sources), use_container_width=True)
 
+    st.markdown(
+        """
+        This chart compares five major outlets across different media contexts and audiences. The key question is: Did different outlets tell the same war story in the same way?
+
+        The answer is no. The heatmap shows clear differences in what each outlet brings to the front.
+
+        * Reuters and BBC put the strongest weight on economic framing. Their coverage makes the war look especially important as a global market and policy event.
+        * Tehran Times stands out for culpability framing. Its coverage is more centered on blame, responsibility, and moral judgment.
+        * Al Jazeera has high scores across several dimensions, especially culpability, military action, and diplomacy. This makes its coverage feel more politically and conflict-focused.
+        * AP News appears more moderate across the five dimensions, without one frame dominating as strongly.
+        * Humanitarian framing is relatively low across all outlets, which means civilian suffering is not the main lens in this sample, even though it is still part of the war story.
+
+        In short, the Iran War was not presented as one shared narrative. Across these outlets, the war becomes a different story depending on which frame is pushed forward: a market shock, a political conflict, a question of blame, or a military crisis.
+        """
+    )
+
 elif page == 'Data & Methods':
     st.markdown('<hr style="border:none;border-top:1px solid #e0e0e0;margin:0.5rem 0 1.5rem 0;">', unsafe_allow_html=True)
 
