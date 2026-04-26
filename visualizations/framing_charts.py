@@ -61,18 +61,16 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
             hovertemplate=f'{trace.name}: %{{y:.2f}}<extra></extra>'
         )
 
-    # Unified event list shared with the international chart.
-    # Opening Strikes is at the chart's left edge so its label goes right; all others go left.
     events = [
-        ('2026-02-28', 'Opening Strikes',        'left'),
-        ('2026-03-08', 'Oil Breaks $100',         'right'),
-        ('2026-03-18', 'Energy Escalation',       'right'),
-        ('2026-03-27', 'Iran Strikes Saudi Base', 'right'),
-        ('2026-04-05', 'Escalation Returns',      'right'),
-        ('2026-04-08', 'Ceasefire',               'right'),
+        ('2026-02-28', 'Opening Strikes'),
+        ('2026-03-08', 'Oil Breaks $100'),
+        ('2026-03-18', 'Energy Escalation'),
+        ('2026-03-27', 'Iran Strikes Saudi Base'),
+        ('2026-04-05', 'Escalation Returns'),
+        ('2026-04-08', 'Ceasefire'),
     ]
 
-    for event_date, event_label, label_anchor in events:
+    for event_date, event_label in events:
         event_date = pd.Timestamp(event_date)
 
         chart.add_shape(
@@ -97,7 +95,7 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
             yref='paper',
             text=event_label,
             showarrow=False,
-            xanchor=label_anchor,
+            xanchor='left',
             yanchor='bottom',
             font={
                 'size': 11,
@@ -191,23 +189,22 @@ def make_international_framing_chart(timeline_path, highlighted_dimensions):
             hovertemplate=f'{trace.name}: %{{y:.2f}}<extra></extra>',
         )
 
-    # Same unified event list as the US chart — same dates, same labels, same anchors.
     events = [
-        ('2026-02-28', 'Opening Strikes',        'left'),
-        ('2026-03-08', 'Oil Breaks $100',         'right'),
-        ('2026-03-18', 'Energy Escalation',       'right'),
-        ('2026-03-27', 'Iran Strikes Saudi Base', 'right'),
-        ('2026-04-05', 'Escalation Returns',      'right'),
-        ('2026-04-08', 'Ceasefire',               'right'),
+        ('2026-02-28', 'Opening Strikes'),
+        ('2026-03-08', 'Oil Breaks $100'),
+        ('2026-03-18', 'Energy Escalation'),
+        ('2026-03-27', 'Iran Strikes Saudi Base'),
+        ('2026-04-05', 'Escalation Returns'),
+        ('2026-04-08', 'Ceasefire'),
     ]
-    for event_date, label, anchor in events:
+    for event_date, label in events:
         ts = pd.Timestamp(event_date)
         chart.add_shape(type='line', xref='x', yref='paper',
                         x0=ts, x1=ts, y0=0, y1=1,
                         line={'width': 1, 'dash': 'dash', 'color': 'rgba(90,90,90,0.55)'})
         chart.add_annotation(x=ts, y=1.02, xref='x', yref='paper',
                              text=label, showarrow=False,
-                             xanchor=anchor, yanchor='bottom',
+                             xanchor='left', yanchor='bottom',
                              font={'size': 11, 'color': 'rgba(70,70,70,0.9)'})
 
     chart.update_layout(
