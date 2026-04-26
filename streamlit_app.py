@@ -363,7 +363,7 @@ elif page == 'Story Arc':
         unsafe_allow_html=True
     )
     band_chart = make_us_framing_band_chart(df, score_cols)
-    st.plotly_chart(band_chart, use_container_width=True, config={'displayModeBar': False})
+    st.plotly_chart(band_chart, use_container_width=True, config={'displayModeBar': False}, key='us_band_aggregate')
 
     # ── Explanatory text ─────────────────────────────────────────────────────
     st.markdown(
@@ -394,7 +394,7 @@ elif page == 'Story Arc':
         unsafe_allow_html=True
     )
     intl_band = make_intl_framing_band_chart('iran-war-framing/data/timeline.json')
-    st.plotly_chart(intl_band, use_container_width=True, config={'displayModeBar': False})
+    st.plotly_chart(intl_band, use_container_width=True, config={'displayModeBar': False}, key='intl_band_aggregate')
 
     st.markdown(
         """
@@ -419,7 +419,7 @@ elif page == 'Story Arc':
         unsafe_allow_html=True
     )
     band_chart_us2 = make_us_framing_band_chart(df, score_cols)
-    st.plotly_chart(band_chart_us2, use_container_width=True, config={'displayModeBar': False})
+    st.plotly_chart(band_chart_us2, use_container_width=True, config={'displayModeBar': False}, key='us_band_individual')
 
     render_us_outlet_event_timeline()
 
