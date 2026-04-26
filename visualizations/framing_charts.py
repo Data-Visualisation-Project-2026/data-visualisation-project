@@ -61,12 +61,15 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
             hovertemplate=f'{trace.name}: %{{y:.2f}}<extra></extra>'
         )
 
-    # Mark major war events that help explain shifts in framing.
+    # Unified event list shared with the international chart.
+    # Opening Strikes is at the chart's left edge so its label goes right; all others go left.
     events = [
-        ('2026-02-28', 'Opening Strikes', 'left'),
-        ('2026-03-08', 'Oil Breaks $100', 'right'),
-        ('2026-03-18', 'Energy Escalation', 'right'),
-        ('2026-03-27', 'Iran Strikes US Base in Saudi Arabia', 'right'),
+        ('2026-02-28', 'Opening Strikes',        'left'),
+        ('2026-03-08', 'Oil Breaks $100',         'right'),
+        ('2026-03-18', 'Energy Escalation',       'right'),
+        ('2026-03-27', 'Iran Strikes Saudi Base', 'right'),
+        ('2026-04-05', 'Escalation Returns',      'right'),
+        ('2026-04-08', 'Ceasefire',               'right'),
     ]
 
     for event_date, event_label, label_anchor in events:
@@ -118,6 +121,7 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
     )
 
     chart.update_xaxes(
+        range=[pd.Timestamp('2026-02-27'), pd.Timestamp('2026-04-21')],
         dtick=4 * 24 * 60 * 60 * 1000,
         tickformat='%b %d',
         showgrid=False
@@ -187,12 +191,14 @@ def make_international_framing_chart(timeline_path, highlighted_dimensions):
             hovertemplate=f'{trace.name}: %{{y:.2f}}<extra></extra>',
         )
 
+    # Same unified event list as the US chart — same dates, same labels, same anchors.
     events = [
-        ('2026-03-01', 'Opening Strikes', 'right'),
-        ('2026-03-08', 'Oil Breaks $100', 'right'),
-        ('2026-03-27', 'Iran Strikes US Base in Saudi Arabia', 'right'),
-        ('2026-04-05', 'Escalation Returns', 'right'),
-        ('2026-04-08', 'Ceasefire', 'right'),
+        ('2026-02-28', 'Opening Strikes',        'left'),
+        ('2026-03-08', 'Oil Breaks $100',         'right'),
+        ('2026-03-18', 'Energy Escalation',       'right'),
+        ('2026-03-27', 'Iran Strikes Saudi Base', 'right'),
+        ('2026-04-05', 'Escalation Returns',      'right'),
+        ('2026-04-08', 'Ceasefire',               'right'),
     ]
     for event_date, label, anchor in events:
         ts = pd.Timestamp(event_date)
@@ -212,7 +218,12 @@ def make_international_framing_chart(timeline_path, highlighted_dimensions):
         legend={'orientation': 'v', 'yanchor': 'top', 'y': 1, 'xanchor': 'left', 'x': 1.02},
         margin={'l': 40, 'r': 140, 't': 60, 'b': 50},
     )
-    chart.update_xaxes(dtick=4 * 24 * 60 * 60 * 1000, tickformat='%b %d', showgrid=False)
+    chart.update_xaxes(
+        range=[pd.Timestamp('2026-02-27'), pd.Timestamp('2026-04-21')],
+        dtick=4 * 24 * 60 * 60 * 1000,
+        tickformat='%b %d',
+        showgrid=False
+    )
     chart.update_yaxes(showgrid=False)
 
     return chart
@@ -259,7 +270,7 @@ def make_us_framing_band_chart(df, score_cols):
         margin=dict(l=0, r=0, t=0, b=0),
         bargap=0,
         bargroupgap=0,
-        xaxis=dict(visible=False),
+        xaxis=dict(visible=False, range=[pd.Timestamp('2026-02-27'), pd.Timestamp('2026-04-21')]),
         yaxis=dict(visible=False, range=[0, 1]),
         plot_bgcolor='white',
         paper_bgcolor='white',
