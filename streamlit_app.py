@@ -355,8 +355,8 @@ elif page == 'Story Arc':
     st.divider()
 
     # ── US aggregate chart ───────────────────────────────────────────────────
-    st.subheader('77 US Outlets — Domestic Media')
-    st.caption('Feb 27–Apr 20, 2026 · average framing score across 77 US outlets')
+    st.markdown('<h2 style="font-family:Georgia,serif; font-weight:normal; color:#1a1a1a;">US Media</h2>', unsafe_allow_html=True)
+    st.markdown('<h3 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a; margin-top:-0.5rem;">Average framing score across 77 US outlets</h3>', unsafe_allow_html=True)
     us_chart = make_framing_over_time_chart(df, score_cols, score_labels, dimension_order)
     st.plotly_chart(us_chart, use_container_width=True)
 
@@ -371,15 +371,15 @@ elif page == 'Story Arc':
     st.divider()
 
     # ── US individual outlet D3 breakdown ────────────────────────────────────
-    st.subheader('US Outlets — Individual Breakdown')
+    st.markdown('<h3 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">Who Framed The War</h3>', unsafe_allow_html=True)
     st.caption('Feb 27–Mar 30, 2026 · NYT, Fox News, CNN, Bloomberg, NPR, Breitbart, NBC News, USA Today')
     render_us_outlet_event_timeline()
 
     st.divider()
 
     # ── International aggregate chart ────────────────────────────────────────
-    st.subheader('AP · Reuters · BBC · Al Jazeera — International Wire Services')
-    st.caption('Feb 27–Apr 20, 2026 · average framing score across 4 international outlets')
+    st.markdown('<h2 style="font-family:Georgia,serif; font-weight:normal; color:#1a1a1a;">International Wire Services</h2>', unsafe_allow_html=True)
+    st.markdown('<h3 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a; margin-top:-0.5rem;">Average framing score across AP, Reuters, BBC, Al Jazeera</h3>', unsafe_allow_html=True)
     intl_chart = make_international_framing_chart('iran-war-framing/data/timeline.json', dimension_order)
     st.plotly_chart(intl_chart, use_container_width=True)
 
@@ -391,8 +391,10 @@ elif page == 'Story Arc':
         unsafe_allow_html=True
     )
 
+    st.divider()
+
     # ── INTL individual outlet D3 breakdown ──────────────────────────────────
-    st.subheader('International Wire Services — Individual Breakdown')
+    st.markdown('<h3 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">Who Framed The War</h3>', unsafe_allow_html=True)
     st.caption('Mar 1–Apr 20, 2026 · AP News, Reuters, BBC, Al Jazeera')
     render_outlet_event_timeline()
 
