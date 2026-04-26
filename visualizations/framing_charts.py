@@ -121,7 +121,7 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
     event_tick_labels = [f"{pd.Timestamp(d).strftime('%b')} {pd.Timestamp(d).day}" for d, _ in events]
 
     chart.update_xaxes(
-        range=[pd.Timestamp('2026-02-27'), pd.Timestamp('2026-04-21')],
+        range=[pd.Timestamp('2026-02-27'), pd.Timestamp('2026-03-31')],
         tickvals=event_dates_ts,
         ticktext=event_tick_labels,
         showgrid=False
@@ -220,7 +220,7 @@ def make_international_framing_chart(timeline_path, highlighted_dimensions):
     event_tick_labels = [f"{pd.Timestamp(d).strftime('%b')} {pd.Timestamp(d).day}" for d, _ in events]
 
     chart.update_xaxes(
-        range=[pd.Timestamp('2026-02-27'), pd.Timestamp('2026-04-21')],
+        range=[pd.Timestamp('2026-03-01'), pd.Timestamp('2026-04-21')],
         tickvals=event_dates_ts,
         ticktext=event_tick_labels,
         showgrid=False
@@ -272,14 +272,14 @@ def make_us_framing_band_chart(df, score_cols):
     ))
 
     fig.update_layout(
-        height=36,
+        height=20,
         margin=dict(l=55, r=20, t=0, b=0),
         bargap=0,
         bargroupgap=0,
         xaxis=dict(
             visible=False,
             type='date',
-            range=[pd.Timestamp('2026-02-27'), pd.Timestamp('2026-04-21')],
+            range=[pd.Timestamp('2026-02-27'), pd.Timestamp('2026-03-31')],
         ),
         yaxis=dict(visible=False, range=[0, 1]),
         plot_bgcolor='white',
@@ -354,14 +354,14 @@ def make_intl_framing_band_chart(timeline_path):
     ))
 
     fig.update_layout(
-        height=36,
+        height=20,
         margin=dict(l=55, r=20, t=0, b=0),
         bargap=0,
         bargroupgap=0,
         xaxis=dict(
             visible=False,
             type='date',
-            range=[pd.Timestamp('2026-02-27'), pd.Timestamp('2026-04-21')],
+            range=[pd.Timestamp('2026-03-01'), pd.Timestamp('2026-04-21')],
         ),
         yaxis=dict(visible=False, range=[0, 1]),
         plot_bgcolor='white',
