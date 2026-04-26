@@ -355,7 +355,7 @@ elif page == 'Story Arc':
     st.divider()
 
     # ── US aggregate chart ───────────────────────────────────────────────────
-    st.markdown('<h3 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">Average framing score across 77 US outlets</h3>', unsafe_allow_html=True)
+    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">Average framing score across 77 US outlets</h1>', unsafe_allow_html=True)
     us_chart = make_framing_over_time_chart(df, score_cols, score_labels, dimension_order)
     st.plotly_chart(us_chart, use_container_width=True)
 
@@ -370,14 +370,14 @@ elif page == 'Story Arc':
     st.divider()
 
     # ── US individual outlet D3 breakdown ────────────────────────────────────
-    st.markdown('<h3 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">Who Framed The War</h3>', unsafe_allow_html=True)
+    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">Who Framed The War</h1>', unsafe_allow_html=True)
     st.caption('Feb 27–Mar 30, 2026 · NYT, Fox News, CNN, Bloomberg, NPR, Breitbart, NBC News, USA Today')
     render_us_outlet_event_timeline()
 
     st.divider()
 
     # ── International aggregate chart ────────────────────────────────────────
-    st.markdown('<h3 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">Average framing score across AP, Reuters, BBC, Al Jazeera</h3>', unsafe_allow_html=True)
+    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">Average framing score across AP, Reuters, BBC, Al Jazeera</h1>', unsafe_allow_html=True)
     intl_chart = make_international_framing_chart('iran-war-framing/data/timeline.json', dimension_order)
     st.plotly_chart(intl_chart, use_container_width=True)
 
@@ -392,8 +392,14 @@ elif page == 'Story Arc':
     st.divider()
 
     # ── INTL individual outlet D3 breakdown ──────────────────────────────────
-    st.markdown('<h3 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">Who Framed The War</h3>', unsafe_allow_html=True)
+    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">Who Framed The War</h1>', unsafe_allow_html=True)
     st.caption('Mar 1–Apr 20, 2026 · AP News, Reuters, BBC, Al Jazeera')
+    st.markdown(
+        'The previous chart showed how American media collectively covered the 2026 Iran War. '
+        'Here, four international and wire-service outlets — AP, Reuters, BBC, and Al Jazeera — '
+        'tell the same story through very different lenses. Scroll to follow where they diverged.',
+        unsafe_allow_html=False
+    )
     render_outlet_event_timeline()
 
 elif page == 'Media Clusters':
