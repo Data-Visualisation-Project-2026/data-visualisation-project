@@ -125,7 +125,7 @@
   {
     "id": "escalation-returns",
     "date": "2026-04-05",
-    "label": "Escalation Returns",
+    "label": "Escalation",
     "description": "A second kinetic surge. Reuters spikes to 0.85 kinetic. BBC drops to nearly zero on kinetic and humanitarian — and pivots to pure economic framing (0.90). AP stays in the middle.",
     "divergence_note": "Biggest kinetic spread in the dataset (0.85 gap between Reuters and BBC). The same escalation produces opposite editorial instincts: Reuters goes to war, BBC goes to markets.",
     "outlet_scores": {

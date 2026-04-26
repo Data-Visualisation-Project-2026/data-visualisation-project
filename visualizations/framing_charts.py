@@ -65,7 +65,7 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
         ('2026-03-01', 'Opening Strikes'),
         ('2026-03-08', 'Oil Breaks $100'),
         ('2026-03-27', 'Iran Strikes Saudi Base'),
-        ('2026-04-05', 'Escalation Returns'),
+        ('2026-04-05', 'Escalation'),
         ('2026-04-08', 'Ceasefire'),
     ]
 
@@ -195,7 +195,7 @@ def make_international_framing_chart(timeline_path, highlighted_dimensions):
         ('2026-03-01', 'Opening Strikes'),
         ('2026-03-08', 'Oil Breaks $100'),
         ('2026-03-27', 'Iran Strikes Saudi Base'),
-        ('2026-04-05', 'Escalation Returns'),
+        ('2026-04-05', 'Escalation'),
         ('2026-04-08', 'Ceasefire'),
     ]
     for event_date, label in events:
