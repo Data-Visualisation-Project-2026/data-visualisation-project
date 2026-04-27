@@ -1,10 +1,11 @@
 gsap.registerPlugin(ScrollTrigger);
 
 (async () => {
-    const [timeline, events, meta] = await Promise.all([
+    const [timeline, events, meta, usEvents] = await Promise.all([
     fetch("data/timeline.json").then(res => res.json()),
     fetch("data/events.json").then(res => res.json()),
     fetch("data/meta.json").then(res => res.json()),
+    fetch("data/us_events.json").then(res => res.json()).catch(() => []),
 ]);
 
     console.log("timeline days:", timeline.length);
@@ -137,6 +138,7 @@ if (btnContainer) {
                 b.style.background = d === dim ? DIM_PALETTE[d] : "transparent";
                 b.style.color      = d === dim ? "#fff"          : DIM_PALETTE[d];
             });
+            rebuildCalloutCards();
         });
         btnContainer.appendChild(btn);
     });
@@ -331,31 +333,29 @@ const calloutPanel = document.createElement('div');
 calloutPanel.id = 'callout-panel';
 if (timelineInner) timelineInner.appendChild(calloutPanel);
 
-// Derive dominant dimension for an event's accent color
-function dominantDim(evt) {
-    const scores = evt.outlet_scores || {};
-    const agg = {};
-    Object.values(scores).forEach(s => {
-        Object.entries(s).forEach(([k, v]) => { agg[k] = (agg[k] || 0) + v; });
-    });
-    const dims = Object.keys(agg);
-    if (!dims.length) return 'kinetic_focus';
-    return dims.reduce((a, b) => agg[a] > agg[b] ? a : b);
-}
+// Build a card for a given event + active dimension.
+// Handles two formats:
+//   us_events.json  → evt.by_dim[dim]  (per-dimension headline lists)
+//   events.json     → evt.snippets     (shared headline list, fallback)
+function buildDimCard(evt, dim) {
+    const dimColor = DIM_PALETTE[dim] || '#4E79A7';
+    let items;
 
-function buildCard(evt) {
-    const accent = DIM_ACCENT[dominantDim(evt)] || '#4E79A7';
-    const snippets = evt.snippets || {};
-    const seen = new Set();
-    const items = Object.entries(snippets)
-        .flatMap(([outlet, arr]) => arr.map(s => ({ outlet, ...s })))
-        .filter(s => { if (seen.has(s.url)) return false; seen.add(s.url); return true; })
-        .slice(0, 2);
+    if (evt.by_dim) {
+        items = (evt.by_dim[dim] || []).slice(0, 2);
+    } else {
+        const snippets = evt.snippets || {};
+        const seen = new Set();
+        items = Object.entries(snippets)
+            .flatMap(([outlet, arr]) => arr.map(s => ({ outlet, ...s })))
+            .filter(s => { if (seen.has(s.url)) return false; seen.add(s.url); return true; })
+            .slice(0, 2);
+    }
 
     const hlHTML = items.map(s => {
         const bg  = CALLOUT_COLORS[s.outlet] || '#999';
         const lbl = CALLOUT_LABELS[s.outlet]  || s.outlet;
-        const snip = (s.snippet || '').replace(/\n/g, ' ').trim().substring(0, 115);
+        const snip = (s.snippet || '').replace(/\n/g, ' ').trim().substring(0, 120);
         return `<div class="cc-hl">
             <span class="cc-badge" style="background:${bg}">${lbl}</span>
             <div class="cc-title">${s.title}</div>
@@ -363,18 +363,27 @@ function buildCard(evt) {
         </div>`;
     }).join('');
 
-    return `<div class="cc-card" style="border-left-color:${accent}">
+    const note = evt.divergence_note || evt.description || '';
+    return `<div class="cc-card" style="border-left-color:${dimColor}">
         <div class="cc-event">${evt.label}</div>
-        <div class="cc-note">${evt.divergence_note || evt.description || ''}</div>
-        ${hlHTML}
+        ${note ? `<div class="cc-note">${note}</div>` : ''}
+        ${hlHTML || '<div class="cc-snip" style="color:#ccc;font-style:italic">No coverage data for this period.</div>'}
     </div>`;
 }
 
-// Pre-render one card per event
-const calloutCards = events.map(evt => ({
-    x:    xScale(parseDate(evt.date)),
-    html: buildCard(evt),
-}));
+// calloutCards is rebuilt whenever the active dimension changes.
+let calloutCards = [];
+
+function rebuildCalloutCards() {
+    // Prefer us_events (per-dim headlines) if available, else fall back to intl events.
+    const src = (usEvents && usEvents.length) ? usEvents : events;
+    calloutCards = src.map(evt => ({
+        x:    xScale(parseDate(evt.date)),
+        html: buildDimCard(evt, activeDim),
+    }));
+    _activeIdx = -1;
+    updateCallout(window.scrollY);
+}
 
 let _activeIdx = -1;
 
@@ -414,6 +423,9 @@ function updateCallout(sy) {
         });
     }
 }
+
+// Build cards for the initial active dimension.
+rebuildCalloutCards();
 
 // ─────────────────────────────────────────────────────────────────────────────
 

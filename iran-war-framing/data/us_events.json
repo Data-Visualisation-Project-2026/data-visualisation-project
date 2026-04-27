@@ -1,0 +1,374 @@
+[
+  {
+    "id": "first-strikes",
+    "date": "2026-03-01",
+    "label": "Opening Strikes",
+    "description": "US-Israeli strikes hit Iran. Only AP is on the ground \u2014 kinetic framing peaks at 0.70, the highest single-day score in the dataset.",
+    "divergence_note": "Early framing is entirely US-centric. No Reuters, no BBC \u2014 a single editorial voice sets the initial narrative.",
+    "by_dim": {
+      "kinetic_focus": [
+        {
+          "outlet": "bloomberg.com",
+          "title": "Trump\u2019s Iran War Widens, Forcing Reluctant Allies to Choose",
+          "snippet": "Trump\u2019s Iran War Widens, Forcing Reluctant Allies to Choose A British base in Cyprus struck by a drone. A French facility in Abu Dhabi targeted.",
+          "score": 1.0,
+          "url": "https://www.bloomberg.com/news/articles/2026-03-02/trump-s-iran-war-widens-forcing-reluctant-allies-to-choose"
+        },
+        {
+          "outlet": "foxnews.com",
+          "title": "US surges forces to Middle East as Pentagon warns Iran fight \u2018will take some time'",
+          "snippet": "More U.S. forces are headed to the Middle East, according to Gen. Dan Caine, chairman of the Joint Chiefs of Staff, as the U.S.",
+          "score": 1.0,
+          "url": "https://www.foxnews.com/politics/us-surges-forces-middle-east-pentagon-warns-iran-fight-will-take-some-time"
+        },
+        {
+          "outlet": "breitbart.com",
+          "title": "Ballots Buried: Israel \u2018Flattens\u2019 Building Where Clerics Choose New Leader",
+          "snippet": "Israel \u201cflattened\u201d the building housing Iran\u2019s Assembly of Experts in the holy city of Qom \u2014 the clerical body constitutionally tasked with selecting the Islami",
+          "score": 0.95,
+          "url": "https://www.breitbart.com/politics/2026/03/03/ballots-buried-israel-flattens-building-where-iranian-clerics-meet-to-elect-new-supreme-leader/"
+        }
+      ],
+      "humanitarian_focus": [
+        {
+          "outlet": "cnn.com",
+          "title": "How Middle East flight disruptions are leaving foreigners stranded",
+          "snippet": "Video Ad Feedback How Middle East flight disruptions are leaving foreigners stranded As the conflict in the Middle East intensifies, the limited flights out air",
+          "score": 0.7,
+          "url": "https://www.cnn.com/2026/03/04/world/video/stranded-in-dubai-iran-attacks-digvid"
+        },
+        {
+          "outlet": "nbcnews.com",
+          "title": "Underground and surrounded by tech, Israeli paramedics watch and wait for Iranian strikes",
+          "snippet": "TEL AVIV \u2014 The main nerve center for Israel\u2019s primary emergency service could resemble any dispatch hub in any American city \u2014 a hive of uniformed first-respond",
+          "score": 0.7,
+          "url": "https://www.nbcnews.com/world/israel/israel-iran-us-strikes-magen-david-adom-emergency-service-underground-rcna261649"
+        },
+        {
+          "outlet": "breitbart.com",
+          "title": "China Trashes Melania Trump\u2019s Turn Leading U.N. Security Council Meeting: \u2018Striking Scene\u2019",
+          "snippet": "China\u2019s state-run propaganda newspaper Global Times declared on Tuesday that First Lady Melania Trump\u2019s leadership at a U.N.",
+          "score": 0.6,
+          "url": "https://www.breitbart.com/asia/2026/03/04/china-trashes-melania-trumps-turn-leading-u-n-security-council-meeting-striking-scene/"
+        }
+      ],
+      "diplomatic_focus": [
+        {
+          "outlet": "breitbart.com",
+          "title": "Reports Dispute Senior Iran Official Larijani's Claim of Rejecting Talks",
+          "snippet": "Iranian Supreme National Security Council Secretary Ali Larijani \u2013 seemingly the de facto leader of Iran following the liquidation of Ayatollah Ali Khamenei in ",
+          "score": 0.8,
+          "url": "https://www.breitbart.com/national-security/2026/03/02/reports-dispute-senior-iran-official-ali-larijanis-claim-of-rejecting-talks-with-u-s/"
+        },
+        {
+          "outlet": "bloomberg.com",
+          "title": "Trump Ramps Up Criticism of Keir Starmer Over War on Iran",
+          "snippet": "Trump Ramps Up Criticism of Keir Starmer Over War on Iran Donald Trump escalated his criticism of Prime Minister Keir Starmer, in a fresh indication of how stra",
+          "score": 0.7,
+          "url": "https://www.bloomberg.com/news/articles/2026-03-03/donald-trump-ramps-up-criticism-of-keir-starmer-over-war-on-iran"
+        },
+        {
+          "outlet": "bloomberg.com",
+          "title": "Bombing Iran May Blow Up Trump\u2019s Middle East Plans",
+          "snippet": ", Columnist Bombing Iran May Blow Up Trump\u2019s Middle East Plans President Donald Trump\u2019s showdown with Iran is reaching its endgame.",
+          "score": 0.7,
+          "url": "https://www.bloomberg.com/opinion/articles/2026-02-27/bombing-iran-may-blow-up-trump-s-middle-east-plans"
+        }
+      ],
+      "economic_focus": [
+        {
+          "outlet": "bloomberg.com",
+          "title": "What the Iran War Means for Your Money",
+          "snippet": "What the Iran War Means for Your Money The biggest economic risk is that surging energy prices trigger stagflation. This article is for subscribers only.",
+          "score": 1.0,
+          "url": "https://www.bloomberg.com/news/newsletters/2026-03-02/what-the-us-iran-conflict-means-for-your-money"
+        },
+        {
+          "outlet": "bloomberg.com",
+          "title": "Gasoline Prices Surge Amid Iran Attack, a Liability for Trump",
+          "snippet": "Surging Gasoline Prices Create New Political Woes for Trump Gasoline and diesel futures surged on the first day of trading after the US and Israel launched atta",
+          "score": 1.0,
+          "url": "https://www.bloomberg.com/news/articles/2026-03-02/gasoline-prices-surge-amid-iran-attack-a-liability-for-trump"
+        },
+        {
+          "outlet": "bloomberg.com",
+          "title": "Oil Prices Could Rise Further on Hormuz Delays, Analysts Say",
+          "snippet": "Oil Prices Could Rise Further on Hormuz Delays, Analysts Say Brent jumped by as much as 13% to above $82 a barrel at the open on Monday, and oil markets are now",
+          "score": 1.0,
+          "url": "https://www.bloomberg.com/news/articles/2026-03-02/oil-prices-could-rise-further-on-hormuz-delays-analysts-say"
+        }
+      ],
+      "culpability_bias": [
+        {
+          "outlet": "foxnews.com",
+          "title": "Iran's terror proxies from Iraq-to-Lebanon say ready to respond to US-Israel attacks",
+          "snippet": "The Islamic Republic of Iran has built a coalition of largely Shiite terrorist proxies \u2014 the axis of resistance \u2014 that will join Tehran in counterstrikes in res",
+          "score": 0.95,
+          "url": "https://www.foxnews.com/world/irans-terror-proxies-from-iraq-to-lebanon-say-ready-respond-us-israel-attacks"
+        },
+        {
+          "outlet": "breitbart.com",
+          "title": "Ballots Buried: Israel \u2018Flattens\u2019 Building Where Clerics Choose New Leader",
+          "snippet": "Israel \u201cflattened\u201d the building housing Iran\u2019s Assembly of Experts in the holy city of Qom \u2014 the clerical body constitutionally tasked with selecting the Islami",
+          "score": 0.9,
+          "url": "https://www.breitbart.com/politics/2026/03/03/ballots-buried-israel-flattens-building-where-iranian-clerics-meet-to-elect-new-supreme-leader/"
+        },
+        {
+          "outlet": "breitbart.com",
+          "title": "Dozens of Senior Iranian Leaders Killed in Operation Epic Fury",
+          "snippet": "The list of Iranian leaders eliminated by U.S.",
+          "score": 0.8,
+          "url": "https://www.breitbart.com/middle-east/2026/03/02/dozens-of-senior-iranian-leaders-killed-in-operation-epic-fury/"
+        }
+      ]
+    }
+  },
+  {
+    "id": "oil-breaks-100",
+    "date": "2026-03-08",
+    "label": "Oil Breaks $100",
+    "description": "Crude oil surpasses $100 a barrel as the war disrupts production and shipping. A humanitarian co-spike \u2014 civilian suffering and market shock arrive simultaneously.",
+    "divergence_note": "AP leads with succession crisis in Tehran (culpability frame). Reuters covers a Lebanese civilian displacement story (humanitarian). Two outlets, same day, opposite frames.",
+    "by_dim": {
+      "kinetic_focus": [
+        {
+          "outlet": "breitbart.com",
+          "title": "Ballots Buried: Israel \u2018Flattens\u2019 Building Where Clerics Choose New Leader",
+          "snippet": "Israel \u201cflattened\u201d the building housing Iran\u2019s Assembly of Experts in the holy city of Qom \u2014 the clerical body constitutionally tasked with selecting the Islami",
+          "score": 0.95,
+          "url": "https://www.breitbart.com/politics/2026/03/03/ballots-buried-israel-flattens-building-where-iranian-clerics-meet-to-elect-new-supreme-leader/"
+        },
+        {
+          "outlet": "foxnews.com",
+          "title": "MIKE PENCE: Trump and our incredible military are ending 47 years of Iranian terror",
+          "snippet": "From its inception in 1979, the Islamic Republic of Iran has long engaged in open hostility and violence toward the United States and Israel and has been a mali",
+          "score": 0.95,
+          "url": "https://www.foxnews.com/opinion/mike-pence-trump-our-incredible-military-ending-47-years-iranian-terror"
+        },
+        {
+          "outlet": "foxnews.com",
+          "title": "As Iran\u2019s leadership shifts amid war, Hezbollah moves to reset the balance: expert",
+          "snippet": "Hezbollah escalated its involvement in the widening conflict between Iran and the U.S.",
+          "score": 0.9,
+          "url": "https://www.foxnews.com/world/iran-leadership-shifts-war-hezbollah-reset-balance-expert"
+        }
+      ],
+      "humanitarian_focus": [
+        {
+          "outlet": "cnn.com",
+          "title": "Analysis suggests US was responsible for deadly strike on Iranian elementary school",
+          "snippet": "The United States military was likely responsible for the strike on an elementary school in southern Iran that killed scores of children, the deadliest incident",
+          "score": 0.8,
+          "url": "https://www.cnn.com/2026/03/06/middleeast/iran-minab-elementary-school-investigation-us-strike-intl"
+        },
+        {
+          "outlet": "cnn.com",
+          "title": "How Middle East flight disruptions are leaving foreigners stranded",
+          "snippet": "Video Ad Feedback How Middle East flight disruptions are leaving foreigners stranded As the conflict in the Middle East intensifies, the limited flights out air",
+          "score": 0.7,
+          "url": "https://www.cnn.com/2026/03/04/world/video/stranded-in-dubai-iran-attacks-digvid"
+        },
+        {
+          "outlet": "nbcnews.com",
+          "title": "Underground and surrounded by tech, Israeli paramedics watch and wait for Iranian strikes",
+          "snippet": "TEL AVIV \u2014 The main nerve center for Israel\u2019s primary emergency service could resemble any dispatch hub in any American city \u2014 a hive of uniformed first-respond",
+          "score": 0.7,
+          "url": "https://www.nbcnews.com/world/israel/israel-iran-us-strikes-magen-david-adom-emergency-service-underground-rcna261649"
+        }
+      ],
+      "diplomatic_focus": [
+        {
+          "outlet": "nytimes.com",
+          "title": "Iran will not compete in Paralympics due to travel concerns amid U.S., Israel strikes",
+          "snippet": "CORTINA D\u2019AMPEZZO, Italy \u2014 Iran will not participate in the 2026 Milan Cortina Winter Paralympics due to travel safety concerns, the International Paralympic Co",
+          "score": 0.8,
+          "url": "https://www.nytimes.com/athletic/7093395/2026/03/06/iran-winter-paralympics-us-israel-attack-travel/"
+        },
+        {
+          "outlet": "nytimes.com",
+          "title": "FIFA, Australian government hold urgent talks over Iran women\u2019s team\u2019s future after Asian Cup exit",
+          "snippet": "Urgent talks between FIFA, the Asian Football Confederation and the Australian government are taking place over whether it is possible to extend the Iran women\u2019",
+          "score": 0.8,
+          "url": "https://www.nytimes.com/athletic/7100720/2026/03/09/iran-women-australia-asian-cup/"
+        },
+        {
+          "outlet": "breitbart.com",
+          "title": "China Trashes Melania Trump\u2019s Turn Leading U.N. Security Council Meeting: \u2018Striking Scene\u2019",
+          "snippet": "China\u2019s state-run propaganda newspaper Global Times declared on Tuesday that First Lady Melania Trump\u2019s leadership at a U.N.",
+          "score": 0.7,
+          "url": "https://www.breitbart.com/asia/2026/03/04/china-trashes-melania-trumps-turn-leading-u-n-security-council-meeting-striking-scene/"
+        }
+      ],
+      "economic_focus": [
+        {
+          "outlet": "breitbart.com",
+          "title": "Iran Claims Strait of Hormuz Open to Friends After China Pressure, Trump Navy Escort Offer",
+          "snippet": "Seemingly under intense pressure from China, Iran\u2019s terrorist Islamic Revolutionary Guard Corps (IRGC) modified its threats to close the vital Strait of Hormuz ",
+          "score": 0.9,
+          "url": "https://www.breitbart.com/economy/2026/03/05/iran-claims-strait-of-hormuz-open-to-friends-after-china-pressure-trump-navy-escort-offer/"
+        },
+        {
+          "outlet": "cnn.com",
+          "title": "Dow tumbles by more than 1,100 points as Iran conflict spills beyond the Middle East",
+          "snippet": "Stocks sank, volatility picked up and oil prices surged to their highest level since mid-2024 as concerns about a prolonged war with Iran continue to roil marke",
+          "score": 0.9,
+          "url": "https://www.cnn.com/2026/03/05/investing/us-stocks-oil-iran"
+        },
+        {
+          "outlet": "cnn.com",
+          "title": "Oil prices rise again as more vessels attacked near the Strait of Hormuz",
+          "snippet": "Member countries of the International Energy Agency unanimously agreed Wednesday to release 400 million barrels of oil into the global market \u2013 the largest rele",
+          "score": 0.9,
+          "url": "https://www.cnn.com/2026/03/11/business/oil-prices-rebound-iran-war-intl"
+        }
+      ],
+      "culpability_bias": [
+        {
+          "outlet": "foxnews.com",
+          "title": "MIKE PENCE: Trump and our incredible military are ending 47 years of Iranian terror",
+          "snippet": "From its inception in 1979, the Islamic Republic of Iran has long engaged in open hostility and violence toward the United States and Israel and has been a mali",
+          "score": 0.95,
+          "url": "https://www.foxnews.com/opinion/mike-pence-trump-our-incredible-military-ending-47-years-iranian-terror"
+        },
+        {
+          "outlet": "breitbart.com",
+          "title": "Ballots Buried: Israel \u2018Flattens\u2019 Building Where Clerics Choose New Leader",
+          "snippet": "Israel \u201cflattened\u201d the building housing Iran\u2019s Assembly of Experts in the holy city of Qom \u2014 the clerical body constitutionally tasked with selecting the Islami",
+          "score": 0.9,
+          "url": "https://www.breitbart.com/politics/2026/03/03/ballots-buried-israel-flattens-building-where-iranian-clerics-meet-to-elect-new-supreme-leader/"
+        },
+        {
+          "outlet": "foxnews.com",
+          "title": "Trump\u2019s Middle East envoy reveals what led to breakdown in Iran talks before Operation Epic Fury",
+          "snippet": "U.S.",
+          "score": 0.8,
+          "url": "https://www.foxnews.com/media/trumps-middle-east-envoy-reveals-what-led-breakdown-iran-talks-before-operation-epic-fury"
+        }
+      ]
+    }
+  },
+  {
+    "id": "saudi-base-attack",
+    "date": "2026-03-27",
+    "label": "Escalation",
+    "description": "Iran hits Prince Sultan Air Base with 6 ballistic missiles and 29 drones, wounding 15 US troops and destroying an E-3 Sentry AWACS. Happens the day after Trump declared Iran\u2019s military \u201cneutralized.\u201d",
+    "divergence_note": "One month into the war, AP frames the strike through domestic political division (CPAC conservatives split on the war). International outlets had no same-day coverage in this dataset.",
+    "by_dim": {
+      "kinetic_focus": [
+        {
+          "outlet": "breitbart.com",
+          "title": "Experts Warn of Growing Stockpile Vulnerability Among U.S. Allies",
+          "snippet": "While more than 90 percent of Iranian missiles and drones have been intercepted by the United States, Israel, and allied forces, experts are reportedly warning ",
+          "score": 0.8,
+          "url": "https://www.breitbart.com/middle-east/2026/03/26/experts-warn-growing-stockpile-vulnerability-u-s-allies/"
+        },
+        {
+          "outlet": "cnn.com",
+          "title": "What we know on day 23 of the US and Israel\u2019s war with Iran",
+          "snippet": "Iran has vowed a heavy retaliation if US President Donald Trump carries out a threat to bomb Iran\u2019s power plants, with Tehran warning that critical infrastructu",
+          "score": 0.8,
+          "url": "https://www.cnn.com/2026/03/22/middleeast/us-israel-iran-middle-east-war-day-23-what-we-know-intl-hnk"
+        },
+        {
+          "outlet": "foxnews.com",
+          "title": "Iran responds to reports US weighing ground operations: 'We will never accept humiliation'",
+          "snippet": "Iran is responding boldly Sunday to reports the U.S.",
+          "score": 0.8,
+          "url": "https://www.foxnews.com/world/iran-responds-reports-us-weighing-ground-operations-we-never-accept-humiliation"
+        }
+      ],
+      "humanitarian_focus": [
+        {
+          "outlet": "nbcnews.com",
+          "title": "Iranians grieving over school missile strike express rage at U.S., Trump",
+          "snippet": "Zahra Monazzah\u2019s son Soheil was at an elementary school in Minab, in southern Iran, on Feb.",
+          "score": 0.9,
+          "url": "https://www.nbcnews.com/world/iran/iranians-grieving-school-missile-strike-express-rage-us-trump-rcna264778"
+        },
+        {
+          "outlet": "breitbart.com",
+          "title": "Olympians Denounce IOC's Response to Iran's Murder of Teen Wrestler",
+          "snippet": "At least seven Olympians from several different countries have denounced the International Olympic Committee (IOC) for issuing a weak statement in response to t",
+          "score": 0.7,
+          "url": "https://www.breitbart.com/sports/2026/03/26/olympians-denounce-iocs-weak-response-to-irans-murder-of-teenage-wrestler/"
+        },
+        {
+          "outlet": "cnn.com",
+          "title": "What we know on day 23 of the US and Israel\u2019s war with Iran",
+          "snippet": "Iran has vowed a heavy retaliation if US President Donald Trump carries out a threat to bomb Iran\u2019s power plants, with Tehran warning that critical infrastructu",
+          "score": 0.7,
+          "url": "https://www.cnn.com/2026/03/22/middleeast/us-israel-iran-middle-east-war-day-23-what-we-know-intl-hnk"
+        }
+      ],
+      "diplomatic_focus": [
+        {
+          "outlet": "breitbart.com",
+          "title": "White House Official: Reports of Iranians Wanting Vance to Lead Negotiations Are Part of a 'Foreign Propaganda Campaign'",
+          "snippet": "The White House is pushing back on media reports citing anonymous \u201cregional sources\u201d claiming that the Iranian regime wants Vice President JD Vance to lead nego",
+          "score": 0.8,
+          "url": "https://www.breitbart.com/the-media/2026/03/24/white-house-official-reports-of-iranians-wanting-vance-to-lead-negotiations-are-part-of-a-foreign-propaganda-campaign/"
+        },
+        {
+          "outlet": "foxnews.com",
+          "title": "Trump, Starmer agree Strait of Hormuz must reopen as Middle East conflict escalates",
+          "snippet": "President Donald Trump spoke with British Prime Minister Keir Starmer on Sunday to discuss escalating tensions in the Middle East, with a focus on the urgent ne",
+          "score": 0.7,
+          "url": "https://www.foxnews.com/world/trump-starmer-agree-strait-hormuz-must-reopen-middle-east-conflict-escalates"
+        },
+        {
+          "outlet": "foxnews.com",
+          "title": "Trump orders War Dept to postpone strikes on Iranian energy sites, citing 'productive' talks to end war",
+          "snippet": "President Donald Trump, in an all-caps post early Monday morning, declared progress toward \"resolution\" of the war with Iran.",
+          "score": 0.7,
+          "url": "https://www.foxnews.com/politics/trump-orders-war-dept-postpone-strikes-iranian-energy-sites-citing-productive-talks-end-war"
+        }
+      ],
+      "economic_focus": [
+        {
+          "outlet": "cnn.com",
+          "title": "The Iran conflict is a boon for Russia\u2019s \u2018war machine.\u2019 And it\u2019s not just about oil",
+          "snippet": "The Iran war has handed Russia\u2019s beleaguered economy a much-needed lifeline.",
+          "score": 0.9,
+          "url": "https://www.cnn.com/2026/03/27/business/iran-war-russia-ukraine-impact-intl"
+        },
+        {
+          "outlet": "usatoday.com",
+          "title": "States mull suspending gas tax to cut prices amid US war in Iran",
+          "snippet": "States mull suspending gas tax to cut prices. Is yours next? Georgia became the first state to temporarily suspend its gas tax on drivers.",
+          "score": 0.9,
+          "url": "https://www.usatoday.com/story/news/nation/2026/03/24/gas-prices-states-taxes-iran-war/89266040007/"
+        },
+        {
+          "outlet": "nbcnews.com",
+          "title": "Treasury secretary defends U.S. military actions in Iran: 'Sometimes you have to escalate to de-escalate'",
+          "snippet": "Treasury Secretary Scott Bessent on Sunday defended strikes on Iran\u2019s infrastructure since the U.S.",
+          "score": 0.8,
+          "url": "https://www.nbcnews.com/politics/trump-administration/treasury-secretary-bessent-us-military-actions-iran-escalate-oil-rcna264608"
+        }
+      ],
+      "culpability_bias": [
+        {
+          "outlet": "breitbart.com",
+          "title": "Levin: 'Imminent or Not,' It Was Time to Put Iran Threat to an End \u2014 'Don't You Think, America?'",
+          "snippet": "During Sunday\u2019s broadcast of FNC\u2019s \u201cLife, Liberty & Levin,\u201d host Mark Levin offered a vociferous defense of the Trump administration\u2019s strikes against Iran.",
+          "score": 0.8,
+          "url": "https://www.breitbart.com/clips/2026/03/23/levin-imminent-or-not-it-was-time-to-put-iran-threat-to-an-end-dont-you-think-america/"
+        },
+        {
+          "outlet": "breitbart.com",
+          "title": "Olympians Denounce IOC's Response to Iran's Murder of Teen Wrestler",
+          "snippet": "At least seven Olympians from several different countries have denounced the International Olympic Committee (IOC) for issuing a weak statement in response to t",
+          "score": 0.8,
+          "url": "https://www.breitbart.com/sports/2026/03/26/olympians-denounce-iocs-weak-response-to-irans-murder-of-teenage-wrestler/"
+        },
+        {
+          "outlet": "nbcnews.com",
+          "title": "Iranians grieving over school missile strike express rage at U.S., Trump",
+          "snippet": "Zahra Monazzah\u2019s son Soheil was at an elementary school in Minab, in southern Iran, on Feb.",
+          "score": 0.8,
+          "url": "https://www.nbcnews.com/world/iran/iranians-grieving-school-missile-strike-express-rage-us-trump-rcna264778"
+        }
+      ]
+    }
+  }
+]
