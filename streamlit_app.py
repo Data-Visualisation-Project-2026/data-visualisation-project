@@ -485,6 +485,11 @@ elif page == 'Story Arc (Lab)':
     render_outlet_event_timeline_lab()
 
 elif page == 'Media Clusters':
+    st.markdown(
+        """
+        Framing changed over time, but it also differed across media outlets. Some outlets shared similar patterns across military, humanitarian, diplomatic, economic, and blame-centered coverage, forming clear media clusters.
+        """
+    )
     st.subheader('Media Clusters')
     st.write(
         'This 3D network visualization shows how media outlets cluster based on their '
@@ -496,6 +501,11 @@ elif page == 'Media Clusters':
     st.markdown(Path('network_analysis/networkvis_interpretation.md').read_text())
 
 elif page == 'Media Differences':
+    st.markdown(
+        """
+        Media differences become clearer when we look more closely. Beyond broad patterns, outlets also differed in the language they used and the parts of the war each of them emphasized.
+        """
+    )
     st.subheader('How Language Differs Across Media Clusters')
     st.write(
         'These charts show the most unique phrases in each media cluster. '
