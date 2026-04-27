@@ -492,8 +492,8 @@ elif page == 'Media Clusters':
     )
     st.subheader('Media Clusters')
     st.write(
-        'This 3D network visualization shows how media outlets cluster based on their '
-        'average framing patterns across the five narrative dimensions.'
+        'Outlets closer together in the network share more similar framing patterns. '
+        'The five colors represent five media clusters.'
     )
 
     render_media_clusters()
