@@ -242,6 +242,27 @@ st.markdown(
         margin-bottom: 0.25rem;
     }
 
+    /* ── Dimension toggle pills ────────────────────────────────────────────
+       Streamlit 1.45.x uses data-testid="stBaseButton-pills" (unselected)
+       and data-testid="stBaseButton-pillsActive" (selected).               */
+    [data-testid="stBaseButton-pills"],
+    [data-testid="stBaseButton-pillsActive"] {
+        border-radius: 4px !important;
+        font-size: 11px !important;
+        font-family: 'Roboto', sans-serif !important;
+        font-weight: 600 !important;
+        padding: 4px 10px !important;
+        min-height: 0 !important;
+        height: auto !important;
+        line-height: 1 !important;
+        border-width: 1.5px !important;
+        border-style: solid !important;
+        box-shadow: none !important;
+        transition: background 0.15s, color 0.15s !important;
+    }
+    [data-testid="stBaseButton-pills"]       { background: #ffffff !important; }
+    [data-testid="stBaseButton-pillsActive"] { color: #ffffff !important; }
+
     </style>
     """,
     unsafe_allow_html=True
@@ -253,40 +274,57 @@ st.markdown(
 components.html("""
 <script>
 (function () {
+  // Streamlit 1.45.x: pill kind="pills" -> data-testid="stBaseButton-pills" (unselected)
+  //                   kind="pillsActive" -> data-testid="stBaseButton-pillsActive" (selected)
   const COLORS = ['#E15759', '#4E79A7', '#59A14F', '#76B7B2', '#F28E2B'];
 
-  function styleGroup(group) {
-    const btns = group.querySelectorAll('[data-testid="stPillsButton"]');
-    btns.forEach(function(btn, i) {
-      const color = COLORS[i] || '#666';
-      const pressed = btn.getAttribute('aria-pressed') === 'true';
-      const s = btn.style;
-      s.setProperty('border-radius',  '4px',                         'important');
-      s.setProperty('font-size',      '11px',                        'important');
-      s.setProperty('font-family',    '"Roboto", sans-serif',         'important');
-      s.setProperty('font-weight',    '600',                         'important');
-      s.setProperty('padding',        '4px 10px',                    'important');
-      s.setProperty('min-height',     '0',                           'important');
-      s.setProperty('height',         'auto',                        'important');
-      s.setProperty('line-height',    '1',                           'important');
-      s.setProperty('border',         '1.5px solid ' + color,        'important');
-      s.setProperty('box-shadow',     'none',                        'important');
-      s.setProperty('cursor',         'pointer',                     'important');
-      s.setProperty('transition',     'background 0.15s, color 0.15s', 'important');
-      if (pressed) {
-        s.setProperty('background', color,   'important');
-        s.setProperty('color',      '#ffffff', 'important');
-      } else {
-        s.setProperty('background', '#ffffff', 'important');
-        s.setProperty('color',      color,     'important');
-      }
-    });
+  function stylePill(btn, color, selected) {
+    const s = btn.style;
+    s.setProperty('border-radius',  '4px',                           'important');
+    s.setProperty('font-size',      '11px',                          'important');
+    s.setProperty('font-family',    '"Roboto", sans-serif',           'important');
+    s.setProperty('font-weight',    '600',                           'important');
+    s.setProperty('padding',        '4px 10px',                      'important');
+    s.setProperty('min-height',     '0',                             'important');
+    s.setProperty('height',         'auto',                          'important');
+    s.setProperty('line-height',    '1',                             'important');
+    s.setProperty('border',         '1.5px solid ' + color,          'important');
+    s.setProperty('box-shadow',     'none',                          'important');
+    s.setProperty('cursor',         'pointer',                       'important');
+    s.setProperty('transition',     'background 0.15s, color 0.15s', 'important');
+    if (selected) {
+      s.setProperty('background', color,     'important');
+      s.setProperty('color',      '#ffffff', 'important');
+    } else {
+      s.setProperty('background', '#ffffff', 'important');
+      s.setProperty('color',      color,     'important');
+    }
   }
 
   function applyAll() {
     try {
       const doc = window.parent.document;
-      doc.querySelectorAll('[data-testid="stPillsButtonGroup"]').forEach(styleGroup);
+      // Collect all pill buttons across all st.pills widgets on the page
+      const all = [...doc.querySelectorAll('[data-testid^="stBaseButton-pills"]')];
+
+      // Group by immediate parent container (one parent = one st.pills widget)
+      const groups = new Map();
+      all.forEach(function(btn) {
+        const p = btn.parentElement;
+        if (!groups.has(p)) groups.set(p, []);
+        groups.get(p).push(btn);
+      });
+
+      groups.forEach(function(btns) {
+        // Sort by DOM position within the parent
+        btns.sort(function(a, b) {
+          return a.compareDocumentPosition(b) & 4 ? -1 : 1;
+        });
+        btns.forEach(function(btn, i) {
+          const selected = btn.getAttribute('data-testid') === 'stBaseButton-pillsActive';
+          stylePill(btn, COLORS[i] || '#666', selected);
+        });
+      });
     } catch(e) {}
   }
 
@@ -294,7 +332,7 @@ components.html("""
     const obs = new MutationObserver(applyAll);
     obs.observe(window.parent.document.body, {
       subtree: true, childList: true,
-      attributes: true, attributeFilter: ['aria-pressed']
+      attributes: true, attributeFilter: ['data-testid']
     });
   } catch(e) {}
 
