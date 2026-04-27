@@ -265,6 +265,158 @@ if (timelineSection) timelineSection.style.height = (window.innerHeight + scroll
 // Cache section offset — constant unless the page layout changes.
 const sectionTop = timelineSection ? timelineSection.offsetTop : 0;
 
+// ── Headline callout panel ─────────────────────────────────────────────────
+
+const CALLOUT_LABELS = {
+    'apnews.com':   'AP News',  'reuters.com':  'Reuters',
+    'bbc.com':      'BBC',      'aljazeera.com':'Al Jazeera',
+    'nytimes.com':  'NYT',      'foxnews.com':  'Fox News',
+    'cnn.com':      'CNN',      'bloomberg.com':'Bloomberg',
+    'npr.org':      'NPR',      'breitbart.com':'Breitbart',
+    'nbcnews.com':  'NBC News', 'usatoday.com': 'USA Today',
+};
+const CALLOUT_COLORS = Object.assign({
+    'apnews.com':   '#76B7B2', 'reuters.com':  '#76B7B2',
+    'bbc.com':      '#76B7B2', 'aljazeera.com':'#895EFF',
+}, meta.outlet_colors || {});
+
+const DIM_ACCENT = {
+    kinetic_focus:      '#4E79A7',
+    humanitarian_focus: '#F28E2B',
+    diplomatic_focus:   '#76B7B2',
+    economic_focus:     '#59A14F',
+    culpability_bias:   '#E15759',
+};
+
+// Inject callout CSS
+const _ccStyle = document.createElement('style');
+_ccStyle.textContent = `
+#callout-panel{
+    position:absolute;top:52px;right:20px;width:268px;
+    z-index:30;pointer-events:none;opacity:0;
+    font-family:Georgia,serif;
+}
+.cc-card{
+    background:rgba(255,255,255,0.97);
+    border-left:3px solid #4E79A7;
+    border-radius:3px;
+    box-shadow:0 2px 16px rgba(0,0,0,0.12);
+    padding:13px 15px 11px;
+}
+.cc-event{
+    font-size:11px;font-weight:700;color:#1a1a1a;
+    text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px;
+}
+.cc-note{
+    font-size:10px;color:#666;line-height:1.5;
+    margin-bottom:9px;font-family:Roboto,sans-serif;font-style:italic;
+}
+.cc-hl{border-top:1px solid #f2f2f2;padding:7px 0 3px;}
+.cc-hl:first-of-type{border-top:none;padding-top:0;}
+.cc-badge{
+    display:inline-block;font-size:8px;font-weight:700;color:#fff;
+    border-radius:2px;padding:1px 6px;margin-bottom:3px;
+    text-transform:uppercase;letter-spacing:.05em;font-family:Roboto,sans-serif;
+}
+.cc-title{
+    font-size:10.5px;font-weight:600;color:#1a1a1a;
+    line-height:1.4;margin-bottom:2px;
+}
+.cc-snip{font-size:9.5px;color:#aaa;line-height:1.4;font-family:Roboto,sans-serif;}
+`;
+document.head.appendChild(_ccStyle);
+
+// Build panel DOM
+const calloutPanel = document.createElement('div');
+calloutPanel.id = 'callout-panel';
+if (timelineInner) timelineInner.appendChild(calloutPanel);
+
+// Derive dominant dimension for an event's accent color
+function dominantDim(evt) {
+    const scores = evt.outlet_scores || {};
+    const agg = {};
+    Object.values(scores).forEach(s => {
+        Object.entries(s).forEach(([k, v]) => { agg[k] = (agg[k] || 0) + v; });
+    });
+    const dims = Object.keys(agg);
+    if (!dims.length) return 'kinetic_focus';
+    return dims.reduce((a, b) => agg[a] > agg[b] ? a : b);
+}
+
+function buildCard(evt) {
+    const accent = DIM_ACCENT[dominantDim(evt)] || '#4E79A7';
+    const snippets = evt.snippets || {};
+    const seen = new Set();
+    const items = Object.entries(snippets)
+        .flatMap(([outlet, arr]) => arr.map(s => ({ outlet, ...s })))
+        .filter(s => { if (seen.has(s.url)) return false; seen.add(s.url); return true; })
+        .slice(0, 2);
+
+    const hlHTML = items.map(s => {
+        const bg  = CALLOUT_COLORS[s.outlet] || '#999';
+        const lbl = CALLOUT_LABELS[s.outlet]  || s.outlet;
+        const snip = (s.snippet || '').replace(/\n/g, ' ').trim().substring(0, 115);
+        return `<div class="cc-hl">
+            <span class="cc-badge" style="background:${bg}">${lbl}</span>
+            <div class="cc-title">${s.title}</div>
+            <div class="cc-snip">${snip}…</div>
+        </div>`;
+    }).join('');
+
+    return `<div class="cc-card" style="border-left-color:${accent}">
+        <div class="cc-event">${evt.label}</div>
+        <div class="cc-note">${evt.divergence_note || evt.description || ''}</div>
+        ${hlHTML}
+    </div>`;
+}
+
+// Pre-render one card per event
+const calloutCards = events.map(evt => ({
+    x:    xScale(parseDate(evt.date)),
+    html: buildCard(evt),
+}));
+
+let _activeIdx = -1;
+
+function updateCallout(sy) {
+    if (!calloutPanel) return;
+    if (sy < sectionTop || sy > sectionTop + scrollDistance) {
+        if (_activeIdx !== -1) {
+            gsap.to(calloutPanel, { opacity: 0, duration: 0.25 });
+            _activeIdx = -1;
+        }
+        return;
+    }
+    // screen_x of chart point = xScale(date) + MARGIN.left − scrollDistance * p
+    // card triggers when event marker passes 35% from left:
+    //   xScale(date) + MARGIN.left − scrollDistance*p = 0.35 * W
+    //   => xScale(date) < 0.35*W − MARGIN.left + scrollDistance*p
+    const p = (sy - sectionTop) / scrollDistance;
+    const threshold = 0.35 * window.innerWidth - MARGIN.left + scrollDistance * p;
+
+    let newIdx = -1;
+    for (let i = calloutCards.length - 1; i >= 0; i--) {
+        if (calloutCards[i].x < threshold) { newIdx = i; break; }
+    }
+
+    if (newIdx === _activeIdx) return;
+    _activeIdx = newIdx;
+
+    if (newIdx === -1) {
+        gsap.to(calloutPanel, { opacity: 0, duration: 0.25 });
+    } else {
+        gsap.to(calloutPanel, {
+            opacity: 0, duration: 0.15,
+            onComplete: () => {
+                calloutPanel.innerHTML = calloutCards[newIdx].html;
+                gsap.to(calloutPanel, { opacity: 1, duration: 0.35 });
+            },
+        });
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+
 function updateTrack() {
     const sy = window.scrollY;
     if (sy < sectionTop || sy > sectionTop + scrollDistance) {
@@ -274,6 +426,7 @@ function updateTrack() {
         const progress = (sy - sectionTop) / scrollDistance;
         if (track) track.style.transform = `translateX(${-scrollDistance * progress}px)`;
     }
+    updateCallout(sy);
 }
 
 window.addEventListener('scroll', updateTrack, { passive: true });
