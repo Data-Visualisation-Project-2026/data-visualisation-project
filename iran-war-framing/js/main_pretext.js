@@ -12,6 +12,9 @@ gsap.registerPlugin(ScrollTrigger);
     console.log("events:", events.map(e => e.label));
     console.log("outlets:", meta.outlets);
 
+// Tracks which outlet lines are currently hidden (toggled off by the legend).
+let hiddenOutlets = new Set();
+
 // --- Dimension Setup ---
 const MARGIN = { top: 112, right: 20, bottom: 76, left: 48 };
 const VH = Math.round(window.innerHeight * 0.82);
@@ -96,6 +99,7 @@ const DIM_PALETTE = {
 function drawLines(dim) {
     g.selectAll(".outlet-line").remove();
     meta.outlets.forEach(outlet => {
+        if (hiddenOutlets.has(outlet)) return;
         const data = timeline
             .filter(d => parseDate(d.date) !== null && d.outlets[outlet])
             .map(d => ({ date: d.date, value: d.outlets[outlet][dim] }));
@@ -316,9 +320,11 @@ _ccStyle.textContent = `
 .cc-hl{border-top:1px solid #f2f2f2;padding:7px 0 3px;}
 .cc-hl:first-of-type{border-top:none;padding-top:0;}
 .cc-badge{
-    display:inline-block;font-size:8px;font-weight:700;color:#fff;
-    border-radius:2px;padding:1px 6px;margin-bottom:3px;
-    text-transform:uppercase;letter-spacing:.05em;font-family:Roboto,sans-serif;
+    display:inline-block;font-size:11px;font-weight:600;color:#fff;
+    border-radius:4px;padding:4px 10px;margin-bottom:5px;
+    border:1.5px solid transparent;
+    font-family:Roboto,sans-serif;
+    line-height:1;
 }
 .cc-title{
     font-size:10.5px;font-weight:600;color:#1a1a1a;
@@ -426,6 +432,63 @@ function updateCallout(sy) {
 
 // Build cards for the initial active dimension.
 rebuildCalloutCards();
+
+// ── Outlet toggle legend ───────────────────────────────────────────────────
+// One pill per outlet, same style as the dimension toggle buttons.
+// Selected (line visible): filled — white text on cluster color.
+// Unselected (line hidden): outlined — cluster color text on transparent.
+
+const outletLegend = document.createElement('div');
+outletLegend.id = 'outlet-legend';
+outletLegend.style.cssText = [
+    'position:absolute',
+    'bottom:14px',
+    'left:' + MARGIN.left + 'px',
+    'z-index:10',
+    'display:flex',
+    'flex-wrap:wrap',
+    'gap:4px',
+].join(';');
+if (timelineInner) timelineInner.appendChild(outletLegend);
+
+meta.outlets.forEach(outlet => {
+    const color = meta.outlet_colors[outlet] || '#999';
+    const label = (meta.outlet_labels && meta.outlet_labels[outlet]) || outlet;
+    const pill = document.createElement('button');
+    pill.textContent = label;
+    pill.dataset.outlet = outlet;
+
+    function applyPillStyle(selected) {
+        pill.style.cssText = [
+            'padding:4px 10px',
+            'border-radius:4px',
+            'border:1.5px solid ' + color,
+            'background:' + (selected ? color : 'transparent'),
+            'color:' + (selected ? '#fff' : color),
+            'font-size:11px',
+            'font-family:Roboto,sans-serif',
+            'cursor:pointer',
+            'transition:background 0.15s,color 0.15s',
+            'line-height:1',
+        ].join(';');
+    }
+
+    applyPillStyle(true); // start selected
+
+    pill.addEventListener('click', () => {
+        const nowHidden = hiddenOutlets.has(outlet);
+        if (nowHidden) {
+            hiddenOutlets.delete(outlet);
+            applyPillStyle(true);
+        } else {
+            hiddenOutlets.add(outlet);
+            applyPillStyle(false);
+        }
+        drawLines(activeDim);
+    });
+
+    outletLegend.appendChild(pill);
+});
 
 // ─────────────────────────────────────────────────────────────────────────────
 
