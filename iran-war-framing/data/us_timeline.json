@@ -17,7 +17,7 @@
       "nbcnews.com": null,
       "usatoday.com": null
     },
-    "us_dominant": "culpability_bias"
+    "us_dominant": "diplomatic_focus"
   },
   {
     "date": "2026-02-28",
@@ -61,7 +61,7 @@
         "culpability_bias": 0.6
       }
     },
-    "us_dominant": "kinetic_focus"
+    "us_dominant": "culpability_bias"
   },
   {
     "date": "2026-03-01",
@@ -217,7 +217,7 @@
         "culpability_bias": 0.4
       }
     },
-    "us_dominant": "kinetic_focus"
+    "us_dominant": "culpability_bias"
   },
   {
     "date": "2026-03-04",
@@ -267,7 +267,7 @@
       },
       "usatoday.com": null
     },
-    "us_dominant": "kinetic_focus"
+    "us_dominant": "culpability_bias"
   },
   {
     "date": "2026-03-05",
@@ -431,7 +431,7 @@
       "nbcnews.com": null,
       "usatoday.com": null
     },
-    "us_dominant": "kinetic_focus"
+    "us_dominant": "culpability_bias"
   },
   {
     "date": "2026-03-09",
@@ -513,7 +513,7 @@
         "culpability_bias": 0.45
       }
     },
-    "us_dominant": "kinetic_focus"
+    "us_dominant": "culpability_bias"
   },
   {
     "date": "2026-03-11",
@@ -557,7 +557,7 @@
         "culpability_bias": 0.0
       }
     },
-    "us_dominant": "kinetic_focus"
+    "us_dominant": "culpability_bias"
   },
   {
     "date": "2026-03-12",
@@ -601,7 +601,7 @@
         "culpability_bias": 0.1
       }
     },
-    "us_dominant": "culpability_bias"
+    "us_dominant": "economic_focus"
   },
   {
     "date": "2026-03-13",
@@ -633,7 +633,7 @@
         "culpability_bias": 0.55
       }
     },
-    "us_dominant": "kinetic_focus"
+    "us_dominant": "culpability_bias"
   },
   {
     "date": "2026-03-14",
@@ -703,7 +703,7 @@
       "nbcnews.com": null,
       "usatoday.com": null
     },
-    "us_dominant": "kinetic_focus"
+    "us_dominant": "culpability_bias"
   },
   {
     "date": "2026-03-16",
@@ -735,7 +735,7 @@
       "nbcnews.com": null,
       "usatoday.com": null
     },
-    "us_dominant": "economic_focus"
+    "us_dominant": "culpability_bias"
   },
   {
     "date": "2026-03-17",
@@ -817,7 +817,7 @@
         "culpability_bias": 0.6
       }
     },
-    "us_dominant": "kinetic_focus"
+    "us_dominant": "culpability_bias"
   },
   {
     "date": "2026-03-19",
@@ -855,7 +855,7 @@
       },
       "usatoday.com": null
     },
-    "us_dominant": "economic_focus"
+    "us_dominant": "culpability_bias"
   },
   {
     "date": "2026-03-20",
@@ -887,7 +887,7 @@
         "culpability_bias": 0.7
       }
     },
-    "us_dominant": "kinetic_focus"
+    "us_dominant": "culpability_bias"
   },
   {
     "date": "2026-03-21",
@@ -1001,7 +1001,7 @@
         "culpability_bias": 0.3
       }
     },
-    "us_dominant": "diplomatic_focus"
+    "us_dominant": "economic_focus"
   },
   {
     "date": "2026-03-24",
@@ -1051,7 +1051,7 @@
         "culpability_bias": 0.7
       }
     },
-    "us_dominant": "culpability_bias"
+    "us_dominant": "economic_focus"
   },
   {
     "date": "2026-03-25",
@@ -1095,7 +1095,7 @@
       "nbcnews.com": null,
       "usatoday.com": null
     },
-    "us_dominant": "culpability_bias"
+    "us_dominant": "economic_focus"
   },
   {
     "date": "2026-03-26",
@@ -1121,7 +1121,7 @@
       "nbcnews.com": null,
       "usatoday.com": null
     },
-    "us_dominant": "culpability_bias"
+    "us_dominant": "economic_focus"
   },
   {
     "date": "2026-03-27",
@@ -1167,7 +1167,7 @@
       "nbcnews.com": null,
       "usatoday.com": null
     },
-    "us_dominant": "kinetic_focus"
+    "us_dominant": "culpability_bias"
   },
   {
     "date": "2026-03-29",
@@ -1193,6 +1193,6 @@
         "culpability_bias": 0.6
       }
     },
-    "us_dominant": "kinetic_focus"
+    "us_dominant": "culpability_bias"
   }
 ]

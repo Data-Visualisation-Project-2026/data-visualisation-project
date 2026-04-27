@@ -107,14 +107,8 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
         yaxis_range=[0, 0.7],
         hovermode='x unified',
         title_text='',
-        legend={
-            'orientation': 'h',
-            'yanchor': 'bottom',
-            'y': 1.18,
-            'xanchor': 'left',
-            'x': 0,
-        },
-        margin={'l': 55, 'r': 20, 't': 130, 'b': 80}
+        showlegend=False,
+        margin={'l': 55, 'r': 20, 't': 60, 'b': 80}
     )
 
     event_dates_ts = [pd.Timestamp(d) for d, _ in events]
@@ -213,8 +207,8 @@ def make_international_framing_chart(timeline_path, highlighted_dimensions):
         yaxis_range=[0, 0.8],
         hovermode='x unified',
         title_text='',
-        legend={'orientation': 'h', 'yanchor': 'bottom', 'y': 1.18, 'xanchor': 'left', 'x': 0},
-        margin={'l': 55, 'r': 20, 't': 130, 'b': 80},
+        showlegend=False,
+        margin={'l': 55, 'r': 20, 't': 60, 'b': 80},
     )
     event_dates_ts = [pd.Timestamp(d) for d, _ in events]
     event_tick_labels = [f"{pd.Timestamp(d).strftime('%b')} {pd.Timestamp(d).day}" for d, _ in events]

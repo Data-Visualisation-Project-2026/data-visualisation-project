@@ -168,7 +168,7 @@ function drawBand(data, bandY, key) {
         g.append('rect')
             .attr('x', x0).attr('y', bandY)
             .attr('width', Math.max(1, x1 - x0)).attr('height', BAND_H)
-            .attr('fill', DIM_COLORS[d[key]]).attr('opacity', 0.72);
+            .attr('fill', DIM_COLORS[d[key]]);
     });
 }
 

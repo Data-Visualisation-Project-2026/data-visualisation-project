@@ -207,6 +207,39 @@ st.markdown(
     a {
         color: #2f5f86;
     }
+
+    /* ── Dimension toggle pills — match D3 button style ─────────────────── */
+    /* Base overrides — target by Streamlit's stable emotion class targets   */
+    button[class*="eacrzsi13"],
+    button[class*="eacrzsi14"] {
+        border-radius: 4px !important;
+        font-size: 11px !important;
+        font-family: 'Roboto', sans-serif !important;
+        padding: 4px 10px !important;
+        min-height: unset !important;
+        height: auto !important;
+        line-height: 1.2 !important;
+        border-width: 1.5px !important;
+        border-style: solid !important;
+        background: transparent !important;
+        transition: background 0.15s, color 0.15s !important;
+    }
+    /* Per-dimension colors by child position within the pills flex container */
+    /* Culpability Bias — 1st */
+    button[class*="eacrzsi13"]:nth-child(1) { border-color: #E15759 !important; color: #E15759 !important; }
+    button[class*="eacrzsi14"]:nth-child(1) { background: #E15759 !important; border-color: #E15759 !important; color: #fff !important; }
+    /* Kinetic — 2nd */
+    button[class*="eacrzsi13"]:nth-child(2) { border-color: #4E79A7 !important; color: #4E79A7 !important; }
+    button[class*="eacrzsi14"]:nth-child(2) { background: #4E79A7 !important; border-color: #4E79A7 !important; color: #fff !important; }
+    /* Economic — 3rd */
+    button[class*="eacrzsi13"]:nth-child(3) { border-color: #59A14F !important; color: #59A14F !important; }
+    button[class*="eacrzsi14"]:nth-child(3) { background: #59A14F !important; border-color: #59A14F !important; color: #fff !important; }
+    /* Diplomatic — 4th */
+    button[class*="eacrzsi13"]:nth-child(4) { border-color: #76B7B2 !important; color: #76B7B2 !important; }
+    button[class*="eacrzsi14"]:nth-child(4) { background: #76B7B2 !important; border-color: #76B7B2 !important; color: #fff !important; }
+    /* Humanitarian — 5th */
+    button[class*="eacrzsi13"]:nth-child(5) { border-color: #F28E2B !important; color: #F28E2B !important; }
+    button[class*="eacrzsi14"]:nth-child(5) { background: #F28E2B !important; border-color: #F28E2B !important; color: #fff !important; }
     </style>
     """,
     unsafe_allow_html=True
@@ -283,7 +316,8 @@ if page == 'Story Arc':
 
     # ── US aggregate chart ───────────────────────────────────────────────────
     st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">How US media outlets framed the war</h1>', unsafe_allow_html=True)
-    us_chart = make_framing_over_time_chart(df, score_cols, score_labels, dimension_order)
+    us_selected = st.pills('', options=dimension_order, default=dimension_order, selection_mode='multi', key='story_arc_us_dims', label_visibility='collapsed')
+    us_chart = make_framing_over_time_chart(df, score_cols, score_labels, us_selected or dimension_order)
     st.plotly_chart(us_chart, use_container_width=True)
 
     # ── US framing band ──────────────────────────────────────────────────────
@@ -328,7 +362,8 @@ if page == 'Story Arc':
 
     # ── International aggregate chart ────────────────────────────────────────
     st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">Average framing score across non-US media outlets</h1>', unsafe_allow_html=True)
-    intl_chart = make_international_framing_chart('iran-war-framing/data/timeline.json', dimension_order)
+    intl_selected = st.pills('', options=dimension_order, default=dimension_order, selection_mode='multi', key='story_arc_intl_dims', label_visibility='collapsed')
+    intl_chart = make_international_framing_chart('iran-war-framing/data/timeline.json', intl_selected or dimension_order)
     st.plotly_chart(intl_chart, use_container_width=True)
 
     # ── INTL framing band ────────────────────────────────────────────────────
