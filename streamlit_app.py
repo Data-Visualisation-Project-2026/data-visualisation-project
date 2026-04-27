@@ -1,4 +1,5 @@
 from pathlib import Path
+from urllib.parse import quote
 
 import pandas as pd
 import streamlit as st
@@ -24,13 +25,16 @@ st.set_page_config(layout='wide')
 
 
 def render_next_page_button(next_page: str, key: str):
-    """Render a subtle next-page button that updates the sidebar navigation."""
-    st.markdown('<div class="next-page-wrap">', unsafe_allow_html=True)
-    if st.button(f'Next: {next_page} →', key=key, type='secondary'):
-        st.session_state['pending_navigation_v5'] = next_page
-        st.session_state['scroll_to_top_v1'] = True
-        st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
+    """Render a subtle next-page link that navigates to the next section at the top."""
+    href = f'?page={quote(next_page)}#top'
+    st.markdown(
+        f"""
+        <div class="next-page-wrap">
+          <a class="next-page-link" href="{href}">Next: {next_page} →</a>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 st.markdown(
     """
@@ -243,6 +247,27 @@ st.markdown(
         margin-bottom: 0.25rem;
     }
 
+    .next-page-link {
+        display: inline-block;
+        border: 1px solid #d9d9d9;
+        background: #ffffff;
+        color: #5d6f7e !important;
+        font-family: 'Roboto', sans-serif !important;
+        font-size: 0.88rem !important;
+        padding: 0.35rem 0.9rem;
+        border-radius: 999px;
+        text-decoration: none !important;
+        box-shadow: none;
+        transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+    }
+
+    .next-page-link:hover {
+        border-color: #b7c4cf;
+        color: #2f4a5f !important;
+        background: #ffffff;
+        text-decoration: none !important;
+    }
+
     /* ── Dimension toggle pills ────────────────────────────────────────────
        Streamlit 1.45.x uses data-testid="stBaseButton-pills" (unselected)
        and data-testid="stBaseButton-pillsActive" (selected).               */
@@ -352,31 +377,6 @@ st.markdown(
 )
 st.divider()
 
-if 'pending_navigation_v5' in st.session_state:
-    st.session_state['main_navigation_v5'] = st.session_state.pop('pending_navigation_v5')
-
-if st.session_state.pop('scroll_to_top_v1', False):
-    components.html(
-        """
-        <script>
-        const scrollTop = () => {
-          window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-          if (window.parent) {
-            window.parent.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-          }
-          const root = window.parent?.document?.querySelector('[data-testid="stAppViewContainer"]');
-          if (root) {
-            root.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-          }
-        };
-        requestAnimationFrame(scrollTop);
-        setTimeout(scrollTop, 50);
-        </script>
-        """,
-        height=0,
-        scrolling=False,
-    )
-
 # Load the clustered article framing data.
 df = pd.read_parquet('iran_war_media_framing_scores_clustered.parquet', engine='fastparquet')
 df_five_sources = pd.read_parquet('iran_war_media_framing_scores2_clustered.parquet', engine='fastparquet')
@@ -409,12 +409,20 @@ dimension_order = [
 ]
 
 st.sidebar.markdown('## Navigation')
+pages = ['Story Arc', 'Story Arc (Lab)', 'Media Clusters', 'Media Differences', 'Data & Methods']
+query_page = st.query_params.get('page')
+if isinstance(query_page, list):
+    query_page = query_page[0] if query_page else None
+if query_page in pages:
+    st.session_state['main_navigation_v5'] = query_page
 page = st.sidebar.radio(
     'Navigation',
-    ['Story Arc', 'Story Arc (Lab)', 'Media Clusters', 'Media Differences', 'Data & Methods'],
+    pages,
     label_visibility='collapsed',
     key='main_navigation_v5'
 )
+if st.query_params.get('page') != page:
+    st.query_params['page'] = page
 
 if page == 'Story Arc':
     st.markdown(
