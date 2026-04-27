@@ -57,22 +57,31 @@ def load_clustered_article_data():
 
 
 @st.cache_data(show_spinner=False)
-def make_cluster_bigram_charts_cached(data):
+def make_cluster_bigram_charts_cached():
     """Build cluster bigram charts once instead of on every page rerun."""
+    data, _ = load_clustered_article_data()
     top_bigrams = get_top_cluster_bigrams(data, top_n=10)
     return make_cluster_bigram_charts(top_bigrams)
 
 
 @st.cache_data(show_spinner=False)
-def get_cluster_representative_articles_cached(data, n=5):
+def get_cluster_representative_articles_cached(n=5):
     """Cache representative articles because Streamlit reruns on navigation."""
+    data, _ = load_clustered_article_data()
     return get_cluster_representative_articles(data, n=n)
 
 
 @st.cache_data(show_spinner=False)
-def make_outlet_framing_heatmap_cached(data):
+def make_outlet_framing_heatmap_cached():
     """Cache the outlet heatmap figure for repeated Media Differences visits."""
+    _, data = load_clustered_article_data()
     return make_outlet_framing_heatmap(data)
+
+
+@st.cache_data(show_spinner=False)
+def load_dataset_overview_data():
+    """Cache Data & Methods overview data across page visits."""
+    return _load_data()
 
 st.markdown(
     """
@@ -625,7 +634,7 @@ elif page == 'Media Differences':
 
     # Compute and display cluster-specific bigram charts.
     with st.spinner('Loading cluster language charts...'):
-        bigram_charts = make_cluster_bigram_charts_cached(df)
+        bigram_charts = make_cluster_bigram_charts_cached()
 
     chart_items = list(bigram_charts.items())
 
@@ -662,7 +671,7 @@ elif page == 'Media Differences':
         'These examples are the articles closest to each cluster centroid, based on the five framing scores.'
     )
     with st.spinner('Loading representative articles...'):
-        representative_articles = get_cluster_representative_articles_cached(df, n=5)
+        representative_articles = get_cluster_representative_articles_cached(n=5)
     st.markdown(
         render_cluster_representative_articles_html(representative_articles),
         unsafe_allow_html=True,
@@ -671,7 +680,7 @@ elif page == 'Media Differences':
     st.subheader('How Framing Differs Across Major Media Outlets')
     st.caption('Based on 1,736 articles from 5 major media outlets')
     
-    st.plotly_chart(make_outlet_framing_heatmap_cached(df_five_sources), use_container_width=True)
+    st.plotly_chart(make_outlet_framing_heatmap_cached(), use_container_width=True)
 
     st.markdown(
         """
@@ -724,7 +733,8 @@ elif page == 'Data & Methods':
     )
 
     # ── Load data + shared date range ────────────────────────────────────────
-    combined = _load_data()
+    with st.spinner('Loading dataset overview...'):
+        combined = load_dataset_overview_data()
     dates = combined["date"].dropna()
     date_range = [
         (dates.min() - pd.Timedelta(days=2)).isoformat(),
