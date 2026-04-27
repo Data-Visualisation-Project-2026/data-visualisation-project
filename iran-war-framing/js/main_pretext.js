@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
     console.log("outlets:", meta.outlets);
 
 // --- Dimension Setup ---
-const MARGIN = { top: 112, right: 20, bottom: 48, left: 48 };
+const MARGIN = { top: 112, right: 20, bottom: 76, left: 48 };
 const VH = Math.round(window.innerHeight * 0.82);
 const DAY_WIDTH = Math.ceil(window.innerWidth * 4 / timeline.length);
 const chartH = VH - MARGIN.top - MARGIN.bottom;
@@ -49,6 +49,12 @@ g.append("g")
 .call(ax => ax.selectAll("line").attr("stroke", "#ebebeb").attr("stroke-dasharray", "3,3"));
 
 // --- AXES ---
+g.append("g")
+.attr("transform", `translate(0, ${chartH})`)
+.call(d3.axisBottom(xScale).ticks(d3.timeWeek.every(2)).tickFormat(d3.timeFormat("%b %d")))
+.call(ax => ax.select(".domain").attr("stroke", "#ccc"))
+.call(ax => ax.selectAll("text").attr("fill", "#555").attr("font-size", "11px").attr("dy", "1.2em"));
+
 g.append("g")
 .call(d3.axisLeft(yScale).ticks(5))
 .call(ax => ax.select(".domain").remove())
@@ -193,34 +199,37 @@ bandConfig.filter(b => showBands.includes(b.label.toLowerCase())).forEach(b => {
 // Top of the uppermost visible band — event lines start here
 const topBandY = showBands.includes('us') ? BAND_Y_US : BAND_Y_INTL;
 
-// ── Outlet legend — DOM-based, fixed below dim-buttons ───────────────────
-const legendEl = document.getElementById('outlet-legend');
-if (legendEl && meta.clusters) {
-    meta.clusters.forEach(cluster => {
-        const col = document.createElement('div');
-        col.style.cssText = 'display:flex;flex-direction:column;gap:3px;';
+// ── Outlet legend — one swatch per cluster, names stacked vertically ─────
+const clusterMap = new Map();
+meta.outlets.forEach(o => {
+    const c = meta.outlet_colors[o];
+    if (!clusterMap.has(c)) clusterMap.set(c, []);
+    clusterMap.get(c).push(o);
+});
 
-        const header = document.createElement('div');
-        header.style.cssText = 'display:flex;align-items:center;gap:6px;margin-bottom:2px;';
-        const sq = document.createElement('div');
-        sq.style.cssText = `width:11px;height:11px;background:${cluster.color};border-radius:2px;flex-shrink:0;`;
-        const name = document.createElement('span');
-        name.style.cssText = 'font-size:11px;font-weight:600;color:#333;font-family:Roboto,sans-serif;white-space:nowrap;';
-        name.textContent = cluster.label;
-        header.appendChild(sq);
-        header.appendChild(name);
-        col.appendChild(header);
+const LINE_H     = 15;
+const SQ         = 11;
+const CLUSTER_W  = 140;
+const maxRows    = Math.max(...[...clusterMap.values()].map(a => a.length));
+const legendTopY = svgH - maxRows * LINE_H - 6;
 
-        cluster.outlets.forEach(outlet => {
-            const item = document.createElement('div');
-            item.style.cssText = 'font-size:11px;color:#666;padding-left:17px;font-family:Roboto,sans-serif;white-space:nowrap;';
-            item.textContent = meta.outlet_labels[outlet];
-            col.appendChild(item);
-        });
+const outletLegend = svg.append('g')
+    .attr('transform', `translate(${MARGIN.left}, ${legendTopY})`);
 
-        legendEl.appendChild(col);
+[...clusterMap.entries()].forEach(([color, outlets], ci) => {
+    const cx = ci * CLUSTER_W;
+    outletLegend.append('rect')
+        .attr('x', cx).attr('y', 0)
+        .attr('width', SQ).attr('height', SQ)
+        .attr('fill', color).attr('rx', 2);
+    outlets.forEach((outlet, oi) => {
+        outletLegend.append('text')
+            .attr('x', cx + SQ + 6)
+            .attr('y', oi * LINE_H + 10)
+            .attr('fill', '#444').attr('font-size', '11px')
+            .text(meta.outlet_labels[outlet]);
     });
-}
+});
 
 // ── Event markers — run through bands and chart ───────────────────────────
 events.forEach(event => {

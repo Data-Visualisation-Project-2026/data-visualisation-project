@@ -20,13 +20,33 @@ def render_us_outlet_event_timeline():
     components.html(html, height=700, scrolling=True)
 
 
-def _build_outlet_event_timeline_html(timeline_file='timeline.json', meta_file='meta.json'):
+def render_outlet_event_timeline_lab():
+    """Render the international outlet event timeline (Lab/Pretext variant)."""
+    html = _build_outlet_event_timeline_html(
+        timeline_file='timeline.json',
+        meta_file='meta.json',
+        js_file='main_pretext.js',
+    )
+    components.html(html, height=700, scrolling=True)
+
+
+def render_us_outlet_event_timeline_lab():
+    """Render the US outlet event timeline (Lab/Pretext variant)."""
+    html = _build_outlet_event_timeline_html(
+        timeline_file='us_timeline.json',
+        meta_file='us_meta.json',
+        js_file='main_pretext.js',
+    )
+    components.html(html, height=700, scrolling=True)
+
+
+def _build_outlet_event_timeline_html(timeline_file='timeline.json', meta_file='meta.json', js_file='main.js'):
     """Build a self-contained HTML string with GSAP scroll experience intact."""
     base_dir = Path('iran-war-framing')
 
     index_html = (base_dir / 'index.html').read_text()
     style_css  = (base_dir / 'style.css').read_text()
-    main_js    = (base_dir / 'js' / 'main.js').read_text()
+    main_js    = (base_dir / 'js' / js_file).read_text()
 
     timeline = _load_json_for_script(base_dir / 'data' / timeline_file)
     events   = _load_json_for_script(base_dir / 'data' / 'events.json')
@@ -57,8 +77,8 @@ html { scrollbar-width: none; overflow-y: scroll; }
 ::-webkit-scrollbar { display: none; }
 
 /* Tighten intro/outro */
-#intro  { height: 50vh; min-height: 50vh; }
-#outro  { height: 50vh; min-height: 50vh; }
+#intro  { height: 0; min-height: 0; overflow: hidden; }
+#outro  { height: 20vh; min-height: 20vh; }
 
 /* Let the page script control section height dynamically. */
 #timeline-section {

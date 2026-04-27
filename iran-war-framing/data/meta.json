@@ -18,6 +18,10 @@
     "bbc.com": "#76B7B2",
     "aljazeera.com": "#895EFF"
   },
+  "clusters": [
+    { "color": "#76B7B2", "label": "Cluster 3: Business-Focused",      "outlets": ["apnews.com", "reuters.com", "bbc.com"] },
+    { "color": "#895EFF", "label": "Cluster 0: Mainstream / Moderate", "outlets": ["aljazeera.com"] }
+  ],
   "dimensions": [
     "kinetic_focus",
     "humanitarian_focus",

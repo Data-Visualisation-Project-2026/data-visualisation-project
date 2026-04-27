@@ -1,5 +1,5 @@
 {
-  "bands": ["us", "intl"],
+  "bands": ["us"],
   "outlets": [
     "nytimes.com",
     "foxnews.com",
@@ -30,6 +30,12 @@
     "nbcnews.com":  "#895EFF",
     "usatoday.com": "#895EFF"
   },
+  "clusters": [
+    { "color": "#59A14F", "label": "Cluster 1: Dissident / Left-Wing",   "outlets": ["nytimes.com", "foxnews.com", "breitbart.com"] },
+    { "color": "#895EFF", "label": "Cluster 0: Mainstream / Moderate",   "outlets": ["cnn.com", "nbcnews.com", "usatoday.com"] },
+    { "color": "#76B7B2", "label": "Cluster 3: Business-Focused",        "outlets": ["bloomberg.com"] },
+    { "color": "#F28E2B", "label": "Cluster 2: Smaller Mainstream",      "outlets": ["npr.org"] }
+  ],
   "dimensions": [
     "kinetic_focus",
     "humanitarian_focus",

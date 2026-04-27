@@ -3,7 +3,12 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from visualizations.embedded_visuals import render_outlet_event_timeline, render_us_outlet_event_timeline
+from visualizations.embedded_visuals import (
+    render_outlet_event_timeline,
+    render_us_outlet_event_timeline,
+    render_outlet_event_timeline_lab,
+    render_us_outlet_event_timeline_lab,
+)
 from visualizations.embedded_network import render_media_clusters
 from visualizations.framing_charts import make_framing_over_time_chart, make_international_framing_chart, make_combined_aggregate_chart, make_us_framing_band_chart, make_intl_framing_band_chart
 from visualizations.text_analysis import (
@@ -249,90 +254,12 @@ dimension_order = [
 st.sidebar.markdown('## Navigation')
 page = st.sidebar.radio(
     'Navigation',
-    ['Overview', 'Narrative Over Time', 'Story Arc', 'Media Clusters', 'Media Differences', 'Data & Methods'],
+    ['Story Arc', 'Story Arc (Lab)', 'Media Clusters', 'Media Differences', 'Data & Methods'],
     label_visibility='collapsed',
-    key='main_navigation_v4'
+    key='main_navigation_v5'
 )
 
-if page == 'Overview':
-    # Intro section for the project overview page.
-    st.markdown(
-        """
-        This project explores how media outlets framed the 2026 Iran War across time, media sources, and narrative dimensions. We analyze how coverage varies across five framing dimensions:
-        """,
-        unsafe_allow_html=True
-    )
-    st.markdown(
-        """
-        <ul style="line-height:2.0; max-width:680px; font-family:'Roboto',sans-serif; font-size:1.0rem; color:#555;">
-          <li><span class="dim-label" style="color:#4E79A7;">Kinetic Focus:</span> emphasis on military action, strikes, weapons, and strategy.</li>
-          <li><span class="dim-label" style="color:#F28E2B;">Humanitarian Focus:</span> emphasis on civilian suffering, refugees, and casualties.</li>
-          <li><span class="dim-label" style="color:#76B7B2;">Diplomatic Focus:</span> emphasis on negotiations, international organizations, and political responses.</li>
-          <li><span class="dim-label" style="color:#59A14F;">Economic Focus:</span> emphasis on oil, trade, markets, and broader economic effects.</li>
-          <li><span class="dim-label" style="color:#E15759;">Culpability Bias:</span> the extent to which coverage uses strong or active language to assign blame.</li>
-        </ul>
-        """,
-        unsafe_allow_html=True
-    )
-
-    st.subheader('Overall Framing Trends During the Iran War')
-    st.caption('Feb 27–Mar 30, 2026 · Based on 1,925 articles from 77 media outlets')
-
-    # Choose which framing dimensions to highlight in the chart.
-    highlighted_dimensions = st.multiselect(
-        'Use the dropdown to show or hide dimensions:',
-        options=dimension_order,
-        default=dimension_order,
-        key='overview_dimension_selector_v2'
-    )
-
-    # Build and display the framing-over-time chart.
-    chart = make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimensions)
-    st.plotly_chart(chart, use_container_width=True)
-
-    st.markdown(
-        """
-        The overall pattern suggests that coverage was driven mainly by military action and responsibility/blame. Kinetic framing stayed high for much of the period, while Culpability Bias remained consistently prominent, showing that many articles framed the war not only through what happened, but also through who was responsible.
-        Humanitarian framing stayed lower overall, suggesting that civilian suffering and human impacts were present but less central in the aggregate coverage.
-
-        Moreover, the emphasis shift over time. Diplomatic framing was unusually high at the beginning, likely reflecting early attention to official statements, international reactions, and political responses. After that, it dropped and stayed relatively low. Later, Economic framing becomes more visible, especially around moments linked to energy and regional escalation.
-
-        Taken together, the five lines show that media framing was not fixed: as the war developed, coverage moved between military, political, economic, and blame-centered narratives.
-        """
-    )
-
-elif page == 'Narrative Over Time':
-    st.subheader('US Media vs. International Wire Services')
-    st.caption('Comparing aggregate framing across two distinct media universes')
-
-    st.markdown('**77 US Outlets** — domestic media aggregate')
-    highlighted_us = st.multiselect(
-        'Highlight dimensions (US):',
-        options=dimension_order,
-        default=dimension_order,
-        key='us_dimension_selector'
-    )
-    us_chart = make_framing_over_time_chart(df, score_cols, score_labels, highlighted_us)
-    us_chart.update_layout(height=380, margin={'l': 40, 'r': 140, 't': 40, 'b': 50})
-    st.plotly_chart(us_chart, use_container_width=True)
-
-    st.markdown('**AP, Reuters, BBC, Al Jazeera** — international wire aggregate')
-    highlighted_intl = st.multiselect(
-        'Highlight dimensions (International):',
-        options=dimension_order,
-        default=dimension_order,
-        key='intl_dimension_selector'
-    )
-    intl_chart = make_international_framing_chart(
-        'iran-war-framing/data/timeline.json', highlighted_intl
-    )
-    st.plotly_chart(intl_chart, use_container_width=True)
-
-    st.divider()
-    st.markdown('**Individual outlet breakdown** — scroll to follow where the four outlets diverged')
-    render_outlet_event_timeline()
-
-elif page == 'Story Arc':
+if page == 'Story Arc':
     st.markdown(
         """
         This project explores how media outlets framed the 2026 Iran War across time, media sources, and narrative dimensions. We analyze how coverage varies across five framing dimensions:
@@ -355,7 +282,7 @@ elif page == 'Story Arc':
     st.divider()
 
     # ── US aggregate chart ───────────────────────────────────────────────────
-    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">Average framing score across 77 US outlets</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">How US media outlets framed the war</h1>', unsafe_allow_html=True)
     us_chart = make_framing_over_time_chart(df, score_cols, score_labels, dimension_order)
     st.plotly_chart(us_chart, use_container_width=True)
 
@@ -363,32 +290,38 @@ elif page == 'Story Arc':
     band_chart = make_us_framing_band_chart(df, score_cols)
     st.plotly_chart(band_chart, use_container_width=True, config={'displayModeBar': False}, key='us_band_aggregate')
     st.markdown(
-        '<div style="font-family:\'Roboto\',sans-serif; font-size:0.72rem; color:#aaa; margin:0 0 1rem 0;">Dominant framing per day — US outlets</div>',
+        '<div style="font-family:\'Roboto\',sans-serif; font-size:0.72rem; color:#aaa; margin:0 0 1rem 0; padding-left:55px;">Dominant framing per day — US outlets</div>',
         unsafe_allow_html=True
     )
 
     st.markdown(
-        """
-        The overall pattern suggests coverage was driven mainly by military action and responsibility/blame.
-        Kinetic framing stayed high for much of the period, while Culpability Bias remained consistently prominent —
-        many articles framed the war not only through what happened, but also through who was responsible.
-        Humanitarian framing stayed lower overall, suggesting that civilian suffering and human impacts were
-        present but less central in the aggregate coverage.
-
-        Diplomatic framing was unusually high at the beginning, likely reflecting early attention to official
-        statements, international reactions, and political responses — then dropped and stayed relatively low.
-        Economic framing becomes more visible later, especially around moments linked to energy and regional escalation.
-
-        Taken together, the five lines show that media framing was not fixed: as the war developed, coverage
-        moved between military, political, economic, and blame-centered narratives.
-        """
+        '<div style="padding-left:55px;">'
+        '<p>The overall pattern suggests coverage was driven mainly by military action and responsibility/blame. '
+        'Kinetic framing stayed high for much of the period, while Culpability Bias remained consistently prominent — '
+        'many articles framed the war not only through what happened, but also through who was responsible. '
+        'Humanitarian framing stayed lower overall, suggesting that civilian suffering and human impacts were '
+        'present but less central in the aggregate coverage.</p>'
+        '<p>Diplomatic framing was unusually high at the beginning, likely reflecting early attention to official '
+        'statements, international reactions, and political responses — then dropped and stayed relatively low. '
+        'Economic framing becomes more visible later, especially around moments linked to energy and regional escalation.</p>'
+        '<p>Taken together, the five lines show that media framing was not fixed: as the war developed, coverage '
+        'moved between military, political, economic, and blame-centered narratives.</p>'
+        '</div>',
+        unsafe_allow_html=True
     )
 
     st.divider()
 
     # ── US individual outlet D3 breakdown ────────────────────────────────────
-    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">Who Framed The War</h1>', unsafe_allow_html=True)
-    st.caption('Feb 27–Mar 30, 2026 · NYT, Fox News, CNN, Bloomberg, NPR, Breitbart, NBC News, USA Today')
+    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">What US media outlets said about the war:</h1>', unsafe_allow_html=True)
+    st.markdown(
+        '<div style="padding-left:55px;">'
+        'Sources: NYT, Fox News, CNN, Bloomberg, NPR, Breitbart, NBC News, USA Today from Feb 27–Mar 30. '
+        'American media differed in their individual framing of the war, converging and diverging notably at some moments. '
+        'Use the dimension buttons below to switch between framing types, then scroll to follow where the outlets diverged.'
+        '</div>',
+        unsafe_allow_html=True
+    )
     render_us_outlet_event_timeline()
 
     st.divider()
@@ -402,22 +335,119 @@ elif page == 'Story Arc':
     intl_band = make_intl_framing_band_chart('iran-war-framing/data/timeline.json')
     st.plotly_chart(intl_band, use_container_width=True, config={'displayModeBar': False}, key='intl_band_aggregate')
     st.markdown(
-        '<div style="font-family:\'Roboto\',sans-serif; font-size:0.72rem; color:#aaa; margin:0 0 1rem 0;">Dominant framing per day — international outlets</div>',
+        '<div style="font-family:\'Roboto\',sans-serif; font-size:0.72rem; color:#aaa; margin:0 0 1rem 0; padding-left:55px;">Dominant framing per day — international outlets</div>',
         unsafe_allow_html=True
     )
 
     st.divider()
 
     # ── INTL individual outlet D3 breakdown ──────────────────────────────────
-    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">Who Framed The War</h1>', unsafe_allow_html=True)
-    st.caption('Mar 1–Apr 20, 2026 · AP News, Reuters, BBC, Al Jazeera')
+    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">What non-US media outlets said about the war</h1>', unsafe_allow_html=True)
     st.markdown(
+        '<div style="padding-left:55px;">'
         'The previous chart showed how American media collectively covered the 2026 Iran War. '
         'Here, four international and wire-service outlets — AP, Reuters, BBC, and Al Jazeera — '
-        'tell the same story through very different lenses. Scroll to follow where they diverged.',
-        unsafe_allow_html=False
+        'tell the same story through very different lenses. '
+        'Use the dimension buttons below to switch between framing types, then scroll to follow where the outlets diverged.'
+        '</div>',
+        unsafe_allow_html=True
     )
     render_outlet_event_timeline()
+
+elif page == 'Story Arc (Lab)':
+    st.markdown(
+        """
+        This project explores how media outlets framed the 2026 Iran War across time, media sources, and narrative dimensions. We analyze how coverage varies across five framing dimensions:
+        """,
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        """
+        <ul style="line-height:2.0; max-width:680px; font-family:'Roboto',sans-serif; font-size:1.0rem; color:#555;">
+          <li><span class="dim-label" style="color:#4E79A7;">Kinetic Focus:</span> emphasis on military action, strikes, weapons, and strategy.</li>
+          <li><span class="dim-label" style="color:#F28E2B;">Humanitarian Focus:</span> emphasis on civilian suffering, refugees, and casualties.</li>
+          <li><span class="dim-label" style="color:#76B7B2;">Diplomatic Focus:</span> emphasis on negotiations, international organizations, and political responses.</li>
+          <li><span class="dim-label" style="color:#59A14F;">Economic Focus:</span> emphasis on oil, trade, markets, and broader economic effects.</li>
+          <li><span class="dim-label" style="color:#E15759;">Culpability Bias:</span> the extent to which coverage uses strong or active language to assign blame.</li>
+        </ul>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.divider()
+
+    # ── US aggregate chart ───────────────────────────────────────────────────
+    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">How US media outlets framed the war</h1>', unsafe_allow_html=True)
+    us_chart_lab = make_framing_over_time_chart(df, score_cols, score_labels, dimension_order)
+    st.plotly_chart(us_chart_lab, use_container_width=True)
+
+    # ── US framing band ──────────────────────────────────────────────────────
+    band_chart_lab = make_us_framing_band_chart(df, score_cols)
+    st.plotly_chart(band_chart_lab, use_container_width=True, config={'displayModeBar': False}, key='us_band_lab')
+    st.markdown(
+        '<div style="font-family:\'Roboto\',sans-serif; font-size:0.72rem; color:#aaa; margin:0 0 1rem 0; padding-left:55px;">Dominant framing per day — US outlets</div>',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        '<div style="padding-left:55px;">'
+        '<p>The overall pattern suggests coverage was driven mainly by military action and responsibility/blame. '
+        'Kinetic framing stayed high for much of the period, while Culpability Bias remained consistently prominent — '
+        'many articles framed the war not only through what happened, but also through who was responsible. '
+        'Humanitarian framing stayed lower overall, suggesting that civilian suffering and human impacts were '
+        'present but less central in the aggregate coverage.</p>'
+        '<p>Diplomatic framing was unusually high at the beginning, likely reflecting early attention to official '
+        'statements, international reactions, and political responses — then dropped and stayed relatively low. '
+        'Economic framing becomes more visible later, especially around moments linked to energy and regional escalation.</p>'
+        '<p>Taken together, the five lines show that media framing was not fixed: as the war developed, coverage '
+        'moved between military, political, economic, and blame-centered narratives.</p>'
+        '</div>',
+        unsafe_allow_html=True
+    )
+
+    st.divider()
+
+    # ── US individual outlet D3 breakdown ────────────────────────────────────
+    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">What US media outlets said about the war:</h1>', unsafe_allow_html=True)
+    st.markdown(
+        '<div style="padding-left:55px;">'
+        'Sources: NYT, Fox News, CNN, Bloomberg, NPR, Breitbart, NBC News, USA Today from Feb 27–Mar 30. '
+        'American media differed in their individual framing of the war, converging and diverging notably at some moments. '
+        'Use the dimension buttons below to switch between framing types, then scroll to follow where the outlets diverged.'
+        '</div>',
+        unsafe_allow_html=True
+    )
+    render_us_outlet_event_timeline_lab()
+
+    st.divider()
+
+    # ── International aggregate chart ────────────────────────────────────────
+    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">Average framing score across non-US media outlets</h1>', unsafe_allow_html=True)
+    intl_chart_lab = make_international_framing_chart('iran-war-framing/data/timeline.json', dimension_order)
+    st.plotly_chart(intl_chart_lab, use_container_width=True)
+
+    # ── INTL framing band ────────────────────────────────────────────────────
+    intl_band_lab = make_intl_framing_band_chart('iran-war-framing/data/timeline.json')
+    st.plotly_chart(intl_band_lab, use_container_width=True, config={'displayModeBar': False}, key='intl_band_lab')
+    st.markdown(
+        '<div style="font-family:\'Roboto\',sans-serif; font-size:0.72rem; color:#aaa; margin:0 0 1rem 0; padding-left:55px;">Dominant framing per day — international outlets</div>',
+        unsafe_allow_html=True
+    )
+
+    st.divider()
+
+    # ── INTL individual outlet D3 breakdown ──────────────────────────────────
+    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">What non-US media outlets said about the war</h1>', unsafe_allow_html=True)
+    st.markdown(
+        '<div style="padding-left:55px;">'
+        'The previous chart showed how American media collectively covered the 2026 Iran War. '
+        'Here, four international and wire-service outlets — AP, Reuters, BBC, and Al Jazeera — '
+        'tell the same story through very different lenses. '
+        'Use the dimension buttons below to switch between framing types, then scroll to follow where the outlets diverged.'
+        '</div>',
+        unsafe_allow_html=True
+    )
+    render_outlet_event_timeline_lab()
 
 elif page == 'Media Clusters':
     st.subheader('Media Clusters')
