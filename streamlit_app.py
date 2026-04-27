@@ -356,16 +356,25 @@ if 'pending_navigation_v5' in st.session_state:
     st.session_state['main_navigation_v5'] = st.session_state.pop('pending_navigation_v5')
 
 if st.session_state.pop('scroll_to_top_v1', False):
-    st.markdown(
+    components.html(
         """
         <script>
-        window.scrollTo(0, 0);
-        if (window.parent) {
-            window.parent.scrollTo(0, 0);
-        }
+        const scrollTop = () => {
+          window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+          if (window.parent) {
+            window.parent.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+          }
+          const root = window.parent?.document?.querySelector('[data-testid="stAppViewContainer"]');
+          if (root) {
+            root.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+          }
+        };
+        requestAnimationFrame(scrollTop);
+        setTimeout(scrollTop, 50);
         </script>
         """,
-        unsafe_allow_html=True,
+        height=0,
+        scrolling=False,
     )
 
 # Load the clustered article framing data.
