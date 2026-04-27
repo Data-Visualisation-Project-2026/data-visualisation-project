@@ -12,7 +12,7 @@ from visualizations.embedded_visuals import (
     render_us_outlet_event_timeline_lab,
 )
 from visualizations.embedded_network import render_media_clusters
-from visualizations.framing_charts import make_framing_over_time_chart, make_international_framing_chart, make_us_framing_band_chart, make_intl_framing_band_chart
+from visualizations.framing_charts import make_framing_over_time_chart, make_international_framing_chart, make_combined_aggregate_chart, make_us_framing_band_chart, make_intl_framing_band_chart
 from visualizations.text_analysis import (
     get_top_cluster_bigrams,
     make_cluster_bigram_charts,
@@ -40,7 +40,6 @@ def render_next_page_button(next_page: str, key: str):
         """,
         unsafe_allow_html=True,
     )
-
 
 st.markdown(
     """
@@ -289,12 +288,11 @@ st.markdown(
         line-height: 1 !important;
         border-width: 1.5px !important;
         border-style: solid !important;
-        box-shadow: none !important;
         transition: background 0.15s, color 0.15s !important;
+        box-shadow: none !important;
     }
     [data-testid="stBaseButton-pills"]       { background: #ffffff !important; }
     [data-testid="stBaseButton-pillsActive"] { color: #ffffff !important; }
-
     </style>
     """,
     unsafe_allow_html=True
@@ -434,7 +432,7 @@ dimension_order = [
 ]
 
 st.sidebar.markdown('## Navigation')
-pages = ['Story Arc', 'Story Arc (Lab)', 'Media Clusters', 'Media Differences', 'Data & Methods']
+pages = ['Story Arc (Lab)', 'Media Clusters', 'Media Differences', 'Data & Methods']
 query_page = st.query_params.get('page')
 if isinstance(query_page, list):
     query_page = query_page[0] if query_page else None
@@ -450,106 +448,7 @@ page = st.sidebar.radio(
 if st.query_params.get('page') != page:
     st.query_params['page'] = page
 
-if page == 'Story Arc':
-    st.markdown(
-        """
-        This project explores how media outlets framed the 2026 Iran War across time, media sources, and narrative dimensions. We analyze how coverage varies across five framing dimensions:
-        """,
-        unsafe_allow_html=True
-    )
-    st.markdown(
-        """
-        <ul style="line-height:2.0; max-width:680px; font-family:'Roboto',sans-serif; font-size:1.0rem; color:#555;">
-          <li><span class="dim-label" style="color:#4E79A7;">Kinetic Focus:</span> emphasis on military action, strikes, weapons, and strategy.</li>
-          <li><span class="dim-label" style="color:#F28E2B;">Humanitarian Focus:</span> emphasis on civilian suffering, refugees, and casualties.</li>
-          <li><span class="dim-label" style="color:#76B7B2;">Diplomatic Focus:</span> emphasis on negotiations, international organizations, and political responses.</li>
-          <li><span class="dim-label" style="color:#59A14F;">Economic Focus:</span> emphasis on oil, trade, markets, and broader economic effects.</li>
-          <li><span class="dim-label" style="color:#E15759;">Culpability Bias:</span> the extent to which coverage uses strong or active language to assign blame.</li>
-        </ul>
-        """,
-        unsafe_allow_html=True
-    )
-
-    st.divider()
-
-    # ── US aggregate chart ───────────────────────────────────────────────────
-    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">How US media outlets framed the war</h1>', unsafe_allow_html=True)
-    us_selected = st.pills('', options=dimension_order, default=dimension_order, selection_mode='multi', key='story_arc_us_dims', label_visibility='collapsed')
-    us_chart = make_framing_over_time_chart(df, score_cols, score_labels, us_selected or dimension_order)
-    st.plotly_chart(us_chart, use_container_width=True)
-
-    # ── US framing band ──────────────────────────────────────────────────────
-    band_chart = make_us_framing_band_chart(df, score_cols)
-    st.plotly_chart(band_chart, use_container_width=True, config={'displayModeBar': False}, key='us_band_aggregate')
-    st.markdown(
-        '<div style="font-family:\'Roboto\',sans-serif; font-size:0.72rem; color:#aaa; margin:0 0 1rem 0; padding-left:55px;">Dominant framing per day — US outlets</div>',
-        unsafe_allow_html=True
-    )
-
-    st.markdown(
-        '<div style="padding-left:55px;">'
-        '<p>The overall pattern suggests coverage was driven mainly by military action and responsibility/blame. '
-        'Kinetic framing stayed high for much of the period, while Culpability Bias remained consistently prominent — '
-        'many articles framed the war not only through what happened, but also through who was responsible. '
-        'Humanitarian framing stayed lower overall, suggesting that civilian suffering and human impacts were '
-        'present but less central in the aggregate coverage.</p>'
-        '<p>Diplomatic framing was unusually high at the beginning, likely reflecting early attention to official '
-        'statements, international reactions, and political responses — then dropped and stayed relatively low. '
-        'Economic framing becomes more visible later, especially around moments linked to energy and regional escalation.</p>'
-        '<p>Taken together, the five lines show that media framing was not fixed: as the war developed, coverage '
-        'moved between military, political, economic, and blame-centered narratives.</p>'
-        '</div>',
-        unsafe_allow_html=True
-    )
-
-    st.divider()
-
-    # ── US individual outlet D3 breakdown ────────────────────────────────────
-    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">What US media outlets said about the war:</h1>', unsafe_allow_html=True)
-    st.markdown(
-        '<div style="padding-left:55px;">'
-        'Sources: NYT, Fox News, CNN, Bloomberg, NPR, Breitbart, NBC News, USA Today from Feb 27–Mar 30. '
-        'American media differed in their individual framing of the war, converging and diverging notably at some moments. '
-        'Use the dimension buttons below to switch between framing types, then scroll to follow where the outlets diverged.'
-        '</div>',
-        unsafe_allow_html=True
-    )
-    render_us_outlet_event_timeline()
-
-    st.divider()
-
-    # ── International aggregate chart ────────────────────────────────────────
-    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">Average framing score across non-US media outlets</h1>', unsafe_allow_html=True)
-    intl_selected = st.pills('', options=dimension_order, default=dimension_order, selection_mode='multi', key='story_arc_intl_dims', label_visibility='collapsed')
-    intl_chart = make_international_framing_chart('iran-war-framing/data/timeline.json', intl_selected or dimension_order)
-    st.plotly_chart(intl_chart, use_container_width=True)
-
-    # ── INTL framing band ────────────────────────────────────────────────────
-    intl_band = make_intl_framing_band_chart('iran-war-framing/data/timeline.json')
-    st.plotly_chart(intl_band, use_container_width=True, config={'displayModeBar': False}, key='intl_band_aggregate')
-    st.markdown(
-        '<div style="font-family:\'Roboto\',sans-serif; font-size:0.72rem; color:#aaa; margin:0 0 1rem 0; padding-left:55px;">Dominant framing per day — international outlets</div>',
-        unsafe_allow_html=True
-    )
-
-    st.divider()
-
-    # ── INTL individual outlet D3 breakdown ──────────────────────────────────
-    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">What non-US media outlets said about the war</h1>', unsafe_allow_html=True)
-    st.markdown(
-        '<div style="padding-left:55px;">'
-        'The previous chart showed how American media collectively covered the 2026 Iran War. '
-        'Here, four international and wire-service outlets — AP, Reuters, BBC, and Al Jazeera — '
-        'tell the same story through very different lenses. '
-        'Use the dimension buttons below to switch between framing types, then scroll to follow where the outlets diverged.'
-        '</div>',
-        unsafe_allow_html=True
-    )
-    render_outlet_event_timeline()
-
-    render_next_page_button('Media Clusters', 'next_story_arc')
-
-elif page == 'Story Arc (Lab)':
+if page == 'Story Arc (Lab)':
     st.markdown(
         """
         This project explores how media outlets framed the 2026 Iran War across time, media sources, and narrative dimensions. We analyze how coverage varies across five framing dimensions:
@@ -646,6 +545,8 @@ elif page == 'Story Arc (Lab)':
     )
     render_outlet_event_timeline_lab()
 
+    render_next_page_button('Media Clusters', 'next_story_arc_lab')
+
 elif page == 'Media Clusters':
     st.markdown(
         """
@@ -705,7 +606,7 @@ elif page == 'Media Differences':
         Overall, the phrases make the cluster differences easier to feel: some outlets turn the war into a market story, some into a military-cost story, and some into a broader political event.
 
         ---
-        *Note: these phrases do not reveal what caused the LLM to assign specific framing scores — the LLM's reasoning is a black box. The bigram analysis is a separate NLP step that identifies vocabulary statistically distinctive to each cluster, serving as cross-validation of the cluster labels. Some clusters, particularly Clusters 2 and 4, surface proper nouns and publication-specific boilerplate (e.g. "Noah Tietjens," "legal notices") rather than genuine framing signals. This is a known limitation of c-TF-IDF when a cluster is dominated by a small number of outlets with distinctive writing styles.*
+        *Note: these phrases do not reveal what caused the LLM to assign specific framing scores since the LLM's reasoning is a black box. The bigram analysis is a separate NLP step which identifies vocabulary statistically distinctive to each cluster, serving as cross-validation of the cluster labels. Some clusters, particularly Clusters 2 and 4, surface proper nouns and publication-specific boilerplate (e.g. "Noah Tietjens," "legal notices") rather than genuine framing signals. This is a known limitation of c-TF-IDF when a cluster is dominated by a small number of outlets with distinctive writing styles.*
         """
     )
 
@@ -767,9 +668,10 @@ elif page == 'Data & Methods':
     # ── Load data + shared date range ────────────────────────────────────────
     combined = _load_data()
     dates = combined["date"].dropna()
+    import pandas as _pd
     date_range = [
-        (dates.min() - pd.Timedelta(days=2)).isoformat(),
-        (dates.max() + pd.Timedelta(days=2)).isoformat(),
+        (dates.min() - _pd.Timedelta(days=2)).isoformat(),
+        (dates.max() + _pd.Timedelta(days=2)).isoformat(),
     ]
 
     st.markdown('<hr style="border:none;border-top:1px solid #e0e0e0;margin:1.5rem 0;">', unsafe_allow_html=True)
