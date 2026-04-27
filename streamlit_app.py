@@ -27,6 +27,7 @@ def render_next_page_button(next_page: str, key: str):
     st.markdown('<div class="next-page-wrap">', unsafe_allow_html=True)
     if st.button(f'Next: {next_page} →', key=key, type='secondary'):
         st.session_state['pending_navigation_v5'] = next_page
+        st.session_state['scroll_to_top_v1'] = True
         st.rerun()
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -288,6 +289,19 @@ st.divider()
 
 if 'pending_navigation_v5' in st.session_state:
     st.session_state['main_navigation_v5'] = st.session_state.pop('pending_navigation_v5')
+
+if st.session_state.pop('scroll_to_top_v1', False):
+    st.markdown(
+        """
+        <script>
+        window.scrollTo(0, 0);
+        if (window.parent) {
+            window.parent.scrollTo(0, 0);
+        }
+        </script>
+        """,
+        unsafe_allow_html=True,
+    )
 
 # Load the clustered article framing data.
 df = pd.read_parquet('iran_war_media_framing_scores_clustered.parquet', engine='fastparquet')
