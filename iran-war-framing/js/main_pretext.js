@@ -205,38 +205,6 @@ bandConfig.filter(b => showBands.includes(b.label.toLowerCase())).forEach(b => {
 // Top of the uppermost visible band — event lines start here
 const topBandY = showBands.includes('us') ? BAND_Y_US : BAND_Y_INTL;
 
-// ── Outlet legend — one swatch per cluster, names stacked vertically ─────
-const clusterMap = new Map();
-meta.outlets.forEach(o => {
-    const c = meta.outlet_colors[o];
-    if (!clusterMap.has(c)) clusterMap.set(c, []);
-    clusterMap.get(c).push(o);
-});
-
-const LINE_H     = 15;
-const SQ         = 11;
-const CLUSTER_W  = 140;
-const maxRows    = Math.max(...[...clusterMap.values()].map(a => a.length));
-const legendTopY = svgH - maxRows * LINE_H - 6;
-
-const outletLegend = svg.append('g')
-    .attr('transform', `translate(${MARGIN.left}, ${legendTopY})`);
-
-[...clusterMap.entries()].forEach(([color, outlets], ci) => {
-    const cx = ci * CLUSTER_W;
-    outletLegend.append('rect')
-        .attr('x', cx).attr('y', 0)
-        .attr('width', SQ).attr('height', SQ)
-        .attr('fill', color).attr('rx', 2);
-    outlets.forEach((outlet, oi) => {
-        outletLegend.append('text')
-            .attr('x', cx + SQ + 6)
-            .attr('y', oi * LINE_H + 10)
-            .attr('fill', '#444').attr('font-size', '11px')
-            .text(meta.outlet_labels[outlet]);
-    });
-});
-
 // ── Event markers — run through bands and chart ───────────────────────────
 events.forEach(event => {
     const x = xScale(parseDate(event.date));
@@ -433,10 +401,30 @@ function updateCallout(sy) {
 // Build cards for the initial active dimension.
 rebuildCalloutCards();
 
-// ── Outlet toggle legend ───────────────────────────────────────────────────
-// One pill per outlet, same style as the dimension toggle buttons.
+// ── Outlet toggle legend — grouped by cluster ─────────────────────────────
+// Outlets are grouped by their cluster color with a "Cluster N" label.
 // Selected (line visible): filled — white text on cluster color.
 // Unselected (line hidden): outlined — cluster color text on transparent.
+
+const COLOR_TO_CLUSTER = {
+    '#895EFF': 'Cluster 0',
+    '#59A14F': 'Cluster 1',
+    '#F28E2B': 'Cluster 2',
+    '#76B7B2': 'Cluster 3',
+    '#4E79A7': 'Cluster 4',
+};
+
+// Build cluster groups preserving order of first appearance.
+const clusterOrder = [];
+const clusterGroups = {};
+meta.outlets.forEach(outlet => {
+    const color = meta.outlet_colors[outlet] || '#999';
+    if (!clusterGroups[color]) {
+        clusterGroups[color] = [];
+        clusterOrder.push(color);
+    }
+    clusterGroups[color].push(outlet);
+});
 
 const outletLegend = document.createElement('div');
 outletLegend.id = 'outlet-legend';
@@ -447,47 +435,67 @@ outletLegend.style.cssText = [
     'z-index:10',
     'display:flex',
     'flex-wrap:wrap',
-    'gap:4px',
+    'align-items:center',
+    'gap:6px 4px',
 ].join(';');
 if (timelineInner) timelineInner.appendChild(outletLegend);
 
-meta.outlets.forEach(outlet => {
-    const color = meta.outlet_colors[outlet] || '#999';
-    const label = (meta.outlet_labels && meta.outlet_labels[outlet]) || outlet;
-    const pill = document.createElement('button');
-    pill.textContent = label;
-    pill.dataset.outlet = outlet;
+clusterOrder.forEach((color, ci) => {
+    const outlets = clusterGroups[color];
+    const clusterName = COLOR_TO_CLUSTER[color] || ('Cluster ' + ci);
 
-    function applyPillStyle(selected) {
-        pill.style.cssText = [
-            'padding:4px 10px',
-            'border-radius:4px',
-            'border:1.5px solid ' + color,
-            'background:' + (selected ? color : 'transparent'),
-            'color:' + (selected ? '#fff' : color),
-            'font-size:11px',
-            'font-family:Roboto,sans-serif',
-            'cursor:pointer',
-            'transition:background 0.15s,color 0.15s',
-            'line-height:1',
-        ].join(';');
-    }
+    // Cluster label
+    const lbl = document.createElement('span');
+    lbl.textContent = clusterName;
+    lbl.style.cssText = [
+        'font-size:9px',
+        'color:#bbb',
+        'font-family:Roboto,sans-serif',
+        'text-transform:uppercase',
+        'letter-spacing:.06em',
+        'margin-right:2px',
+        ci > 0 ? 'margin-left:10px' : '',
+    ].filter(Boolean).join(';');
+    outletLegend.appendChild(lbl);
 
-    applyPillStyle(true); // start selected
+    // Outlet pills in this cluster
+    outlets.forEach(outlet => {
+        const label = (meta.outlet_labels && meta.outlet_labels[outlet]) || outlet;
+        const pill = document.createElement('button');
+        pill.textContent = label;
+        pill.dataset.outlet = outlet;
 
-    pill.addEventListener('click', () => {
-        const nowHidden = hiddenOutlets.has(outlet);
-        if (nowHidden) {
-            hiddenOutlets.delete(outlet);
-            applyPillStyle(true);
-        } else {
-            hiddenOutlets.add(outlet);
-            applyPillStyle(false);
+        function applyPillStyle(selected) {
+            pill.style.cssText = [
+                'padding:4px 10px',
+                'border-radius:4px',
+                'border:1.5px solid ' + color,
+                'background:' + (selected ? color : 'transparent'),
+                'color:' + (selected ? '#fff' : color),
+                'font-size:11px',
+                'font-family:Roboto,sans-serif',
+                'cursor:pointer',
+                'transition:background 0.15s,color 0.15s',
+                'line-height:1',
+            ].join(';');
         }
-        drawLines(activeDim);
-    });
 
-    outletLegend.appendChild(pill);
+        applyPillStyle(true);
+
+        pill.addEventListener('click', () => {
+            const nowHidden = hiddenOutlets.has(outlet);
+            if (nowHidden) {
+                hiddenOutlets.delete(outlet);
+                applyPillStyle(true);
+            } else {
+                hiddenOutlets.add(outlet);
+                applyPillStyle(false);
+            }
+            drawLines(activeDim);
+        });
+
+        outletLegend.appendChild(pill);
+    });
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
