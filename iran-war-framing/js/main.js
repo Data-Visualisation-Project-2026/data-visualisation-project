@@ -7,10 +7,6 @@ gsap.registerPlugin(ScrollTrigger);
     fetch("data/meta.json").then(res => res.json()),
 ]);
 
-    console.log("timeline days:", timeline.length);
-    console.log("events:", events.map(e => e.label));
-    console.log("outlets:", meta.outlets);
-
 // --- Dimension Setup ---
 const MARGIN = { top: 112, right: 20, bottom: 48, left: 48 };
 const VH = Math.round(window.innerHeight * 0.82);

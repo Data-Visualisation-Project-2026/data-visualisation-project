@@ -11,7 +11,7 @@ from visualizations.embedded_visuals import (
     render_us_outlet_event_timeline_lab,
 )
 from visualizations.embedded_network import render_media_clusters
-from visualizations.framing_charts import make_framing_over_time_chart, make_international_framing_chart, make_combined_aggregate_chart, make_us_framing_band_chart, make_intl_framing_band_chart
+from visualizations.framing_charts import make_framing_over_time_chart, make_international_framing_chart, make_us_framing_band_chart, make_intl_framing_band_chart
 from visualizations.text_analysis import (
     get_top_cluster_bigrams,
     make_cluster_bigram_charts,
@@ -733,10 +733,9 @@ elif page == 'Data & Methods':
     # ── Load data + shared date range ────────────────────────────────────────
     combined = _load_data()
     dates = combined["date"].dropna()
-    import pandas as _pd
     date_range = [
-        (dates.min() - _pd.Timedelta(days=2)).isoformat(),
-        (dates.max() + _pd.Timedelta(days=2)).isoformat(),
+        (dates.min() - pd.Timedelta(days=2)).isoformat(),
+        (dates.max() + pd.Timedelta(days=2)).isoformat(),
     ]
 
     st.markdown('<hr style="border:none;border-top:1px solid #e0e0e0;margin:1.5rem 0;">', unsafe_allow_html=True)

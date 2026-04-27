@@ -8,10 +8,6 @@ gsap.registerPlugin(ScrollTrigger);
     fetch("data/us_events.json").then(res => res.json()).catch(() => []),
 ]);
 
-    console.log("timeline days:", timeline.length);
-    console.log("events:", events.map(e => e.label));
-    console.log("outlets:", meta.outlets);
-
 // Tracks which outlet lines are currently hidden (toggled off by the legend).
 let hiddenOutlets = new Set();
 
@@ -253,14 +249,6 @@ const CALLOUT_COLORS = Object.assign({
     'apnews.com':   '#76B7B2', 'reuters.com':  '#76B7B2',
     'bbc.com':      '#76B7B2', 'aljazeera.com':'#895EFF',
 }, meta.outlet_colors || {});
-
-const DIM_ACCENT = {
-    kinetic_focus:      '#4E79A7',
-    humanitarian_focus: '#F28E2B',
-    diplomatic_focus:   '#76B7B2',
-    economic_focus:     '#59A14F',
-    culpability_bias:   '#E15759',
-};
 
 // Inject callout CSS
 const _ccStyle = document.createElement('style');
