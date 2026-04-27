@@ -26,7 +26,7 @@ def render_next_page_button(next_page: str, key: str):
     """Render a subtle next-page button that updates the sidebar navigation."""
     st.markdown('<div class="next-page-wrap">', unsafe_allow_html=True)
     if st.button(f'Next: {next_page} →', key=key, type='secondary'):
-        st.session_state['main_navigation_v5'] = next_page
+        st.session_state['pending_navigation_v5'] = next_page
         st.rerun()
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -89,8 +89,8 @@ st.markdown(
     [data-testid="stSidebar"] {
         background: #f2f2f2;
         border-right: 1px solid #d9d9d9;
-        min-width: 17rem !important;
-        max-width: 17rem !important;
+        min-width: 14rem !important;
+        max-width: 16rem !important;
     }
 
     [data-testid="stSidebar"] > div:first-child {
@@ -285,6 +285,9 @@ st.markdown(
     unsafe_allow_html=True
 )
 st.divider()
+
+if 'pending_navigation_v5' in st.session_state:
+    st.session_state['main_navigation_v5'] = st.session_state.pop('pending_navigation_v5')
 
 # Load the clustered article framing data.
 df = pd.read_parquet('iran_war_media_framing_scores_clustered.parquet', engine='fastparquet')
