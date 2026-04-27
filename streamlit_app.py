@@ -25,9 +25,8 @@ st.set_page_config(layout='wide')
 
 
 def handle_sidebar_navigation_change():
-    """Mark that the current rerun came from the sidebar radio widget."""
-    st.session_state['_nav_changed_by_radio_v1'] = True
-    st.session_state['_scroll_to_header_v1'] = True
+    """Trigger a browser-level navigation so sidebar page changes open at the top."""
+    st.session_state['_pending_sidebar_nav_v1'] = st.session_state['main_navigation_v5']
 
 
 def render_next_page_button(next_page: str, key: str):
@@ -42,49 +41,6 @@ def render_next_page_button(next_page: str, key: str):
         unsafe_allow_html=True,
     )
 
-
-def scroll_to_header_once():
-    """Scroll the app back to the top/title area after navigation."""
-    components.html(
-        """
-        <script>
-        (function () {
-          function scrollTargets(win) {
-            const doc = win.document;
-            const selectors = [
-              'section.main',
-              '[data-testid="stAppViewContainer"]',
-              '.main',
-              'body',
-              'html'
-            ];
-
-            selectors.forEach((selector) => {
-              const el = doc.querySelector(selector);
-              if (el) {
-                el.scrollTo({ top: 0, behavior: 'auto' });
-                el.scrollTop = 0;
-              }
-            });
-
-            win.scrollTo(0, 0);
-          }
-
-          function run() {
-            try { scrollTargets(window); } catch (e) {}
-            try { scrollTargets(window.parent); } catch (e) {}
-          }
-
-          run();
-          setTimeout(run, 80);
-          setTimeout(run, 240);
-          setTimeout(run, 600);
-        })();
-        </script>
-        """,
-        height=0,
-        scrolling=False,
-    )
 
 st.markdown(
     """
@@ -419,6 +375,24 @@ components.html("""
 </script>
 """, height=0, scrolling=False)
 
+if '_pending_sidebar_nav_v1' in st.session_state:
+    pending_page = st.session_state.pop('_pending_sidebar_nav_v1')
+    pending_href = f'?page={quote(pending_page)}#top'
+    components.html(
+        f"""
+        <script>
+        try {{
+          window.parent.location.assign('{pending_href}');
+        }} catch (e) {{
+          window.location.assign('{pending_href}');
+        }}
+        </script>
+        """,
+        height=0,
+        scrolling=False,
+    )
+    st.stop()
+
 
 st.title('Media Framing of the 2026 Iran War')
 st.markdown('<div id="top"></div>', unsafe_allow_html=True)
@@ -427,9 +401,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 st.divider()
-
-if st.session_state.pop('_scroll_to_header_v1', False):
-    scroll_to_header_once()
 
 # Load the clustered article framing data.
 df = pd.read_parquet('iran_war_media_framing_scores_clustered.parquet', engine='fastparquet')
@@ -467,8 +438,7 @@ pages = ['Story Arc', 'Story Arc (Lab)', 'Media Clusters', 'Media Differences', 
 query_page = st.query_params.get('page')
 if isinstance(query_page, list):
     query_page = query_page[0] if query_page else None
-changed_by_radio = st.session_state.pop('_nav_changed_by_radio_v1', False)
-if query_page in pages and not changed_by_radio:
+if query_page in pages:
     st.session_state['main_navigation_v5'] = query_page
 page = st.sidebar.radio(
     'Navigation',
