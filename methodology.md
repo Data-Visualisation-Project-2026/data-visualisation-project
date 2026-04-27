@@ -64,6 +64,6 @@ Then, for the network step, we decided to do a 3D visualization via plotly which
 
 Because we forced the algorithm to draw exactly three connections per outlet to map the relationships between our pre-defined clusters, this isn't a traditional, organically grown network graph. However, the resulting edges still provide a highly accurate and interpretable representation of which media outlets are closest to one another ideologically.
 
-### Bigram Aanlysis
+### Bigram Analysis
 
 For the "How Language Differs Across Media Clusters" visualization, we grouped article text within each cluster and treated each cluster as one combined document. We then extracted **bigrams only** using `CountVectorizer`, with lowercasing, accent stripping, English stop words, added domain-specific stop words, and a small blocklist of noisy phrases. Tokens were limited to alphabetic strings of at least three letters, with `min_df=2` and `max_df=0.75`. We ranked phrases using a **c-TF-IDF-style weighting**: bigram frequency within each cluster-document was normalized by document length and multiplied by an inverse document frequency term across clusters. For each cluster, we selected the top 10 highest-scoring bigrams after filtering out blocked phrases.
