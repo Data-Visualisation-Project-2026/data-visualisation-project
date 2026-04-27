@@ -242,50 +242,49 @@ st.markdown(
     }
 
     /* ── Dimension toggle pills — match D3 button style ─────────────────── */
-    /* Shape/size — target the stable kind attribute Streamlit sets on pills  */
-    button[kind="pillsButton"] {
+    /* Streamlit 1.45.x renders st.pills as [data-testid="stPillsButton"]    */
+    [data-testid="stPillsButton"] {
         border-radius: 4px !important;
         font-size: 11px !important;
         font-family: 'Roboto', sans-serif !important;
         font-weight: 600 !important;
         padding: 4px 10px !important;
-        min-height: unset !important;
+        min-height: 0 !important;
         height: auto !important;
-        line-height: 1.2 !important;
+        line-height: 1 !important;
         border-width: 1.5px !important;
         border-style: solid !important;
         transition: background 0.15s, color 0.15s !important;
         box-shadow: none !important;
     }
-    /* Unselected state */
-    button[kind="pillsButton"][aria-pressed="false"] {
-        background: transparent !important;
+    /* Unselected: white bg, colored text */
+    [data-testid="stPillsButton"][aria-pressed="false"] {
+        background: #fff !important;
     }
-    /* Selected state */
-    button[kind="pillsButton"][aria-pressed="true"] {
+    /* Selected: colored bg, white text */
+    [data-testid="stPillsButton"][aria-pressed="true"] {
         color: #fff !important;
     }
-    /* Per-dimension colors — order matches dimension_order list:            */
-    /* Culpability Bias(1) · Kinetic(2) · Economic(3) · Diplomatic(4) · Humanitarian(5) */
-    button[kind="pillsButton"]:nth-of-type(1) { border-color:#E15759!important; }
-    button[kind="pillsButton"]:nth-of-type(1)[aria-pressed="false"] { color:#E15759!important; }
-    button[kind="pillsButton"]:nth-of-type(1)[aria-pressed="true"]  { background:#E15759!important; }
+    /* Per-dimension colors — order: Culpability(1) Kinetic(2) Economic(3) Diplomatic(4) Humanitarian(5) */
+    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(1) { border-color:#E15759!important; }
+    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(1)[aria-pressed="false"] { color:#E15759!important; }
+    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(1)[aria-pressed="true"]  { background:#E15759!important; }
 
-    button[kind="pillsButton"]:nth-of-type(2) { border-color:#4E79A7!important; }
-    button[kind="pillsButton"]:nth-of-type(2)[aria-pressed="false"] { color:#4E79A7!important; }
-    button[kind="pillsButton"]:nth-of-type(2)[aria-pressed="true"]  { background:#4E79A7!important; }
+    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(2) { border-color:#4E79A7!important; }
+    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(2)[aria-pressed="false"] { color:#4E79A7!important; }
+    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(2)[aria-pressed="true"]  { background:#4E79A7!important; }
 
-    button[kind="pillsButton"]:nth-of-type(3) { border-color:#59A14F!important; }
-    button[kind="pillsButton"]:nth-of-type(3)[aria-pressed="false"] { color:#59A14F!important; }
-    button[kind="pillsButton"]:nth-of-type(3)[aria-pressed="true"]  { background:#59A14F!important; }
+    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(3) { border-color:#59A14F!important; }
+    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(3)[aria-pressed="false"] { color:#59A14F!important; }
+    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(3)[aria-pressed="true"]  { background:#59A14F!important; }
 
-    button[kind="pillsButton"]:nth-of-type(4) { border-color:#76B7B2!important; }
-    button[kind="pillsButton"]:nth-of-type(4)[aria-pressed="false"] { color:#76B7B2!important; }
-    button[kind="pillsButton"]:nth-of-type(4)[aria-pressed="true"]  { background:#76B7B2!important; }
+    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(4) { border-color:#76B7B2!important; }
+    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(4)[aria-pressed="false"] { color:#76B7B2!important; }
+    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(4)[aria-pressed="true"]  { background:#76B7B2!important; }
 
-    button[kind="pillsButton"]:nth-of-type(5) { border-color:#F28E2B!important; }
-    button[kind="pillsButton"]:nth-of-type(5)[aria-pressed="false"] { color:#F28E2B!important; }
-    button[kind="pillsButton"]:nth-of-type(5)[aria-pressed="true"]  { background:#F28E2B!important; }
+    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(5) { border-color:#F28E2B!important; }
+    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(5)[aria-pressed="false"] { color:#F28E2B!important; }
+    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(5)[aria-pressed="true"]  { background:#F28E2B!important; }
     </style>
     """,
     unsafe_allow_html=True
