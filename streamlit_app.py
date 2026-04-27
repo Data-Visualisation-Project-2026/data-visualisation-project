@@ -21,6 +21,15 @@ from visualizations.dataset_overview import make_article_count_chart, make_gantt
 # Set up the Streamlit page and main title.
 st.set_page_config(layout='wide')
 
+
+def render_next_page_button(next_page: str, key: str):
+    """Render a subtle next-page button that updates the sidebar navigation."""
+    st.markdown('<div class="next-page-wrap">', unsafe_allow_html=True)
+    if st.button(f'Next: {next_page} →', key=key, type='secondary'):
+        st.session_state['main_navigation_v5'] = next_page
+        st.rerun()
+    st.markdown('</div>', unsafe_allow_html=True)
+
 st.markdown(
     """
     <style>
@@ -80,6 +89,8 @@ st.markdown(
     [data-testid="stSidebar"] {
         background: #f2f2f2;
         border-right: 1px solid #d9d9d9;
+        min-width: 17rem !important;
+        max-width: 17rem !important;
     }
 
     [data-testid="stSidebar"] > div:first-child {
@@ -204,8 +215,30 @@ st.markdown(
         border-color: #2f4a5f;
     }
 
+    button[kind="secondary"] {
+        border: 1px solid #d9d9d9 !important;
+        background: #ffffff !important;
+        color: #5d6f7e !important;
+        font-family: 'Roboto', sans-serif !important;
+        font-size: 0.88rem !important;
+        padding: 0.25rem 0.8rem !important;
+        min-height: 2rem !important;
+        border-radius: 999px !important;
+        box-shadow: none !important;
+    }
+
+    button[kind="secondary"]:hover {
+        border-color: #b7c4cf !important;
+        color: #2f4a5f !important;
+    }
+
     a {
         color: #2f5f86;
+    }
+
+    .next-page-wrap {
+        margin-top: 1.75rem;
+        margin-bottom: 0.25rem;
     }
 
     /* ── Dimension toggle pills — match D3 button style ─────────────────── */
@@ -389,6 +422,8 @@ if page == 'Story Arc':
     )
     render_outlet_event_timeline()
 
+    render_next_page_button('Media Clusters', 'next_story_arc')
+
 elif page == 'Story Arc (Lab)':
     st.markdown(
         """
@@ -500,6 +535,8 @@ elif page == 'Media Clusters':
 
     st.markdown(Path('network_analysis/networkvis_interpretation.md').read_text())
 
+    render_next_page_button('Media Differences', 'next_media_clusters')
+
 elif page == 'Media Differences':
     st.markdown(
         """
@@ -562,6 +599,8 @@ elif page == 'Media Differences':
         In short, the Iran War was not presented as one shared narrative. Across these outlets, the war becomes a different story depending on which frame is pushed forward: a market shock, a political conflict, a question of blame, or a military crisis. The most striking point is that civilian harm appears less central than these broader political and economic angles.
         """
     )
+
+    render_next_page_button('Data & Methods', 'next_media_differences')
 
 elif page == 'Data & Methods':
     st.markdown('<hr style="border:none;border-top:1px solid #e0e0e0;margin:0.5rem 0 1.5rem 0;">', unsafe_allow_html=True)
