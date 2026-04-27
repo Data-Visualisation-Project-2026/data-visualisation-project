@@ -496,7 +496,7 @@ elif page == 'Media Clusters':
     st.markdown(Path('network_analysis/networkvis_interpretation.md').read_text())
 
 elif page == 'Media Differences':
-    st.subheader('Distinctive Phrases by Media Cluster')
+    st.subheader('How Language Differs Across Media Clusters')
     st.write(
         'These charts show the most unique phrases in each media cluster. '
     )
@@ -526,7 +526,7 @@ elif page == 'Media Differences':
 
         - **Cluster 3: Business-Focused** has the clearest angle. Phrases like “Brent crude,” “barrels oil,” “Dow Jones,” and “Nasdaq composite” show that this cluster mainly treats the war as an oil, energy, and market-risk story.
 
-        - **Cluster 4: Right-Wing / Military** makes the war more personal and military-centered. Names and places like “Declan Coady,” “Noah Tietjens,” and “West Des Moines” point to coverage of U.S. service members killed in the conflict, while phrases like “American forces” and “army reserve” keep the focus on military service and sacrifice.
+        - **Cluster 4: Right-Wing / Military** makes the war more personal and military-centered. Names and places like “Declan Coady,” “Noah Tietjens,” and “West Moines” point to coverage of U.S. service members killed in the conflict, while phrases like “American forces” and “army reserve” keep the focus on military service and sacrifice.
 
         Overall, the phrases make the cluster differences easier to feel: some outlets turn the war into a market story, some into a military-cost story, and some into a broader political event.
         """
