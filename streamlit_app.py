@@ -89,8 +89,8 @@ st.markdown(
     [data-testid="stSidebar"] {
         background: #f2f2f2;
         border-right: 1px solid #d9d9d9;
-        min-width: 14rem !important;
-        max-width: 16rem !important;
+        min-width: 15rem !important;
+        max-width: 17rem !important;
     }
 
     [data-testid="stSidebar"] > div:first-child {
