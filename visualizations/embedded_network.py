@@ -1,14 +1,20 @@
 import re
 from pathlib import Path
 
+import streamlit as st
 import streamlit.components.v1 as components
 
 
 def render_media_clusters():
     """Render the self-contained media cluster network HTML inside Streamlit."""
+    components.html(_load_media_clusters_html(), height=850, scrolling=False)
+
+
+@st.cache_data(show_spinner=False)
+def _load_media_clusters_html():
+    """Load and patch the exported network HTML once per session."""
     html = Path('network_analysis/media_cluster_3d_pca.html').read_text(encoding='utf-8')
-    html = _build_media_clusters_html(html)
-    components.html(html, height=850, scrolling=False)
+    return _build_media_clusters_html(html)
 
 
 def _build_media_clusters_html(html):

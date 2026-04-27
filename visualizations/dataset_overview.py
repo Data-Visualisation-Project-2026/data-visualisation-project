@@ -34,7 +34,8 @@ TOGGLE_STYLE = dict(
     bgcolor="#f4f4f4",
     bordercolor="#d0d0d0",
     borderwidth=1,
-    font=dict(family=FONT_FAMILY, size=12, color="#263746"),
+    font=dict(family="'Roboto', sans-serif", size=11, color="#263746"),
+    pad=dict(l=0, r=0, t=0, b=0),
 )
 
 PX_PER_BAR  = 18   # pixel height allocated per outlet row
@@ -62,6 +63,26 @@ def _load_data():
     pq_root["date"] = pd.to_datetime(pq_root["indexed_date"], errors="coerce")
     pq_5["date"]    = pd.to_datetime(pq_5["indexed_date"].astype(str), errors="coerce")
 
+    # pq_5 outlets (BBC, Al Jazeera, Reuters) have null indexed_date — fill from scraped_articles.csv
+    csv_path = base / "scraped_articles.csv"
+    if csv_path.exists():
+        csv_dates = pd.read_csv(csv_path, usecols=["url", "published_datetime"])
+        csv_dates["csv_date"] = pd.to_datetime(
+            csv_dates["published_datetime"].str.replace(r"Z$", "", regex=True),
+            format="mixed",
+            errors="coerce",
+        )
+        # Al Jazeera has no published_datetime — extract date from URL path (/news/YYYY/M/D/)
+        aj_mask = csv_dates["url"].str.contains("aljazeera.com", na=False) & csv_dates["csv_date"].isna()
+        aj_dates = csv_dates.loc[aj_mask, "url"].str.extract(r"/(\d{4})/(\d{1,2})/(\d{1,2})/")
+        csv_dates.loc[aj_mask, "csv_date"] = pd.to_datetime(
+            aj_dates[0] + "-" + aj_dates[1] + "-" + aj_dates[2], errors="coerce"
+        )
+        csv_dates = csv_dates.drop(columns=["published_datetime"])
+        pq_5 = pq_5.merge(csv_dates, on="url", how="left")
+        pq_5["date"] = pq_5["date"].fillna(pq_5["csv_date"])
+        pq_5 = pq_5.drop(columns=["csv_date"])
+
     pq_root["country"] = pq_root["media_name"].map(NON_US_OUTLETS).fillna("US")
     pq_5["country"]    = pq_5["media_name"].map(NON_US_OUTLETS).fillna("US")
 
@@ -72,6 +93,11 @@ def _load_data():
 
     cluster_map = pq_avg.set_index("media_name")["media_cluster"].to_dict()
     combined["cluster"] = combined["media_name"].map(cluster_map).fillna(-1).astype(int)
+
+    # Tehran Times coverage starts Feb 28 — drop earlier articles
+    combined = combined[
+        ~((combined["media_name"] == "tehrantimes.com") & (combined["date"] < pd.Timestamp("2026-02-28")))
+    ].copy()
 
     return combined
 

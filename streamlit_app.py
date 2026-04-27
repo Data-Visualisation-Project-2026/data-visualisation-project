@@ -6,17 +6,22 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 from visualizations.embedded_visuals import (
-    render_outlet_event_timeline,
-    render_us_outlet_event_timeline,
     render_outlet_event_timeline_lab,
     render_us_outlet_event_timeline_lab,
 )
 from visualizations.embedded_network import render_media_clusters
-from visualizations.framing_charts import make_framing_over_time_chart, make_international_framing_chart, make_combined_aggregate_chart, make_us_framing_band_chart, make_intl_framing_band_chart
+from visualizations.framing_charts import (
+    make_framing_over_time_chart,
+    make_international_framing_chart,
+    make_us_framing_band_chart,
+    make_intl_framing_band_chart,
+)
 from visualizations.text_analysis import (
     get_top_cluster_bigrams,
     make_cluster_bigram_charts,
     make_outlet_framing_heatmap,
+    get_cluster_representative_articles,
+    render_cluster_representative_articles_html,
 )
 from visualizations.dataset_overview import make_article_count_chart, make_gantt_chart, _load_data
 
@@ -29,7 +34,7 @@ def handle_sidebar_navigation_change():
     st.session_state['_pending_sidebar_nav_v1'] = st.session_state['main_navigation_v5']
 
 
-def render_next_page_button(next_page: str, key: str):
+def render_next_page_button(next_page: str):
     """Render a subtle next-page link that navigates to the next section at the top."""
     href = f'?page={quote(next_page)}#top'
     st.markdown(
@@ -40,6 +45,34 @@ def render_next_page_button(next_page: str, key: str):
         """,
         unsafe_allow_html=True,
     )
+
+
+@st.cache_data(show_spinner=False)
+def load_clustered_article_data():
+    """Load the article framing datasets once per Streamlit session."""
+    return (
+        pd.read_parquet('iran_war_media_framing_scores_clustered.parquet', engine='fastparquet'),
+        pd.read_parquet('iran_war_media_framing_scores2_clustered.parquet', engine='fastparquet'),
+    )
+
+
+@st.cache_data(show_spinner=False)
+def make_cluster_bigram_charts_cached(data):
+    """Build cluster bigram charts once instead of on every page rerun."""
+    top_bigrams = get_top_cluster_bigrams(data, top_n=10)
+    return make_cluster_bigram_charts(top_bigrams)
+
+
+@st.cache_data(show_spinner=False)
+def get_cluster_representative_articles_cached(data, n=5):
+    """Cache representative articles because Streamlit reruns on navigation."""
+    return get_cluster_representative_articles(data, n=n)
+
+
+@st.cache_data(show_spinner=False)
+def make_outlet_framing_heatmap_cached(data):
+    """Cache the outlet heatmap figure for repeated Media Differences visits."""
+    return make_outlet_framing_heatmap(data)
 
 st.markdown(
     """
@@ -93,7 +126,7 @@ st.markdown(
     /* Dimension labels in bullet lists */
     .dim-label {
         font-family: 'Roboto', sans-serif !important;
-        font-weight: 600 !important;
+        font-weight: 400 !important;
         font-size: 1.0rem !important;
     }
 
@@ -276,12 +309,12 @@ st.markdown(
     /* ── Dimension toggle pills ────────────────────────────────────────────
        Streamlit 1.45.x uses data-testid="stBaseButton-pills" (unselected)
        and data-testid="stBaseButton-pillsActive" (selected).               */
-    [data-testid="stBaseButton-pills"],
-    [data-testid="stBaseButton-pillsActive"] {
+    .stApp [data-testid="stBaseButton-pills"],
+    .stApp [data-testid="stBaseButton-pillsActive"] {
         border-radius: 4px !important;
         font-size: 11px !important;
         font-family: 'Roboto', sans-serif !important;
-        font-weight: 600 !important;
+        font-weight: 400 !important;
         padding: 4px 10px !important;
         min-height: 0 !important;
         height: auto !important;
@@ -291,8 +324,16 @@ st.markdown(
         transition: background 0.15s, color 0.15s !important;
         box-shadow: none !important;
     }
-    [data-testid="stBaseButton-pills"]       { background: #ffffff !important; }
-    [data-testid="stBaseButton-pillsActive"] { color: #ffffff !important; }
+    .stApp [data-testid="stBaseButton-pills"]       { background: #ffffff !important; }
+    .stApp [data-testid="stBaseButton-pillsActive"] { color: #ffffff !important; }
+    .stApp [data-testid="stBaseButton-pills"] *,
+    .stApp [data-testid="stBaseButton-pillsActive"] * {
+        font-family: 'Roboto', sans-serif !important;
+        font-size: 11px !important;
+        font-weight: 400 !important;
+        line-height: 1 !important;
+        color: inherit !important;
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -313,7 +354,7 @@ components.html("""
     s.setProperty('border-radius',  '4px',                           'important');
     s.setProperty('font-size',      '11px',                          'important');
     s.setProperty('font-family',    '"Roboto", sans-serif',           'important');
-    s.setProperty('font-weight',    '600',                           'important');
+    s.setProperty('font-weight',    '400',                           'important');
     s.setProperty('padding',        '4px 10px',                      'important');
     s.setProperty('min-height',     '0',                             'important');
     s.setProperty('height',         'auto',                          'important');
@@ -322,13 +363,20 @@ components.html("""
     s.setProperty('box-shadow',     'none',                          'important');
     s.setProperty('cursor',         'pointer',                       'important');
     s.setProperty('transition',     'background 0.15s, color 0.15s', 'important');
+    const textColor = selected ? '#ffffff' : color;
     if (selected) {
-      s.setProperty('background', color,     'important');
-      s.setProperty('color',      '#ffffff', 'important');
+      s.setProperty('background', color, 'important');
     } else {
       s.setProperty('background', '#ffffff', 'important');
-      s.setProperty('color',      color,     'important');
     }
+    s.setProperty('color', textColor, 'important');
+    btn.querySelectorAll('*').forEach(function(child) {
+      child.style.setProperty('font-family', '"Roboto", sans-serif', 'important');
+      child.style.setProperty('font-size', '11px', 'important');
+      child.style.setProperty('font-weight', '400', 'important');
+      child.style.setProperty('line-height', '1', 'important');
+      child.style.setProperty('color', textColor, 'important');
+    });
   }
 
   function applyAll() {
@@ -401,8 +449,7 @@ st.markdown(
 st.divider()
 
 # Load the clustered article framing data.
-df = pd.read_parquet('iran_war_media_framing_scores_clustered.parquet', engine='fastparquet')
-df_five_sources = pd.read_parquet('iran_war_media_framing_scores2_clustered.parquet', engine='fastparquet')
+df, df_five_sources = load_clustered_article_data()
 
 # Columns containing the LLM-generated framing scores.
 score_cols = [
@@ -432,7 +479,7 @@ dimension_order = [
 ]
 
 st.sidebar.markdown('## Navigation')
-pages = ['Story Arc (Lab)', 'Media Clusters', 'Media Differences', 'Data & Methods']
+pages = ['Media framing', 'Media Clusters', 'Media Differences', 'Data & Methods']
 query_page = st.query_params.get('page')
 if isinstance(query_page, list):
     query_page = query_page[0] if query_page else None
@@ -448,7 +495,7 @@ page = st.sidebar.radio(
 if st.query_params.get('page') != page:
     st.query_params['page'] = page
 
-if page == 'Story Arc (Lab)':
+if page == 'Media framing':
     st.markdown(
         """
         This project explores how media outlets framed the 2026 Iran War across time, media sources, and narrative dimensions. We analyze how coverage varies across five framing dimensions:
@@ -503,7 +550,7 @@ if page == 'Story Arc (Lab)':
     st.divider()
 
     # ── US individual outlet D3 breakdown ────────────────────────────────────
-    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">What US media outlets said about the war:</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">What US media outlets focused on most:</h1>', unsafe_allow_html=True)
     st.markdown(
         '<div style="padding-left:55px;">'
         'Sources: NYT, Fox News, CNN, Bloomberg, NPR, Breitbart, NBC News, USA Today from Feb 27–Mar 30. '
@@ -533,7 +580,7 @@ if page == 'Story Arc (Lab)':
     st.divider()
 
     # ── INTL individual outlet D3 breakdown ──────────────────────────────────
-    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">What non-US media outlets said about the war</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">What non-US media outlets focused on most</h1>', unsafe_allow_html=True)
     st.markdown(
         '<div style="padding-left:55px;">'
         'The previous chart showed how American media collectively covered the 2026 Iran War. '
@@ -545,7 +592,7 @@ if page == 'Story Arc (Lab)':
     )
     render_outlet_event_timeline_lab()
 
-    render_next_page_button('Media Clusters', 'next_story_arc_lab')
+    render_next_page_button('Media Clusters')
 
 elif page == 'Media Clusters':
     st.markdown(
@@ -563,7 +610,7 @@ elif page == 'Media Clusters':
 
     st.markdown(Path('network_analysis/networkvis_interpretation.md').read_text())
 
-    render_next_page_button('Media Differences', 'next_media_clusters')
+    render_next_page_button('Media Differences')
 
 elif page == 'Media Differences':
     st.markdown(
@@ -577,8 +624,8 @@ elif page == 'Media Differences':
     )
 
     # Compute and display cluster-specific bigram charts.
-    top_bigrams = get_top_cluster_bigrams(df, top_n=10)
-    bigram_charts = make_cluster_bigram_charts(top_bigrams)
+    with st.spinner('Loading cluster language charts...'):
+        bigram_charts = make_cluster_bigram_charts_cached(df)
 
     chart_items = list(bigram_charts.items())
 
@@ -610,10 +657,21 @@ elif page == 'Media Differences':
         """
     )
 
+    st.subheader('Representative Articles by Media Cluster')
+    st.write(
+        'These examples are the articles closest to each cluster centroid, based on the five framing scores.'
+    )
+    with st.spinner('Loading representative articles...'):
+        representative_articles = get_cluster_representative_articles_cached(df, n=5)
+    st.markdown(
+        render_cluster_representative_articles_html(representative_articles),
+        unsafe_allow_html=True,
+    )
+
     st.subheader('How Framing Differs Across Major Media Outlets')
     st.caption('Based on 1,736 articles from 5 major media outlets')
     
-    st.plotly_chart(make_outlet_framing_heatmap(df_five_sources), use_container_width=True)
+    st.plotly_chart(make_outlet_framing_heatmap_cached(df_five_sources), use_container_width=True)
 
     st.markdown(
         """
@@ -631,7 +689,7 @@ elif page == 'Media Differences':
         """
     )
 
-    render_next_page_button('Data & Methods', 'next_media_differences')
+    render_next_page_button('Data & Methods')
 
 elif page == 'Data & Methods':
     st.markdown('<hr style="border:none;border-top:1px solid #e0e0e0;margin:0.5rem 0 1.5rem 0;">', unsafe_allow_html=True)
@@ -668,10 +726,9 @@ elif page == 'Data & Methods':
     # ── Load data + shared date range ────────────────────────────────────────
     combined = _load_data()
     dates = combined["date"].dropna()
-    import pandas as _pd
     date_range = [
-        (dates.min() - _pd.Timedelta(days=2)).isoformat(),
-        (dates.max() + _pd.Timedelta(days=2)).isoformat(),
+        (dates.min() - pd.Timedelta(days=2)).isoformat(),
+        (dates.max() + pd.Timedelta(days=2)).isoformat(),
     ]
 
     st.markdown('<hr style="border:none;border-top:1px solid #e0e0e0;margin:1.5rem 0;">', unsafe_allow_html=True)
