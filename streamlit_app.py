@@ -2,6 +2,7 @@ from pathlib import Path
 
 import pandas as pd
 import streamlit as st
+import streamlit.components.v1 as components
 
 from visualizations.embedded_visuals import (
     render_outlet_event_timeline,
@@ -241,54 +242,68 @@ st.markdown(
         margin-bottom: 0.25rem;
     }
 
-    /* ── Dimension toggle pills — match D3 button style ─────────────────── */
-    /* Streamlit 1.45.x renders st.pills as [data-testid="stPillsButton"]    */
-    [data-testid="stPillsButton"] {
-        border-radius: 4px !important;
-        font-size: 11px !important;
-        font-family: 'Roboto', sans-serif !important;
-        font-weight: 600 !important;
-        padding: 4px 10px !important;
-        min-height: 0 !important;
-        height: auto !important;
-        line-height: 1 !important;
-        border-width: 1.5px !important;
-        border-style: solid !important;
-        transition: background 0.15s, color 0.15s !important;
-        box-shadow: none !important;
-    }
-    /* Unselected: white bg, colored text */
-    [data-testid="stPillsButton"][aria-pressed="false"] {
-        background: #fff !important;
-    }
-    /* Selected: colored bg, white text */
-    [data-testid="stPillsButton"][aria-pressed="true"] {
-        color: #fff !important;
-    }
-    /* Per-dimension colors — order: Culpability(1) Kinetic(2) Economic(3) Diplomatic(4) Humanitarian(5) */
-    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(1) { border-color:#E15759!important; }
-    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(1)[aria-pressed="false"] { color:#E15759!important; }
-    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(1)[aria-pressed="true"]  { background:#E15759!important; }
-
-    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(2) { border-color:#4E79A7!important; }
-    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(2)[aria-pressed="false"] { color:#4E79A7!important; }
-    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(2)[aria-pressed="true"]  { background:#4E79A7!important; }
-
-    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(3) { border-color:#59A14F!important; }
-    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(3)[aria-pressed="false"] { color:#59A14F!important; }
-    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(3)[aria-pressed="true"]  { background:#59A14F!important; }
-
-    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(4) { border-color:#76B7B2!important; }
-    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(4)[aria-pressed="false"] { color:#76B7B2!important; }
-    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(4)[aria-pressed="true"]  { background:#76B7B2!important; }
-
-    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(5) { border-color:#F28E2B!important; }
-    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(5)[aria-pressed="false"] { color:#F28E2B!important; }
-    [data-testid="stPillsButtonGroup"] [data-testid="stPillsButton"]:nth-child(5)[aria-pressed="true"]  { background:#F28E2B!important; }
     </style>
     """,
     unsafe_allow_html=True
 )
+
+# Inject JS via zero-height iframe to style st.pills using inline styles.
+# CSS selectors can't reliably override Streamlit's Emotion CSS-in-JS at runtime,
+# but inline styles set via JS always win.
+components.html("""
+<script>
+(function () {
+  const COLORS = ['#E15759', '#4E79A7', '#59A14F', '#76B7B2', '#F28E2B'];
+
+  function styleGroup(group) {
+    const btns = group.querySelectorAll('[data-testid="stPillsButton"]');
+    btns.forEach(function(btn, i) {
+      const color = COLORS[i] || '#666';
+      const pressed = btn.getAttribute('aria-pressed') === 'true';
+      const s = btn.style;
+      s.setProperty('border-radius',  '4px',                         'important');
+      s.setProperty('font-size',      '11px',                        'important');
+      s.setProperty('font-family',    '"Roboto", sans-serif',         'important');
+      s.setProperty('font-weight',    '600',                         'important');
+      s.setProperty('padding',        '4px 10px',                    'important');
+      s.setProperty('min-height',     '0',                           'important');
+      s.setProperty('height',         'auto',                        'important');
+      s.setProperty('line-height',    '1',                           'important');
+      s.setProperty('border',         '1.5px solid ' + color,        'important');
+      s.setProperty('box-shadow',     'none',                        'important');
+      s.setProperty('cursor',         'pointer',                     'important');
+      s.setProperty('transition',     'background 0.15s, color 0.15s', 'important');
+      if (pressed) {
+        s.setProperty('background', color,   'important');
+        s.setProperty('color',      '#ffffff', 'important');
+      } else {
+        s.setProperty('background', '#ffffff', 'important');
+        s.setProperty('color',      color,     'important');
+      }
+    });
+  }
+
+  function applyAll() {
+    try {
+      const doc = window.parent.document;
+      doc.querySelectorAll('[data-testid="stPillsButtonGroup"]').forEach(styleGroup);
+    } catch(e) {}
+  }
+
+  try {
+    const obs = new MutationObserver(applyAll);
+    obs.observe(window.parent.document.body, {
+      subtree: true, childList: true,
+      attributes: true, attributeFilter: ['aria-pressed']
+    });
+  } catch(e) {}
+
+  applyAll();
+  setTimeout(applyAll, 400);
+  setTimeout(applyAll, 1200);
+})();
+</script>
+""", height=0, scrolling=False)
 
 
 st.title('Media Framing of the 2026 Iran War')
@@ -593,6 +608,9 @@ elif page == 'Media Differences':
         - **Cluster 4: Right-Wing / Military** makes the war more personal and military-centered. Names and places like “Declan Coady,” “Noah Tietjens,” and “West Moines” point to coverage of U.S. service members killed in the conflict, while phrases like “American forces” and “army reserve” keep the focus on military service and sacrifice.
 
         Overall, the phrases make the cluster differences easier to feel: some outlets turn the war into a market story, some into a military-cost story, and some into a broader political event.
+
+        ---
+        *Note: these phrases do not reveal what caused the LLM to assign specific framing scores — the LLM's reasoning is a black box. The bigram analysis is a separate NLP step that identifies vocabulary statistically distinctive to each cluster, serving as cross-validation of the cluster labels. Some clusters, particularly Clusters 2 and 4, surface proper nouns and publication-specific boilerplate (e.g. "Noah Tietjens," "legal notices") rather than genuine framing signals. This is a known limitation of c-TF-IDF when a cluster is dominated by a small number of outlets with distinctive writing styles.*
         """
     )
 
