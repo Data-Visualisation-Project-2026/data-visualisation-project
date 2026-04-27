@@ -24,6 +24,11 @@ from visualizations.dataset_overview import make_article_count_chart, make_gantt
 st.set_page_config(layout='wide')
 
 
+def handle_sidebar_navigation_change():
+    """Mark that the current rerun came from the sidebar radio widget."""
+    st.session_state['_nav_changed_by_radio_v1'] = True
+
+
 def render_next_page_button(next_page: str, key: str):
     """Render a subtle next-page link that navigates to the next section at the top."""
     href = f'?page={quote(next_page)}#top'
@@ -413,13 +418,15 @@ pages = ['Story Arc', 'Story Arc (Lab)', 'Media Clusters', 'Media Differences', 
 query_page = st.query_params.get('page')
 if isinstance(query_page, list):
     query_page = query_page[0] if query_page else None
-if query_page in pages:
+changed_by_radio = st.session_state.pop('_nav_changed_by_radio_v1', False)
+if query_page in pages and not changed_by_radio:
     st.session_state['main_navigation_v5'] = query_page
 page = st.sidebar.radio(
     'Navigation',
     pages,
     label_visibility='collapsed',
-    key='main_navigation_v5'
+    key='main_navigation_v5',
+    on_change=handle_sidebar_navigation_change,
 )
 if st.query_params.get('page') != page:
     st.query_params['page'] = page
