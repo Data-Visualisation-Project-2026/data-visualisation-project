@@ -35,7 +35,7 @@ def render_next_page_button(next_page: str, key: str):
     st.markdown(
         f"""
         <div class="next-page-wrap">
-          <a class="next-page-link" href="{href}">Next: {next_page} →</a>
+          <a class="next-page-link" href="{href}" target="_self" onclick="window.location.href='{href}'; return false;">Next: {next_page} →</a>
         </div>
         """,
         unsafe_allow_html=True,
