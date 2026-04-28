@@ -155,7 +155,12 @@ def make_outlet_framing_heatmap(df):
             z=outlet_heatmap.values,
             x=outlet_heatmap.columns.tolist(),
             y=outlet_heatmap.index.tolist(),
-            colorscale='Blues',
+            colorscale=[
+                [0.0, '#f2f2f2'],
+                [0.35, '#b8b8b8'],
+                [0.7, '#6f6f6f'],
+                [1.0, '#1a1a1a']
+            ],
             zmin=float(outlet_heatmap.values.min()),
             zmax=float(outlet_heatmap.values.max()),
             colorbar={'title': 'Average Score'},
