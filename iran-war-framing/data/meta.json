@@ -13,14 +13,14 @@
     "aljazeera.com": "Al Jazeera"
   },
   "outlet_colors": {
-    "apnews.com": "#76B7B2",
-    "reuters.com": "#76B7B2",
-    "bbc.com": "#76B7B2",
-    "aljazeera.com": "#895EFF"
+    "apnews.com": "#2F7F7B",
+    "reuters.com": "#2F7F7B",
+    "bbc.com": "#2F7F7B",
+    "aljazeera.com": "#7A5BA6"
   },
   "clusters": [
-    { "color": "#76B7B2", "label": "Cluster 3: Business-Focused",      "outlets": ["apnews.com", "reuters.com", "bbc.com"] },
-    { "color": "#895EFF", "label": "Cluster 0: Mainstream / Moderate", "outlets": ["aljazeera.com"] }
+    { "color": "#2F7F7B", "label": "Cluster 3: The Economic Lens",     "outlets": ["apnews.com", "reuters.com", "bbc.com"] },
+    { "color": "#7A5BA6", "label": "Cluster 0: The Mainstream Center", "outlets": ["aljazeera.com"] }
   ],
   "dimensions": [
     "kinetic_focus",

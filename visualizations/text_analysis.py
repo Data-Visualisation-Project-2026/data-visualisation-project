@@ -6,19 +6,19 @@ from sklearn.feature_extraction.text import CountVectorizer, ENGLISH_STOP_WORDS
 
 
 CLUSTER_NAMES = {
-    0: 'Mainstream / Moderate',
-    1: 'Dissident / Left-Wing',
-    2: 'Smaller Mainstream',
-    3: 'Business-Focused',
-    4: 'Right-Wing / Military'
+    0: 'The Mainstream Center',
+    1: 'The Dissident/Resistance Wing',
+    2: 'The Diplomatic/Humanitarian Focus',
+    3: 'The Economic Lens',
+    4: 'The Military/Right-Wing Faction'
 }
 
 CLUSTER_COLORS = {
-    'Cluster 0: Mainstream / Moderate': '#895EFF',
-    'Cluster 1: Dissident / Left-Wing': '#59A14F',
-    'Cluster 2: Smaller Mainstream': '#F28E2B',
-    'Cluster 3: Business-Focused': '#76B7B2',
-    'Cluster 4: Right-Wing / Military': '#4E79A7'
+    'Cluster 0: The Mainstream Center': '#7A5BA6',
+    'Cluster 1: The Dissident/Resistance Wing': '#B65F6F',
+    'Cluster 2: The Diplomatic/Humanitarian Focus': '#4E6FAE',
+    'Cluster 3: The Economic Lens': '#2F7F7B',
+    'Cluster 4: The Military/Right-Wing Faction': '#B88A3D'
 }
 
 SCORE_COLS = [
@@ -193,7 +193,9 @@ def make_outlet_framing_heatmap(df):
     fig.update_layout(
         paper_bgcolor='white',
         plot_bgcolor='white',
-        margin={'l': 40, 'r': 40, 't': 30, 'b': 90},
+        width=620,
+        height=620,
+        margin={'l': 90, 'r': 90, 't': 30, 'b': 90},
         font={'color': '#263746'}
     )
 
@@ -204,7 +206,12 @@ def make_outlet_framing_heatmap(df):
         showgrid=False,
         ticks=''
     )
-    fig.update_yaxes(showgrid=False, ticks='')
+    fig.update_yaxes(
+        showgrid=False,
+        ticks='',
+        scaleanchor='x',
+        scaleratio=1
+    )
 
     return fig
 

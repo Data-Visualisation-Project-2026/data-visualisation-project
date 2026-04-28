@@ -3,19 +3,19 @@ import plotly.graph_objects as go
 from pathlib import Path
 
 CLUSTER_COLORS = {
-    0: "#895EFF",
-    1: "#59A14F",
-    2: "#F28E2B",
-    3: "#76B7B2",
-    4: "#4E79A7",
+    0: "#7A5BA6",
+    1: "#B65F6F",
+    2: "#4E6FAE",
+    3: "#2F7F7B",
+    4: "#B88A3D",
 }
 
 CLUSTER_LABELS = {
-    0: "Cluster 0 — Mainstream/Wire",
-    1: "Cluster 1 — Left-leaning",
-    2: "Cluster 2 — Centre/Regional",
-    3: "Cluster 3 — Financial/Intl",
-    4: "Cluster 4 — Right-leaning",
+    0: "Cluster 0 — The Mainstream Center",
+    1: "Cluster 1 — The Dissident/Resistance Wing",
+    2: "Cluster 2 — The Diplomatic/Humanitarian Focus",
+    3: "Cluster 3 — The Economic Lens",
+    4: "Cluster 4 — The Military/Right-Wing Faction",
 }
 
 NON_US_OUTLETS = {
@@ -56,9 +56,21 @@ def _ticktext(sort_order: list, grey_names: set) -> list:
 
 def _load_data():
     base = Path(__file__).parent.parent
-    pq_root = pd.read_parquet(base / "iran_war_media_framing_scores_clustered.parquet", engine="pyarrow")
-    pq_5    = pd.read_parquet(base / "iran_war_media_framing_scores2_clustered.parquet", engine="pyarrow")
-    pq_avg  = pd.read_parquet(base / "iran_war_outlet_averages_clustered.parquet", engine="pyarrow")
+    pq_root = pd.read_parquet(
+        base / "iran_war_media_framing_scores_clustered.parquet",
+        columns=["indexed_date", "media_name"],
+        engine="pyarrow",
+    )
+    pq_5 = pd.read_parquet(
+        base / "iran_war_media_framing_scores2_clustered.parquet",
+        columns=["indexed_date", "media_name", "url"],
+        engine="pyarrow",
+    )
+    pq_avg = pd.read_parquet(
+        base / "iran_war_outlet_averages_clustered.parquet",
+        columns=["media_name", "media_cluster"],
+        engine="pyarrow",
+    )
 
     pq_root["date"] = pd.to_datetime(pq_root["indexed_date"], errors="coerce")
     pq_5["date"]    = pd.to_datetime(pq_5["indexed_date"].astype(str), errors="coerce")
