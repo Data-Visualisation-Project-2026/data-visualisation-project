@@ -180,10 +180,10 @@ def make_outlet_framing_heatmap(df):
             x=outlet_heatmap.columns.tolist(),
             y=outlet_heatmap.index.tolist(),
             colorscale=[
-                [0.0, '#f2f2f2'],
-                [0.35, '#b8b8b8'],
-                [0.7, '#6f6f6f'],
-                [1.0, '#1a1a1a']
+                [0.0, '#eef3f7'],
+                [0.35, '#b9cbd8'],
+                [0.7, '#6f92ad'],
+                [1.0, '#2f4a5f']
             ],
             zmin=float(outlet_heatmap.values.min()),
             zmax=float(outlet_heatmap.values.max()),
