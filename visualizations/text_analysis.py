@@ -183,7 +183,7 @@ def make_outlet_framing_heatmap(df):
                 [0.0, '#eef3f7'],
                 [0.35, '#b9cbd8'],
                 [0.7, '#6f92ad'],
-                [1.0, '#2f4a5f']
+                [1.0, '#21384a']
             ],
             zmin=float(outlet_heatmap.values.min()),
             zmax=float(outlet_heatmap.values.max()),
