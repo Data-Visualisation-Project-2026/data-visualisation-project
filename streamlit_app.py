@@ -149,7 +149,7 @@ def get_cluster_representative_articles_cached(n=5):
 def make_outlet_framing_heatmap_cached():
     """Cache the outlet heatmap figure for repeated Media Differences visits."""
     # Bump this local marker when the cached figure layout changes.
-    heatmap_layout_version = 'square-v1'
+    heatmap_layout_version = 'square-greys-v2'
     data = load_outlet_heatmap_data()
     _ = heatmap_layout_version
     return make_outlet_framing_heatmap(data)
