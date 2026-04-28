@@ -3,19 +3,19 @@ import plotly.graph_objects as go
 from pathlib import Path
 
 CLUSTER_COLORS = {
-    0: "#895EFF",
-    1: "#59A14F",
-    2: "#F28E2B",
-    3: "#76B7B2",
-    4: "#4E79A7",
+    0: "#7A5BA6",
+    1: "#B65F6F",
+    2: "#4E6FAE",
+    3: "#2F7F7B",
+    4: "#B88A3D",
 }
 
 CLUSTER_LABELS = {
-    0: "Cluster 0 — Mainstream/Wire",
-    1: "Cluster 1 — Left-leaning",
-    2: "Cluster 2 — Centre/Regional",
-    3: "Cluster 3 — Financial/Intl",
-    4: "Cluster 4 — Right-leaning",
+    0: "Cluster 0 — The Mainstream Center",
+    1: "Cluster 1 — The Dissident/Resistance Wing",
+    2: "Cluster 2 — The Diplomatic/Humanitarian Focus",
+    3: "Cluster 3 — The Economic Lens",
+    4: "Cluster 4 — The Military/Right-Wing Faction",
 }
 
 NON_US_OUTLETS = {
@@ -34,7 +34,8 @@ TOGGLE_STYLE = dict(
     bgcolor="#f4f4f4",
     bordercolor="#d0d0d0",
     borderwidth=1,
-    font=dict(family=FONT_FAMILY, size=12, color="#263746"),
+    font=dict(family="'Roboto', sans-serif", size=11, color="#263746"),
+    pad=dict(l=0, r=0, t=0, b=0),
 )
 
 PX_PER_BAR  = 18   # pixel height allocated per outlet row
@@ -55,12 +56,44 @@ def _ticktext(sort_order: list, grey_names: set) -> list:
 
 def _load_data():
     base = Path(__file__).parent.parent
-    pq_root = pd.read_parquet(base / "iran_war_media_framing_scores_clustered.parquet", engine="pyarrow")
-    pq_5    = pd.read_parquet(base / "iran_war_media_framing_scores2_clustered.parquet", engine="pyarrow")
-    pq_avg  = pd.read_parquet(base / "iran_war_outlet_averages_clustered.parquet", engine="pyarrow")
+    pq_root = pd.read_parquet(
+        base / "iran_war_media_framing_scores_clustered.parquet",
+        columns=["indexed_date", "media_name"],
+        engine="pyarrow",
+    )
+    pq_5 = pd.read_parquet(
+        base / "iran_war_media_framing_scores2_clustered.parquet",
+        columns=["indexed_date", "media_name", "url"],
+        engine="pyarrow",
+    )
+    pq_avg = pd.read_parquet(
+        base / "iran_war_outlet_averages_clustered.parquet",
+        columns=["media_name", "media_cluster"],
+        engine="pyarrow",
+    )
 
     pq_root["date"] = pd.to_datetime(pq_root["indexed_date"], errors="coerce")
     pq_5["date"]    = pd.to_datetime(pq_5["indexed_date"].astype(str), errors="coerce")
+
+    # pq_5 outlets (BBC, Al Jazeera, Reuters) have null indexed_date — fill from scraped_articles.csv
+    csv_path = base / "scraped_articles.csv"
+    if csv_path.exists():
+        csv_dates = pd.read_csv(csv_path, usecols=["url", "published_datetime"])
+        csv_dates["csv_date"] = pd.to_datetime(
+            csv_dates["published_datetime"].str.replace(r"Z$", "", regex=True),
+            format="mixed",
+            errors="coerce",
+        )
+        # Al Jazeera has no published_datetime — extract date from URL path (/news/YYYY/M/D/)
+        aj_mask = csv_dates["url"].str.contains("aljazeera.com", na=False) & csv_dates["csv_date"].isna()
+        aj_dates = csv_dates.loc[aj_mask, "url"].str.extract(r"/(\d{4})/(\d{1,2})/(\d{1,2})/")
+        csv_dates.loc[aj_mask, "csv_date"] = pd.to_datetime(
+            aj_dates[0] + "-" + aj_dates[1] + "-" + aj_dates[2], errors="coerce"
+        )
+        csv_dates = csv_dates.drop(columns=["published_datetime"])
+        pq_5 = pq_5.merge(csv_dates, on="url", how="left")
+        pq_5["date"] = pq_5["date"].fillna(pq_5["csv_date"])
+        pq_5 = pq_5.drop(columns=["csv_date"])
 
     pq_root["country"] = pq_root["media_name"].map(NON_US_OUTLETS).fillna("US")
     pq_5["country"]    = pq_5["media_name"].map(NON_US_OUTLETS).fillna("US")
@@ -72,6 +105,11 @@ def _load_data():
 
     cluster_map = pq_avg.set_index("media_name")["media_cluster"].to_dict()
     combined["cluster"] = combined["media_name"].map(cluster_map).fillna(-1).astype(int)
+
+    # Tehran Times coverage starts Feb 28 — drop earlier articles
+    combined = combined[
+        ~((combined["media_name"] == "tehrantimes.com") & (combined["date"] < pd.Timestamp("2026-02-28")))
+    ].copy()
 
     return combined
 

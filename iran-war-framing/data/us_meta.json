@@ -21,20 +21,20 @@
     "usatoday.com": "USA Today"
   },
   "outlet_colors": {
-    "nytimes.com":  "#59A14F",
-    "foxnews.com":  "#59A14F",
-    "cnn.com":      "#895EFF",
-    "bloomberg.com":"#76B7B2",
-    "npr.org":      "#F28E2B",
-    "breitbart.com":"#59A14F",
-    "nbcnews.com":  "#895EFF",
-    "usatoday.com": "#895EFF"
+    "nytimes.com":  "#B65F6F",
+    "foxnews.com":  "#B65F6F",
+    "cnn.com":      "#7A5BA6",
+    "bloomberg.com":"#2F7F7B",
+    "npr.org":      "#4E6FAE",
+    "breitbart.com":"#B65F6F",
+    "nbcnews.com":  "#7A5BA6",
+    "usatoday.com": "#7A5BA6"
   },
   "clusters": [
-    { "color": "#59A14F", "label": "Cluster 1: Dissident / Left-Wing",   "outlets": ["nytimes.com", "foxnews.com", "breitbart.com"] },
-    { "color": "#895EFF", "label": "Cluster 0: Mainstream / Moderate",   "outlets": ["cnn.com", "nbcnews.com", "usatoday.com"] },
-    { "color": "#76B7B2", "label": "Cluster 3: Business-Focused",        "outlets": ["bloomberg.com"] },
-    { "color": "#F28E2B", "label": "Cluster 2: Smaller Mainstream",      "outlets": ["npr.org"] }
+    { "color": "#B65F6F", "label": "Cluster 1: The Dissident/Resistance Wing",       "outlets": ["nytimes.com", "foxnews.com", "breitbart.com"] },
+    { "color": "#7A5BA6", "label": "Cluster 0: The Mainstream Center",               "outlets": ["cnn.com", "nbcnews.com", "usatoday.com"] },
+    { "color": "#2F7F7B", "label": "Cluster 3: The Economic Lens",                   "outlets": ["bloomberg.com"] },
+    { "color": "#4E6FAE", "label": "Cluster 2: The Diplomatic/Humanitarian Focus",   "outlets": ["npr.org"] }
   ],
   "dimensions": [
     "kinetic_focus",

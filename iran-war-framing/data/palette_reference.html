@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Iran War Framing Palette Reference</title>
+  <style>
+    :root {
+      --text: #263746;
+      --muted: #6f7f8f;
+      --border: #e1e5e8;
+      --page: #f7fafc;
+      --card: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--text);
+      font-family: Roboto, Arial, sans-serif;
+      line-height: 1.45;
+    }
+
+    main {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 44px 28px 56px;
+    }
+
+    h1,
+    h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: #1a1a1a;
+    }
+
+    h1 {
+      font-size: 34px;
+      line-height: 1.15;
+    }
+
+    h2 {
+      margin-top: 34px;
+      font-size: 24px;
+    }
+
+    p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      max-width: 780px;
+    }
+
+    .palette {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .swatch-card {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--card);
+      box-shadow: 0 8px 24px rgba(38, 55, 70, 0.06);
+    }
+
+    .swatch {
+      min-height: 112px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .details {
+      padding: 13px 14px 15px;
+    }
+
+    .label {
+      margin-bottom: 7px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .name,
+    .hex,
+    .key {
+      margin: 3px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .hex {
+      font-family: "SFMono-Regular", Consolas, monospace;
+      letter-spacing: 0.02em;
+      color: #415365;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Iran War Framing Palette Reference</h1>
+    <p>
+      Saved reference for the two categorical color systems used in the project:
+      media cluster colors and framing dimension colors.
+    </p>
+
+    <h2>Media Cluster Palette</h2>
+    <p>
+      Moody, desaturated colors used for outlet/article clusters, including the
+      PCA cluster map, cluster labels, D3 outlet groups, and cluster text mentions.
+    </p>
+    <section class="palette" aria-label="Media cluster palette">
+      <article class="swatch-card">
+        <div class="swatch" style="background:#7A5BA6;"></div>
+        <div class="details">
+          <div class="label">Cluster 0: The Mainstream Center</div>
+          <div class="name">Dusty violet</div>
+          <div class="hex">#7A5BA6</div>
+        </div>
+      </article>
+      <article class="swatch-card">
+        <div class="swatch" style="background:#B65F6F;"></div>
+        <div class="details">
+          <div class="label">Cluster 1: The Dissident/Resistance Wing</div>
+          <div class="name">Muted raspberry</div>
+          <div class="hex">#B65F6F</div>
+        </div>
+      </article>
+      <article class="swatch-card">
+        <div class="swatch" style="background:#4E6FAE;"></div>
+        <div class="details">
+          <div class="label">Cluster 2: The Diplomatic/Humanitarian Focus</div>
+          <div class="name">Muted blue</div>
+          <div class="hex">#4E6FAE</div>
+        </div>
+      </article>
+      <article class="swatch-card">
+        <div class="swatch" style="background:#2F7F7B;"></div>
+        <div class="details">
+          <div class="label">Cluster 3: The Economic Lens</div>
+          <div class="name">Deep teal</div>
+          <div class="hex">#2F7F7B</div>
+        </div>
+      </article>
+      <article class="swatch-card">
+        <div class="swatch" style="background:#B88A3D;"></div>
+        <div class="details">
+          <div class="label">Cluster 4: The Military/Right-Wing Faction</div>
+          <div class="name">Ochre</div>
+          <div class="hex">#B88A3D</div>
+        </div>
+      </article>
+    </section>
+
+    <h2>Framing Dimension Palette</h2>
+    <p>
+      Brighter analytic colors used for the five framing scores in line charts,
+      score bars, and framing controls.
+    </p>
+    <section class="palette" aria-label="Framing dimension palette">
+      <article class="swatch-card">
+        <div class="swatch" style="background:#4E79A7;"></div>
+        <div class="details">
+          <div class="label">Kinetic</div>
+          <div class="key">kinetic_focus</div>
+          <div class="hex">#4E79A7</div>
+        </div>
+      </article>
+      <article class="swatch-card">
+        <div class="swatch" style="background:#F28E2B;"></div>
+        <div class="details">
+          <div class="label">Humanitarian</div>
+          <div class="key">humanitarian_focus</div>
+          <div class="hex">#F28E2B</div>
+        </div>
+      </article>
+      <article class="swatch-card">
+        <div class="swatch" style="background:#76B7B2;"></div>
+        <div class="details">
+          <div class="label">Diplomatic</div>
+          <div class="key">diplomatic_focus</div>
+          <div class="hex">#76B7B2</div>
+        </div>
+      </article>
+      <article class="swatch-card">
+        <div class="swatch" style="background:#59A14F;"></div>
+        <div class="details">
+          <div class="label">Economic</div>
+          <div class="key">economic_focus</div>
+          <div class="hex">#59A14F</div>
+        </div>
+      </article>
+      <article class="swatch-card">
+        <div class="swatch" style="background:#E15759;"></div>
+        <div class="details">
+          <div class="label">Culpability Bias</div>
+          <div class="key">culpability_bias</div>
+          <div class="hex">#E15759</div>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

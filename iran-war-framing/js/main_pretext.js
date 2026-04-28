@@ -246,8 +246,8 @@ const CALLOUT_LABELS = {
     'nbcnews.com':  'NBC News', 'usatoday.com': 'USA Today',
 };
 const CALLOUT_COLORS = Object.assign({
-    'apnews.com':   '#76B7B2', 'reuters.com':  '#76B7B2',
-    'bbc.com':      '#76B7B2', 'aljazeera.com':'#895EFF',
+    'apnews.com':   '#2F7F7B', 'reuters.com':  '#2F7F7B',
+    'bbc.com':      '#2F7F7B', 'aljazeera.com':'#7A5BA6',
 }, meta.outlet_colors || {});
 
 // Inject callout CSS
@@ -395,11 +395,11 @@ rebuildCalloutCards();
 // Unselected (line hidden): outlined — cluster color text on transparent.
 
 const COLOR_TO_CLUSTER = {
-    '#895EFF': 'Cluster 0',
-    '#59A14F': 'Cluster 1',
-    '#F28E2B': 'Cluster 2',
-    '#76B7B2': 'Cluster 3',
-    '#4E79A7': 'Cluster 4',
+    '#7A5BA6': 'Cluster 0: The Mainstream Center',
+    '#B65F6F': 'Cluster 1: The Dissident/Resistance Wing',
+    '#4E6FAE': 'Cluster 2: The Diplomatic/Humanitarian Focus',
+    '#2F7F7B': 'Cluster 3: The Economic Lens',
+    '#B88A3D': 'Cluster 4: The Military/Right-Wing Faction',
 };
 
 // Build cluster groups preserving order of first appearance.
@@ -420,11 +420,13 @@ outletLegend.style.cssText = [
     'position:absolute',
     'bottom:14px',
     'left:' + MARGIN.left + 'px',
+    'right:' + MARGIN.right + 'px',
     'z-index:10',
     'display:flex',
     'flex-wrap:wrap',
-    'align-items:center',
-    'gap:6px 4px',
+    'align-items:flex-start',
+    'justify-content:space-between',
+    'gap:12px 18px',
 ].join(';');
 if (timelineInner) timelineInner.appendChild(outletLegend);
 
@@ -432,19 +434,39 @@ clusterOrder.forEach((color, ci) => {
     const outlets = clusterGroups[color];
     const clusterName = COLOR_TO_CLUSTER[color] || ('Cluster ' + ci);
 
+    const clusterGroup = document.createElement('div');
+    clusterGroup.style.cssText = [
+        'display:flex',
+        'flex-direction:column',
+        'align-items:flex-start',
+        'gap:5px',
+        'flex:1 1 0',
+        'max-width:190px',
+        'min-width:140px',
+    ].join(';');
+
     // Cluster label
     const lbl = document.createElement('span');
     lbl.textContent = clusterName;
     lbl.style.cssText = [
         'font-size:9px',
-        'color:#bbb',
+        'color:' + color,
         'font-family:Roboto,sans-serif',
         'text-transform:uppercase',
         'letter-spacing:.06em',
-        'margin-right:2px',
-        ci > 0 ? 'margin-left:10px' : '',
+        'line-height:1.25',
+        'min-height:22px',
+        'font-weight:700',
     ].filter(Boolean).join(';');
-    outletLegend.appendChild(lbl);
+    clusterGroup.appendChild(lbl);
+
+    const pillsWrap = document.createElement('div');
+    pillsWrap.style.cssText = [
+        'display:flex',
+        'flex-wrap:wrap',
+        'align-items:flex-start',
+        'gap:4px',
+    ].join(';');
 
     // Outlet pills in this cluster
     outlets.forEach(outlet => {
@@ -482,8 +504,11 @@ clusterOrder.forEach((color, ci) => {
             drawLines(activeDim);
         });
 
-        outletLegend.appendChild(pill);
+        pillsWrap.appendChild(pill);
     });
+
+    clusterGroup.appendChild(pillsWrap);
+    outletLegend.appendChild(clusterGroup);
 });
 
 // ─────────────────────────────────────────────────────────────────────────────

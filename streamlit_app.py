@@ -1,22 +1,28 @@
 from pathlib import Path
-from urllib.parse import quote
+from html import escape
+from urllib.parse import quote_plus
 
 import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
 
 from visualizations.embedded_visuals import (
-    render_outlet_event_timeline,
-    render_us_outlet_event_timeline,
     render_outlet_event_timeline_lab,
     render_us_outlet_event_timeline_lab,
 )
 from visualizations.embedded_network import render_media_clusters
-from visualizations.framing_charts import make_framing_over_time_chart, make_international_framing_chart, make_us_framing_band_chart, make_intl_framing_band_chart
+from visualizations.framing_charts import (
+    make_framing_over_time_chart,
+    make_international_framing_chart,
+    make_us_framing_band_chart,
+    make_intl_framing_band_chart,
+)
 from visualizations.text_analysis import (
     get_top_cluster_bigrams,
     make_cluster_bigram_charts,
     make_outlet_framing_heatmap,
+    get_cluster_representative_articles,
+    render_cluster_representative_articles_html,
 )
 from visualizations.dataset_overview import make_article_count_chart, make_gantt_chart, _load_data
 
@@ -24,23 +30,147 @@ from visualizations.dataset_overview import make_article_count_chart, make_gantt
 st.set_page_config(layout='wide')
 
 
-def handle_sidebar_navigation_change():
-    """Trigger a browser-level navigation so sidebar page changes open at the top."""
-    st.session_state['_pending_sidebar_nav_v1'] = st.session_state['main_navigation_v5']
+CLUSTER_TEXT_COLORS = {
+    0: '#7A5BA6',
+    1: '#B65F6F',
+    2: '#4E6FAE',
+    3: '#2F7F7B',
+    4: '#B88A3D',
+}
 
 
-def render_next_page_button(next_page: str, key: str):
-    """Render a subtle next-page link that navigates to the next section at the top."""
-    href = f'?page={quote(next_page)}#top'
-    st.markdown(
-        f"""
-        <div class="next-page-wrap">
-          <a class="next-page-link" href="{href}" target="_self" onclick="window.location.href='{href}'; return false;">Next: {next_page} →</a>
-        </div>
-        """,
-        unsafe_allow_html=True,
+CLUSTER_LABELS = {
+    0: 'Cluster 0: The Mainstream Center',
+    1: 'Cluster 1: The Dissident/Resistance Wing',
+    2: 'Cluster 2: The Diplomatic/Humanitarian Focus',
+    3: 'Cluster 3: The Economic Lens',
+    4: 'Cluster 4: The Military/Right-Wing Faction',
+}
+
+
+def cluster_label_span(cluster_id: int) -> str:
+    """Return a colored HTML span for a cluster label."""
+    return (
+        f'<span style="color:{CLUSTER_TEXT_COLORS[cluster_id]};font-weight:700;">'
+        f'{CLUSTER_LABELS[cluster_id]}</span>'
     )
 
+
+def color_cluster_mentions(text: str) -> str:
+    """Color full cluster-label mentions in markdown/HTML text."""
+    for cluster_id, label in CLUSTER_LABELS.items():
+        text = text.replace(label, cluster_label_span(cluster_id))
+    return text
+
+
+def render_next_page_button(next_page: str):
+    """Render a subtle next-page button that navigates via Streamlit state."""
+    if st.button(f'Next → {next_page}', key=f'next_page_{quote_plus(next_page)}'):
+        st.query_params['page'] = next_page
+        st.rerun()
+
+
+def render_top_navigation(pages: list[str], active_page: str):
+    """Render top-level page navigation below the project author line."""
+    nav_cols = st.columns([2.1, 2.3, 2.8, 2.5, 1.3], gap="small")
+    for idx, nav_page in enumerate(pages):
+        button_type = 'primary' if nav_page == active_page else 'secondary'
+        if nav_cols[idx].button(
+            nav_page,
+            key=f'top_nav_{idx}',
+            type=button_type,
+            use_container_width=True,
+        ):
+            if nav_page != active_page:
+                st.query_params['page'] = nav_page
+                st.rerun()
+
+
+@st.cache_data(show_spinner=False)
+def load_us_framing_chart_data():
+    """Load only columns needed for the main US framing charts."""
+    return pd.read_parquet(
+        'iran_war_media_framing_scores_clustered.parquet',
+        columns=['indexed_date', 'media_name', *score_cols],
+        engine='fastparquet',
+    )
+
+
+@st.cache_data(show_spinner=False)
+def load_bigram_article_data():
+    """Load only article text and cluster labels needed for bigram analysis."""
+    return pd.read_parquet(
+        'iran_war_media_framing_scores_clustered.parquet',
+        columns=['article_text', 'article_cluster'],
+        engine='fastparquet',
+    )
+
+
+@st.cache_data(show_spinner=False)
+def load_representative_article_data():
+    """Load only columns needed to choose and display representative articles."""
+    return pd.read_parquet(
+        'iran_war_media_framing_scores_clustered.parquet',
+        columns=['article_cluster', 'title', 'media_name', *score_cols],
+        engine='fastparquet',
+    )
+
+
+@st.cache_data(show_spinner=False)
+def load_outlet_heatmap_data():
+    """Load only columns needed for the five-outlet heatmap."""
+    return pd.read_parquet(
+        'iran_war_media_framing_scores2_clustered.parquet',
+        columns=['media_name', *score_cols],
+        engine='fastparquet',
+    )
+
+
+@st.cache_data(show_spinner=False)
+def make_cluster_bigram_charts_cached():
+    """Build cluster bigram charts once instead of on every page rerun."""
+    cluster_palette_version = 'richer-reassigned-cluster-palette-v1'
+    data = load_bigram_article_data()
+    _ = cluster_palette_version
+    top_bigrams = get_top_cluster_bigrams(data, top_n=10)
+    return make_cluster_bigram_charts(top_bigrams)
+
+
+@st.cache_data(show_spinner=False)
+def get_cluster_representative_articles_cached(n=5):
+    """Cache representative articles because Streamlit reruns on navigation."""
+    cluster_palette_version = 'richer-reassigned-cluster-palette-v1'
+    data = load_representative_article_data()
+    _ = cluster_palette_version
+    return get_cluster_representative_articles(data, n=n)
+
+
+@st.cache_data(show_spinner=False)
+def make_outlet_framing_heatmap_cached():
+    """Cache the outlet heatmap figure for repeated Media Differences visits."""
+    # Bump this local marker when the cached figure layout changes.
+    heatmap_layout_version = 'square-v1'
+    data = load_outlet_heatmap_data()
+    _ = heatmap_layout_version
+    return make_outlet_framing_heatmap(data)
+
+
+@st.cache_data(show_spinner=False)
+def make_dataset_overview_outputs_cached():
+    """Cache Data & Methods data and figures across page visits."""
+    cluster_palette_version = 'richer-reassigned-cluster-palette-v1'
+    combined = _load_data()
+    _ = cluster_palette_version
+    dates = combined["date"].dropna()
+    date_range = [
+        (dates.min() - pd.Timedelta(days=2)).isoformat(),
+        (dates.max() + pd.Timedelta(days=2)).isoformat(),
+    ]
+    return (
+        date_range,
+        make_article_count_chart(combined),
+        make_gantt_chart(combined, date_range=date_range),
+    )
 
 st.markdown(
     """
@@ -57,6 +187,11 @@ st.markdown(
 
     .stApp {
         color: #263746;
+    }
+
+    [data-testid="stSidebar"],
+    [data-testid="collapsedControl"] {
+        display: none !important;
     }
 
     /* Main title */
@@ -91,82 +226,66 @@ st.markdown(
         max-width: 680px;
     }
 
+    .analysis-note {
+        color: #777777 !important;
+        font-family: 'Georgia', serif !important;
+        font-size: 0.8rem !important;
+        line-height: 1.55 !important;
+        max-width: 680px;
+    }
+
     /* Dimension labels in bullet lists */
     .dim-label {
         font-family: 'Roboto', sans-serif !important;
-        font-weight: 600 !important;
+        font-weight: 400 !important;
         font-size: 1.0rem !important;
-    }
-
-    [data-testid="stSidebar"] {
-        background: #f2f2f2;
-        border-right: 1px solid #d9d9d9;
-        min-width: 15rem !important;
-        max-width: 17rem !important;
-    }
-
-    [data-testid="stSidebar"] > div:first-child {
-        padding-top: 2rem;
-        padding-left: 1.35rem;
-        padding-right: 1.35rem;
-    }
-
-    [data-testid="stSidebar"] h2 {
-        color: #2f4a5f;
-        font-size: 1.05rem;
-        font-weight: 800;
-        letter-spacing: 0.03em;
-        margin-bottom: 1rem;
-        padding-bottom: 0.7rem;
-        border-bottom: 1px solid rgba(47, 74, 95, 0.22);
-        text-transform: uppercase;
-    }
-
-    [data-testid="stSidebar"] div[role="radiogroup"] {
-        gap: 0.8rem;
-    }
-
-    [data-testid="stSidebar"] div[role="radiogroup"] label {
-        align-items: center;
-        background: #ffffff;
-        border: 1px solid #d9d9d9;
-        border-radius: 8px;
-        color: #2f4a5f;
-        font-size: 1.02rem;
-        font-weight: 600;
-        margin-bottom: 0.7rem;
-        padding: 0.8rem 0.85rem;
-        transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    [data-testid="stSidebar"] div[role="radiogroup"] label:hover {
-        background: #ffffff;
-        border-color: #aaaaaa;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-    }
-
-    [data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked) {
-        background: #ffffff;
-        border-color: #2f4a5f;
-        border-left: 4px solid #2f4a5f;
-        color: #1a1a1a;
-        font-weight: 800;
-    }
-
-    [data-testid="stSidebar"] div[role="radiogroup"] label p {
-        color: inherit;
-        font-size: 1.02rem;
-    }
-
-    [data-testid="stSidebar"] input[type="radio"] {
-        accent-color: #2f4a5f;
     }
 
     .project-author {
         color: #5d6f7e;
         font-size: 1rem;
         margin-top: -0.7rem;
-        margin-bottom: 2rem;
+        margin-bottom: 2.2rem;
+    }
+
+    .stApp div[data-testid="stHorizontalBlock"]:has(button[kind="primary"], button[kind="secondary"]) {
+        align-items: flex-end !important;
+        border-bottom: 1px solid #e0e0e0 !important;
+        gap: 0 !important;
+        margin-bottom: 2rem !important;
+        overflow: visible !important;
+        position: relative !important;
+    }
+
+    .stApp div[data-testid="stHorizontalBlock"]:has(button[kind="primary"], button[kind="secondary"])::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 88.2%;
+        height: 1px;
+        box-shadow: 0 -6px 9px -4px rgba(0, 0, 0, 0.5);
+        pointer-events: none;
+    }
+
+    .stApp div[data-testid="stHorizontalBlock"]:has(button[kind="primary"], button[kind="secondary"]) > div[data-testid="column"] {
+        position: relative !important;
+    }
+
+    .stApp div[data-testid="stHorizontalBlock"]:has(button[kind="primary"], button[kind="secondary"]) > div[data-testid="column"]:nth-child(1) {
+        z-index: 4 !important;
+    }
+
+    .stApp div[data-testid="stHorizontalBlock"]:has(button[kind="primary"], button[kind="secondary"]) > div[data-testid="column"]:nth-child(2) {
+        z-index: 3 !important;
+    }
+
+    .stApp div[data-testid="stHorizontalBlock"]:has(button[kind="primary"], button[kind="secondary"]) > div[data-testid="column"]:nth-child(3) {
+        z-index: 2 !important;
+    }
+
+    .stApp div[data-testid="stHorizontalBlock"]:has(button[kind="primary"], button[kind="secondary"]) > div[data-testid="column"]:nth-child(4) {
+        z-index: 1 !important;
     }
 
     /* Search / select input background and font */
@@ -223,25 +342,69 @@ st.markdown(
 
     button[kind="primary"],
     button[data-testid="baseButton-primary"] {
-        background-color: #2f4a5f;
-        border-color: #2f4a5f;
+        background-color: #e6e6e6 !important;
+        border-color: #bdbdbd !important;
+        border-radius: 0 !important;
+        box-shadow: 8px 0 8px -5px rgba(0, 0, 0, 0.42) !important;
+        color: #263746 !important;
+        justify-content: flex-start !important;
+        font-family: 'Roboto', sans-serif !important;
+        font-size: 0.98rem !important;
+        margin-bottom: -1px !important;
+        min-height: 3rem !important;
+        padding: 0.8rem 0.9rem !important;
+        text-align: left !important;
+    }
+
+    button[kind="primary"] p,
+    button[data-testid="baseButton-primary"] p {
+        color: #263746 !important;
+        font-family: 'Roboto', sans-serif !important;
+        font-size: 0.98rem !important;
+        font-weight: 400 !important;
+        line-height: 1 !important;
+        max-width: none !important;
+        text-align: left !important;
+        width: 100% !important;
+        white-space: nowrap !important;
     }
 
     button[kind="secondary"] {
         border: 1px solid #d9d9d9 !important;
         background: #ffffff !important;
         color: #5d6f7e !important;
+        justify-content: flex-start !important;
         font-family: 'Roboto', sans-serif !important;
-        font-size: 0.88rem !important;
-        padding: 0.25rem 0.8rem !important;
-        min-height: 2rem !important;
-        border-radius: 999px !important;
-        box-shadow: none !important;
+        font-size: 0.98rem !important;
+        margin-bottom: -1px !important;
+        padding: 0.8rem 0.9rem !important;
+        min-height: 3rem !important;
+        border-radius: 0 !important;
+        box-shadow: 8px 0 8px -5px rgba(0, 0, 0, 0.42) !important;
+        text-align: left !important;
     }
 
     button[kind="secondary"]:hover {
         border-color: #b7c4cf !important;
         color: #2f4a5f !important;
+        background: #f5f5f5 !important;
+    }
+
+    [data-testid="column"] + [data-testid="column"] button[kind="primary"],
+    [data-testid="column"] + [data-testid="column"] button[kind="secondary"] {
+        border-left-width: 0 !important;
+    }
+
+    button[kind="secondary"] p {
+        color: inherit !important;
+        font-family: 'Roboto', sans-serif !important;
+        font-size: 0.98rem !important;
+        font-weight: 400 !important;
+        line-height: 1 !important;
+        max-width: none !important;
+        text-align: left !important;
+        width: 100% !important;
+        white-space: nowrap !important;
     }
 
     a {
@@ -277,24 +440,31 @@ st.markdown(
     /* ── Dimension toggle pills ────────────────────────────────────────────
        Streamlit 1.45.x uses data-testid="stBaseButton-pills" (unselected)
        and data-testid="stBaseButton-pillsActive" (selected).               */
-    [data-testid="stBaseButton-pills"],
-    [data-testid="stBaseButton-pillsActive"] {
+    .stApp [data-testid="stBaseButton-pills"],
+    .stApp [data-testid="stBaseButton-pillsActive"] {
         border-radius: 4px !important;
         font-size: 11px !important;
         font-family: 'Roboto', sans-serif !important;
-        font-weight: 600 !important;
+        font-weight: 400 !important;
         padding: 4px 10px !important;
         min-height: 0 !important;
         height: auto !important;
         line-height: 1 !important;
         border-width: 1.5px !important;
         border-style: solid !important;
-        box-shadow: none !important;
         transition: background 0.15s, color 0.15s !important;
+        box-shadow: none !important;
     }
-    [data-testid="stBaseButton-pills"]       { background: #ffffff !important; }
-    [data-testid="stBaseButton-pillsActive"] { color: #ffffff !important; }
-
+    .stApp [data-testid="stBaseButton-pills"]       { background: #ffffff !important; }
+    .stApp [data-testid="stBaseButton-pillsActive"] { color: #ffffff !important; }
+    .stApp [data-testid="stBaseButton-pills"] *,
+    .stApp [data-testid="stBaseButton-pillsActive"] * {
+        font-family: 'Roboto', sans-serif !important;
+        font-size: 11px !important;
+        font-weight: 400 !important;
+        line-height: 1 !important;
+        color: inherit !important;
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -315,7 +485,7 @@ components.html("""
     s.setProperty('border-radius',  '4px',                           'important');
     s.setProperty('font-size',      '11px',                          'important');
     s.setProperty('font-family',    '"Roboto", sans-serif',           'important');
-    s.setProperty('font-weight',    '600',                           'important');
+    s.setProperty('font-weight',    '400',                           'important');
     s.setProperty('padding',        '4px 10px',                      'important');
     s.setProperty('min-height',     '0',                             'important');
     s.setProperty('height',         'auto',                          'important');
@@ -324,13 +494,20 @@ components.html("""
     s.setProperty('box-shadow',     'none',                          'important');
     s.setProperty('cursor',         'pointer',                       'important');
     s.setProperty('transition',     'background 0.15s, color 0.15s', 'important');
+    const textColor = selected ? '#ffffff' : color;
     if (selected) {
-      s.setProperty('background', color,     'important');
-      s.setProperty('color',      '#ffffff', 'important');
+      s.setProperty('background', color, 'important');
     } else {
       s.setProperty('background', '#ffffff', 'important');
-      s.setProperty('color',      color,     'important');
     }
+    s.setProperty('color', textColor, 'important');
+    btn.querySelectorAll('*').forEach(function(child) {
+      child.style.setProperty('font-family', '"Roboto", sans-serif', 'important');
+      child.style.setProperty('font-size', '11px', 'important');
+      child.style.setProperty('font-weight', '400', 'important');
+      child.style.setProperty('line-height', '1', 'important');
+      child.style.setProperty('color', textColor, 'important');
+    });
   }
 
   function applyAll() {
@@ -375,24 +552,13 @@ components.html("""
 </script>
 """, height=0, scrolling=False)
 
-if '_pending_sidebar_nav_v1' in st.session_state:
-    pending_page = st.session_state.pop('_pending_sidebar_nav_v1')
-    pending_href = f'?page={quote(pending_page)}#top'
-    components.html(
-        f"""
-        <script>
-        try {{
-          window.parent.location.assign('{pending_href}');
-        }} catch (e) {{
-          window.location.assign('{pending_href}');
-        }}
-        </script>
-        """,
-        height=0,
-        scrolling=False,
-    )
-    st.stop()
-
+pages = ['Media framing', 'Media Clusters', 'Media Differences', 'Data & Methods']
+query_page = st.query_params.get('page')
+if isinstance(query_page, list):
+    query_page = query_page[0] if query_page else None
+page = query_page if query_page in pages else pages[0]
+if query_page != page:
+    st.query_params['page'] = page
 
 st.title('Media Framing of the 2026 Iran War')
 st.markdown('<div id="top"></div>', unsafe_allow_html=True)
@@ -400,11 +566,7 @@ st.markdown(
     '<div class="project-author">By Adeline Setiawan, Maximilian Chelminski, and Yixiao Liu</div>',
     unsafe_allow_html=True
 )
-st.divider()
-
-# Load the clustered article framing data.
-df = pd.read_parquet('iran_war_media_framing_scores_clustered.parquet', engine='fastparquet')
-df_five_sources = pd.read_parquet('iran_war_media_framing_scores2_clustered.parquet', engine='fastparquet')
+render_top_navigation(pages, page)
 
 # Columns containing the LLM-generated framing scores.
 score_cols = [
@@ -423,8 +585,6 @@ score_labels = {
     'culpability_bias': 'Culpability Bias'
 }
 
-df['publish_date'] = pd.to_datetime(df['indexed_date'])
-
 dimension_order = [
     'Culpability Bias',
     'Kinetic',
@@ -433,123 +593,12 @@ dimension_order = [
     'Humanitarian'
 ]
 
-st.sidebar.markdown('## Navigation')
-pages = ['Story Arc', 'Story Arc (Lab)', 'Media Clusters', 'Media Differences', 'Data & Methods']
-query_page = st.query_params.get('page')
-if isinstance(query_page, list):
-    query_page = query_page[0] if query_page else None
-if query_page in pages:
-    st.session_state['main_navigation_v5'] = query_page
-page = st.sidebar.radio(
-    'Navigation',
-    pages,
-    label_visibility='collapsed',
-    key='main_navigation_v5',
-    on_change=handle_sidebar_navigation_change,
-)
-if st.query_params.get('page') != page:
-    st.query_params['page'] = page
+if page == 'Media framing':
+    with st.spinner('Loading framing data...'):
+        df = load_us_framing_chart_data()
+        df = df.copy()
+        df['publish_date'] = pd.to_datetime(df['indexed_date'])
 
-if page == 'Story Arc':
-    st.markdown(
-        """
-        This project explores how media outlets framed the 2026 Iran War across time, media sources, and narrative dimensions. We analyze how coverage varies across five framing dimensions:
-        """,
-        unsafe_allow_html=True
-    )
-    st.markdown(
-        """
-        <ul style="line-height:2.0; max-width:680px; font-family:'Roboto',sans-serif; font-size:1.0rem; color:#555;">
-          <li><span class="dim-label" style="color:#4E79A7;">Kinetic Focus:</span> emphasis on military action, strikes, weapons, and strategy.</li>
-          <li><span class="dim-label" style="color:#F28E2B;">Humanitarian Focus:</span> emphasis on civilian suffering, refugees, and casualties.</li>
-          <li><span class="dim-label" style="color:#76B7B2;">Diplomatic Focus:</span> emphasis on negotiations, international organizations, and political responses.</li>
-          <li><span class="dim-label" style="color:#59A14F;">Economic Focus:</span> emphasis on oil, trade, markets, and broader economic effects.</li>
-          <li><span class="dim-label" style="color:#E15759;">Culpability Bias:</span> the extent to which coverage uses strong or active language to assign blame.</li>
-        </ul>
-        """,
-        unsafe_allow_html=True
-    )
-
-    st.divider()
-
-    # ── US aggregate chart ───────────────────────────────────────────────────
-    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">How US media outlets framed the war</h1>', unsafe_allow_html=True)
-    us_selected = st.pills('', options=dimension_order, default=dimension_order, selection_mode='multi', key='story_arc_us_dims', label_visibility='collapsed')
-    us_chart = make_framing_over_time_chart(df, score_cols, score_labels, us_selected or dimension_order)
-    st.plotly_chart(us_chart, use_container_width=True)
-
-    # ── US framing band ──────────────────────────────────────────────────────
-    band_chart = make_us_framing_band_chart(df, score_cols)
-    st.plotly_chart(band_chart, use_container_width=True, config={'displayModeBar': False}, key='us_band_aggregate')
-    st.markdown(
-        '<div style="font-family:\'Roboto\',sans-serif; font-size:0.72rem; color:#aaa; margin:0 0 1rem 0; padding-left:55px;">Dominant framing per day — US outlets</div>',
-        unsafe_allow_html=True
-    )
-
-    st.markdown(
-        '<div style="padding-left:55px;">'
-        '<p>The overall pattern suggests coverage was driven mainly by military action and responsibility/blame. '
-        'Kinetic framing stayed high for much of the period, while Culpability Bias remained consistently prominent — '
-        'many articles framed the war not only through what happened, but also through who was responsible. '
-        'Humanitarian framing stayed lower overall, suggesting that civilian suffering and human impacts were '
-        'present but less central in the aggregate coverage.</p>'
-        '<p>Diplomatic framing was unusually high at the beginning, likely reflecting early attention to official '
-        'statements, international reactions, and political responses — then dropped and stayed relatively low. '
-        'Economic framing becomes more visible later, especially around moments linked to energy and regional escalation.</p>'
-        '<p>Taken together, the five lines show that media framing was not fixed: as the war developed, coverage '
-        'moved between military, political, economic, and blame-centered narratives.</p>'
-        '</div>',
-        unsafe_allow_html=True
-    )
-
-    st.divider()
-
-    # ── US individual outlet D3 breakdown ────────────────────────────────────
-    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">What US media outlets said about the war:</h1>', unsafe_allow_html=True)
-    st.markdown(
-        '<div style="padding-left:55px;">'
-        'Sources: NYT, Fox News, CNN, Bloomberg, NPR, Breitbart, NBC News, USA Today from Feb 27–Mar 30. '
-        'American media differed in their individual framing of the war, converging and diverging notably at some moments. '
-        'Use the dimension buttons below to switch between framing types, then scroll to follow where the outlets diverged.'
-        '</div>',
-        unsafe_allow_html=True
-    )
-    render_us_outlet_event_timeline()
-
-    st.divider()
-
-    # ── International aggregate chart ────────────────────────────────────────
-    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">Average framing score across non-US media outlets</h1>', unsafe_allow_html=True)
-    intl_selected = st.pills('', options=dimension_order, default=dimension_order, selection_mode='multi', key='story_arc_intl_dims', label_visibility='collapsed')
-    intl_chart = make_international_framing_chart('iran-war-framing/data/timeline.json', intl_selected or dimension_order)
-    st.plotly_chart(intl_chart, use_container_width=True)
-
-    # ── INTL framing band ────────────────────────────────────────────────────
-    intl_band = make_intl_framing_band_chart('iran-war-framing/data/timeline.json')
-    st.plotly_chart(intl_band, use_container_width=True, config={'displayModeBar': False}, key='intl_band_aggregate')
-    st.markdown(
-        '<div style="font-family:\'Roboto\',sans-serif; font-size:0.72rem; color:#aaa; margin:0 0 1rem 0; padding-left:55px;">Dominant framing per day — international outlets</div>',
-        unsafe_allow_html=True
-    )
-
-    st.divider()
-
-    # ── INTL individual outlet D3 breakdown ──────────────────────────────────
-    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">What non-US media outlets said about the war</h1>', unsafe_allow_html=True)
-    st.markdown(
-        '<div style="padding-left:55px;">'
-        'The previous chart showed how American media collectively covered the 2026 Iran War. '
-        'Here, four international and wire-service outlets — AP, Reuters, BBC, and Al Jazeera — '
-        'tell the same story through very different lenses. '
-        'Use the dimension buttons below to switch between framing types, then scroll to follow where the outlets diverged.'
-        '</div>',
-        unsafe_allow_html=True
-    )
-    render_outlet_event_timeline()
-
-    render_next_page_button('Media Clusters', 'next_story_arc')
-
-elif page == 'Story Arc (Lab)':
     st.markdown(
         """
         This project explores how media outlets framed the 2026 Iran War across time, media sources, and narrative dimensions. We analyze how coverage varies across five framing dimensions:
@@ -604,7 +653,7 @@ elif page == 'Story Arc (Lab)':
     st.divider()
 
     # ── US individual outlet D3 breakdown ────────────────────────────────────
-    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">What US media outlets said about the war:</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">What US media outlets focused on most:</h1>', unsafe_allow_html=True)
     st.markdown(
         '<div style="padding-left:55px;">'
         'Sources: NYT, Fox News, CNN, Bloomberg, NPR, Breitbart, NBC News, USA Today from Feb 27–Mar 30. '
@@ -634,7 +683,7 @@ elif page == 'Story Arc (Lab)':
     st.divider()
 
     # ── INTL individual outlet D3 breakdown ──────────────────────────────────
-    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">What non-US media outlets said about the war</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 style="font-family:Georgia,serif; font-weight:bold; color:#1a1a1a;">What non-US media outlets focused on most</h1>', unsafe_allow_html=True)
     st.markdown(
         '<div style="padding-left:55px;">'
         'The previous chart showed how American media collectively covered the 2026 Iran War. '
@@ -645,6 +694,8 @@ elif page == 'Story Arc (Lab)':
         unsafe_allow_html=True
     )
     render_outlet_event_timeline_lab()
+
+    render_next_page_button('Media Clusters')
 
 elif page == 'Media Clusters':
     st.markdown(
@@ -660,9 +711,12 @@ elif page == 'Media Clusters':
 
     render_media_clusters()
 
-    st.markdown(Path('network_analysis/networkvis_interpretation.md').read_text())
+    st.markdown(
+        color_cluster_mentions(Path('network_analysis/networkvis_interpretation.md').read_text()),
+        unsafe_allow_html=True,
+    )
 
-    render_next_page_button('Media Differences', 'next_media_clusters')
+    render_next_page_button('Media Differences')
 
 elif page == 'Media Differences':
     st.markdown(
@@ -676,8 +730,8 @@ elif page == 'Media Differences':
     )
 
     # Compute and display cluster-specific bigram charts.
-    top_bigrams = get_top_cluster_bigrams(df, top_n=10)
-    bigram_charts = make_cluster_bigram_charts(top_bigrams)
+    with st.spinner('Loading cluster language charts...'):
+        bigram_charts = make_cluster_bigram_charts_cached()
 
     chart_items = list(bigram_charts.items())
 
@@ -689,30 +743,45 @@ elif page == 'Media Differences':
                 st.plotly_chart(chart, use_container_width=True)
 
     st.markdown(
-        """
+        f"""
         These unique phrases show what each media cluster tends to bring into focus.
 
-        - **Cluster 0: Mainstream / Moderate** reads like broad general coverage. It touches regional conflict through phrases like “southern Lebanon” and “backed Hezbollah,” but also brings in oil and energy through phrases like “million barrels” and “Brent crude.” This makes the cluster feel wide-ranging rather than driven by one clear storyline.
+        - {cluster_label_span(0)} reads like broad general coverage. It touches regional conflict through phrases like “southern Lebanon” and “backed Hezbollah,” but also brings in oil and energy through phrases like “million barrels” and “Brent crude.” This makes the cluster feel wide-ranging rather than driven by one clear storyline.
 
-        - **Cluster 1: Dissident / Left-Wing** focuses strongly on military harm and U.S. involvement. Phrases like “troops killed,” “killed injured,” and “American forces” make the costs of military action more visible. Compared with Cluster 0, this cluster feels more focused on consequence and responsibility.
+        - {cluster_label_span(1)} focuses strongly on military harm and U.S. involvement. Phrases like “troops killed,” “killed injured,” and “American forces” make the costs of military action more visible. Compared with Cluster 0, this cluster feels more focused on consequence and responsibility.
 
-        - **Cluster 2: Smaller Mainstream** is the least centered on one clear war theme. Phrases such as “religious freedom,” “Iranian hackers,” and “early elections” suggest that these outlets often connect the war to wider political, social, and security issues.
+        - {cluster_label_span(2)} is the least centered on one clear war theme. Phrases such as “religious freedom,” “Iranian hackers,” and “early elections” suggest that these outlets often connect the war to wider political, social, and security issues.
 
-        - **Cluster 3: Business-Focused** has the clearest angle. Phrases like “Brent crude,” “barrels oil,” “Dow Jones,” and “Nasdaq composite” show that this cluster mainly treats the war as an oil, energy, and market-risk story.
+        - {cluster_label_span(3)} has the clearest angle. Phrases like “Brent crude,” “barrels oil,” “Dow Jones,” and “Nasdaq composite” show that this cluster mainly treats the war as an oil, energy, and market-risk story.
 
-        - **Cluster 4: Right-Wing / Military** makes the war more personal and military-centered. Names and places like “Declan Coady,” “Noah Tietjens,” and “West Moines” point to coverage of U.S. service members killed in the conflict, while phrases like “American forces” and “army reserve” keep the focus on military service and sacrifice.
+        - {cluster_label_span(4)} makes the war more personal and military-centered. Names and places like “Declan Coady,” “Noah Tietjens,” and “West Moines” point to coverage of U.S. service members killed in the conflict, while phrases like “American forces” and “army reserve” keep the focus on military service and sacrifice.
 
         Overall, the phrases make the cluster differences easier to feel: some outlets turn the war into a market story, some into a military-cost story, and some into a broader political event.
 
+        
+        <div class="analysis-note"><em>Note: these phrases do not reveal what caused the LLM to assign specific framing scores since the LLM's reasoning is a black box. The bigram analysis is a separate NLP step which identifies vocabulary statistically distinctive to each cluster, serving as cross-validation of the cluster labels. Some clusters, particularly Clusters 2 and 4, surface proper nouns and publication-specific boilerplate (e.g. "Noah Tietjens," "legal notices") rather than genuine framing signals. This is a known limitation of c-TF-IDF when a cluster is dominated by a small number of outlets with distinctive writing styles.</em></div>
+
         ---
-        *Note: these phrases do not reveal what caused the LLM to assign specific framing scores — the LLM's reasoning is a black box. The bigram analysis is a separate NLP step that identifies vocabulary statistically distinctive to each cluster, serving as cross-validation of the cluster labels. Some clusters, particularly Clusters 2 and 4, surface proper nouns and publication-specific boilerplate (e.g. "Noah Tietjens," "legal notices") rather than genuine framing signals. This is a known limitation of c-TF-IDF when a cluster is dominated by a small number of outlets with distinctive writing styles.*
-        """
+        """,
+        unsafe_allow_html=True,
+    )
+    
+
+    st.subheader('Representative Articles by Media Cluster')
+    st.write(
+        'These examples are the articles closest to each cluster centroid, based on the five framing scores.'
+    )
+    with st.spinner('Loading representative articles...'):
+        representative_articles = get_cluster_representative_articles_cached(n=5)
+    st.markdown(
+        render_cluster_representative_articles_html(representative_articles),
+        unsafe_allow_html=True,
     )
 
     st.subheader('How Framing Differs Across Major Media Outlets')
     st.caption('Based on 1,736 articles from 5 major media outlets')
     
-    st.plotly_chart(make_outlet_framing_heatmap(df_five_sources), use_container_width=True)
+    st.plotly_chart(make_outlet_framing_heatmap_cached(), use_container_width=False)
 
     st.markdown(
         """
@@ -730,11 +799,9 @@ elif page == 'Media Differences':
         """
     )
 
-    render_next_page_button('Data & Methods', 'next_media_differences')
+    render_next_page_button('Data & Methods')
 
 elif page == 'Data & Methods':
-    st.markdown('<hr style="border:none;border-top:1px solid #e0e0e0;margin:0.5rem 0 1.5rem 0;">', unsafe_allow_html=True)
-
     # ── Dataset stats ────────────────────────────────────────────────────────
     st.markdown(
         """
@@ -765,12 +832,8 @@ elif page == 'Data & Methods':
     )
 
     # ── Load data + shared date range ────────────────────────────────────────
-    combined = _load_data()
-    dates = combined["date"].dropna()
-    date_range = [
-        (dates.min() - pd.Timedelta(days=2)).isoformat(),
-        (dates.max() + pd.Timedelta(days=2)).isoformat(),
-    ]
+    with st.spinner('Loading dataset overview...'):
+        date_range, article_count_chart, gantt_chart = make_dataset_overview_outputs_cached()
 
     st.markdown('<hr style="border:none;border-top:1px solid #e0e0e0;margin:1.5rem 0;">', unsafe_allow_html=True)
 
@@ -783,13 +846,13 @@ elif page == 'Data & Methods':
     st.markdown(before_extraction)
 
     # Articles per outlet chart — between "Data Preparation" and "Article Extraction"
-    st.plotly_chart(make_article_count_chart(combined), use_container_width=True)
+    st.plotly_chart(article_count_chart, use_container_width=True)
 
     # Article Extraction text
     st.markdown('#### Article Extraction' + extraction_body)
 
     # Coverage window chart — after Article Extraction, before AI Scoring
-    st.plotly_chart(make_gantt_chart(combined, date_range=date_range), use_container_width=True)
+    st.plotly_chart(gantt_chart, use_container_width=True)
 
     # Rest of methodology
     st.markdown('#### AI Scoring and Dimensionality' + after_extraction)

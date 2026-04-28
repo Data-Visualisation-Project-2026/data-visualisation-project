@@ -15,14 +15,21 @@ import networkx as nx
 df = pd.read_parquet('iran_war_outlet_averages_clustered.parquet')
 
 # Map Labels and Colors
-df['cluster_label'] = 'Cluster ' + df['media_cluster'].astype(str)
+cluster_labels = {
+    0: 'Cluster 0: The Mainstream Center',
+    1: 'Cluster 1: The Dissident/Resistance Wing',
+    2: 'Cluster 2: The Diplomatic/Humanitarian Focus',
+    3: 'Cluster 3: The Economic Lens',
+    4: 'Cluster 4: The Military/Right-Wing Faction',
+}
+df['cluster_label'] = df['media_cluster'].map(cluster_labels)
 
 color_map = {
-    0: '#895EFF',
-    1: '#59A14F',
-    2: '#F28E2B',
-    3: '#76B7B2',
-    4: '#4E79A7'
+    0: '#7A5BA6',
+    1: '#B65F6F',
+    2: '#4E6FAE',
+    3: '#2F7F7B',
+    4: '#B88A3D'
 }
 
 # Perform PCA 
@@ -64,7 +71,7 @@ fig = go.Figure()
 show_master_legend = True 
 
 for i in range(5):
-    cluster_name = f'Cluster {i}'
+    cluster_name = cluster_labels[i]
     group = df[df['media_cluster'] == i]
     color = color_map[i]
     
@@ -97,7 +104,7 @@ fig.add_trace(go.Scatter3d(
 
 # LAYER 3: Draw Nodes
 for i in range(5):
-    cluster_name = f'Cluster {i}'
+    cluster_name = cluster_labels[i]
     group = df[df['media_cluster'] == i]
     color = color_map[i]
     

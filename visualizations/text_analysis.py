@@ -6,19 +6,43 @@ from sklearn.feature_extraction.text import CountVectorizer, ENGLISH_STOP_WORDS
 
 
 CLUSTER_NAMES = {
-    0: 'Mainstream / Moderate',
-    1: 'Dissident / Left-Wing',
-    2: 'Smaller Mainstream',
-    3: 'Business-Focused',
-    4: 'Right-Wing / Military'
+    0: 'The Mainstream Center',
+    1: 'The Dissident/Resistance Wing',
+    2: 'The Diplomatic/Humanitarian Focus',
+    3: 'The Economic Lens',
+    4: 'The Military/Right-Wing Faction'
 }
 
 CLUSTER_COLORS = {
-    'Cluster 0: Mainstream / Moderate': '#895EFF',
-    'Cluster 1: Dissident / Left-Wing': '#59A14F',
-    'Cluster 2: Smaller Mainstream': '#F28E2B',
-    'Cluster 3: Business-Focused': '#76B7B2',
-    'Cluster 4: Right-Wing / Military': '#4E79A7'
+    'Cluster 0: The Mainstream Center': '#7A5BA6',
+    'Cluster 1: The Dissident/Resistance Wing': '#B65F6F',
+    'Cluster 2: The Diplomatic/Humanitarian Focus': '#4E6FAE',
+    'Cluster 3: The Economic Lens': '#2F7F7B',
+    'Cluster 4: The Military/Right-Wing Faction': '#B88A3D'
+}
+
+SCORE_COLS = [
+    'kinetic_focus',
+    'humanitarian_focus',
+    'diplomatic_focus',
+    'economic_focus',
+    'culpability_bias',
+]
+
+SCORE_LABELS = {
+    'kinetic_focus': 'Kinetic',
+    'humanitarian_focus': 'Humanitarian',
+    'diplomatic_focus': 'Diplomatic',
+    'economic_focus': 'Economic',
+    'culpability_bias': 'Culpability',
+}
+
+SCORE_COLORS = {
+    'kinetic_focus': '#4E79A7',
+    'humanitarian_focus': '#F28E2B',
+    'diplomatic_focus': '#76B7B2',
+    'economic_focus': '#59A14F',
+    'culpability_bias': '#E15759',
 }
 
 DOMAIN_STOP_WORDS = {
@@ -174,7 +198,9 @@ def make_outlet_framing_heatmap(df):
     fig.update_layout(
         paper_bgcolor='white',
         plot_bgcolor='white',
-        margin={'l': 40, 'r': 40, 't': 30, 'b': 90},
+        width=620,
+        height=620,
+        margin={'l': 90, 'r': 90, 't': 30, 'b': 90},
         font={'color': '#263746'}
     )
 
@@ -185,7 +211,12 @@ def make_outlet_framing_heatmap(df):
         showgrid=False,
         ticks=''
     )
-    fig.update_yaxes(showgrid=False, ticks='')
+    fig.update_yaxes(
+        showgrid=False,
+        ticks='',
+        scaleanchor='x',
+        scaleratio=1
+    )
 
     return fig
 
@@ -238,3 +269,80 @@ def _format_cluster_label(cluster_id):
     """Create a display label for an article cluster."""
     cluster_id = int(cluster_id)
     return f'Cluster {cluster_id}: {CLUSTER_NAMES.get(cluster_id, "Unnamed")}'
+
+
+def get_cluster_representative_articles(df, n=5):
+    """Return the n articles per cluster closest to the cluster centroid (Euclidean distance)."""
+    clean = df.dropna(subset=SCORE_COLS + ['article_cluster', 'title']).copy()
+    clean['article_cluster'] = clean['article_cluster'].astype(int)
+
+    centroids = clean.groupby('article_cluster')[SCORE_COLS].mean()
+    rows = []
+
+    for cluster_id, centroid in centroids.iterrows():
+        cluster_df = clean[clean['article_cluster'] == cluster_id].copy()
+        cluster_df['_dist'] = np.linalg.norm(
+            cluster_df[SCORE_COLS].values - centroid.values, axis=1
+        )
+        # deduplicate by title so identical syndicated articles don't fill the list
+        top = (
+            cluster_df
+            .sort_values('_dist')
+            .drop_duplicates(subset=['title'])
+            .head(n)
+        )
+        for _, row in top.iterrows():
+            entry = {
+                'cluster_id': cluster_id,
+                'cluster_label': _format_cluster_label(cluster_id),
+                'title': row['title'],
+                'media_name': row['media_name'],
+                'dist': row['_dist'],
+            }
+            for col in SCORE_COLS:
+                entry[col] = row[col]
+            rows.append(entry)
+
+    return pd.DataFrame(rows)
+
+
+def render_cluster_representative_articles_html(rep_df):
+    """Return an HTML string showing representative articles per cluster with score bars."""
+    sections = []
+
+    for cluster_id in sorted(rep_df['cluster_id'].unique()):
+        label = _format_cluster_label(cluster_id)
+        color = CLUSTER_COLORS.get(label, '#888888')
+        cluster_rows = rep_df[rep_df['cluster_id'] == cluster_id]
+
+        article_html_parts = []
+        for _, row in cluster_rows.iterrows():
+            bars = ''.join(
+                f'''<div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;">
+                      <span style="font-size:10px;color:#888;width:80px;flex-shrink:0;font-family:Roboto,sans-serif;">{SCORE_LABELS[col]}</span>
+                      <div style="flex:1;background:#f0f0f0;border-radius:2px;height:7px;max-width:160px;">
+                        <div style="width:{int(row[col]*100)}%;background:{SCORE_COLORS[col]};height:7px;border-radius:2px;"></div>
+                      </div>
+                      <span style="font-size:10px;color:#aaa;width:28px;text-align:right;font-family:Roboto,sans-serif;">{row[col]:.2f}</span>
+                    </div>'''
+                for col in SCORE_COLS
+            )
+            article_html_parts.append(
+                f'''<div style="border:1px solid #ebebeb;border-radius:6px;padding:12px 14px;margin-bottom:10px;background:#fafafa;">
+                      <div style="font-size:13px;font-weight:600;color:#263746;font-family:Georgia,serif;margin-bottom:3px;line-height:1.4;">{row["title"]}</div>
+                      <div style="font-size:11px;color:#aaa;font-family:Roboto,sans-serif;margin-bottom:10px;">{row["media_name"]}</div>
+                      {bars}
+                    </div>'''
+            )
+
+        sections.append(
+            f'''<div style="margin-bottom:28px;">
+                  <div style="font-size:13px;font-weight:700;color:{color};font-family:Roboto,sans-serif;
+                              border-left:3px solid {color};padding-left:8px;margin-bottom:10px;letter-spacing:0.02em;">
+                    {label}
+                  </div>
+                  {"".join(article_html_parts)}
+                </div>'''
+        )
+
+    return f'<div style="max-width:680px;">{"".join(sections)}</div>'
