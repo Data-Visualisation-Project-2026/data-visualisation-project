@@ -64,10 +64,19 @@ def color_cluster_mentions(text: str) -> str:
 
 
 def render_next_page_button(next_page: str):
-    """Render a subtle next-page button that navigates via Streamlit state."""
-    if st.button(f'Next → {next_page}', key=f'next_page_{quote_plus(next_page)}'):
-        st.query_params['page'] = next_page
-        st.rerun()
+    """Render a subtle next-page link that opens the next page at the top."""
+    href = f'?page={quote_plus(next_page)}#top'
+    st.markdown(
+        f"""
+        <div class="next-page-wrap">
+          <a class="next-page-link" href="{href}" target="_self"
+             onclick="try {{ window.parent.location.assign('{href}'); }} catch (e) {{ window.location.assign('{href}'); }} return false;">
+             Next → {escape(next_page)}
+          </a>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def render_top_navigation(pages: list[str], active_page: str):
@@ -149,7 +158,7 @@ def get_cluster_representative_articles_cached(n=5):
 def make_outlet_framing_heatmap_cached():
     """Cache the outlet heatmap figure for repeated Media Differences visits."""
     # Bump this local marker when the cached figure layout changes.
-    heatmap_layout_version = 'square-muted-blue-v4'
+    heatmap_layout_version = 'square-muted-blue-v5'
     data = load_outlet_heatmap_data()
     _ = heatmap_layout_version
     return make_outlet_framing_heatmap(data)
