@@ -79,13 +79,8 @@ def _build_outlet_event_timeline_html(timeline_file='timeline.json', meta_file='
         f'  const usEvents = {us_events};\n'
         f'  const eventClusterArticles = {event_cluster_articles};'
     )
-    # Match both 3-item (main.js) and 4-item (main_pretext.js) destructuring patterns.
-    main_js = re.sub(
-        r'const \[timeline, events, meta(?:, usEvents)?(?:, eventClusterArticles)?\] = await Promise\.all\(\[.*?\]\);',
-        lambda _: inline_data,
-        main_js,
-        flags=re.DOTALL,
-    )
+    # Match both 3-item (main.js) and 5-item (main_pretext.js) destructuring patterns.
+    main_js = _inline_timeline_data(main_js, inline_data)
 
 
 
@@ -165,3 +160,23 @@ def _load_json_for_script(path: Path) -> str:
     """Load a JSON file and escape it for safe inline embedding in a <script> tag."""
     data = json.loads(path.read_text())
     return json.dumps(data).replace('</', '<\\/')
+
+
+def _inline_timeline_data(main_js: str, inline_data: str) -> str:
+    """Replace the opening async JSON fetch block with inline data constants."""
+    pattern = r'const \[timeline, events, meta(?:, usEvents)?(?:, eventClusterArticles)?\] = await Promise\.all\(\[.*?\]\);'
+    patched, replacements = re.subn(pattern, lambda _: inline_data, main_js, count=1, flags=re.DOTALL)
+    if replacements:
+        return patched
+
+    # Fallback for small formatting changes in the JS: replace everything between
+    # the async wrapper opening and the hiddenOutlets initialization.
+    marker = '// Tracks which outlet lines are currently hidden'
+    marker_idx = main_js.find(marker)
+    wrapper_idx = main_js.find('(async () => {')
+    if wrapper_idx == -1 or marker_idx == -1 or marker_idx <= wrapper_idx:
+        raise RuntimeError('Unable to inline D3 timeline data into embedded JavaScript.')
+
+    prefix = main_js[:wrapper_idx + len('(async () => {')]
+    suffix = main_js[marker_idx:]
+    return f'{prefix}\n{inline_data}\n\n{suffix}'
