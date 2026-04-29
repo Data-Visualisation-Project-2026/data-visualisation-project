@@ -61,15 +61,27 @@ def _build_outlet_event_timeline_html(timeline_file='timeline.json', meta_file='
     # Use a lambda replacement so re.sub doesn't interpret \u sequences in JSON as regex escapes.
     us_events_path = base_dir / 'data' / 'us_events.json'
     us_events = _load_json_for_script(us_events_path) if us_events_path.exists() else '[]'
+    event_cluster_articles_file = (
+        'us_event_cluster_articles.json'
+        if meta_file == 'us_meta.json'
+        else 'event_cluster_articles.json'
+    )
+    event_cluster_articles_path = base_dir / 'data' / event_cluster_articles_file
+    event_cluster_articles = (
+        _load_json_for_script(event_cluster_articles_path)
+        if event_cluster_articles_path.exists()
+        else '[]'
+    )
     inline_data = (
         f'const timeline = {timeline};\n'
         f'  const events = {events};\n'
         f'  const meta = {meta};\n'
-        f'  const usEvents = {us_events};'
+        f'  const usEvents = {us_events};\n'
+        f'  const eventClusterArticles = {event_cluster_articles};'
     )
     # Match both 3-item (main.js) and 4-item (main_pretext.js) destructuring patterns.
     main_js = re.sub(
-        r'const \[timeline, events, meta(?:, usEvents)?\] = await Promise\.all\(\[.*?\]\);',
+        r'const \[timeline, events, meta(?:, usEvents)?(?:, eventClusterArticles)?\] = await Promise\.all\(\[.*?\]\);',
         lambda _: inline_data,
         main_js,
         flags=re.DOTALL,

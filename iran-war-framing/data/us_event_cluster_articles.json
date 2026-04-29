@@ -1,0 +1,298 @@
+[
+  {
+    "id": "first-strikes",
+    "date": "2026-03-01",
+    "label": "Opening Strikes",
+    "description": "US-Israeli strikes hit Iran. Only AP is on the ground \u2014 kinetic framing peaks at 0.70, the highest single-day score in the dataset.",
+    "divergence_note": "Early framing is entirely US-centric. No Reuters, no BBC \u2014 a single editorial voice sets the initial narrative.",
+    "window_days": 2,
+    "clusters": [
+      {
+        "cluster_id": 3,
+        "cluster_label": "Cluster 3: The Economic Lens",
+        "cluster_color": "#2F7F7B",
+        "window_article_count": 12,
+        "distance": 0.0588,
+        "date": "2026-03-02",
+        "outlet": "bloomberg.com",
+        "title": "Hopes for Suez Canal Revival Dashed by New Middle East Conflict",
+        "snippet": "Hopes for Suez Canal Revival Dashed by New Middle East Conflict Shippers are once again avoiding the Suez Canal as the US and Israel are locked in a war with Iran, dashin",
+        "url": "https://www.bloomberg.com/news/articles/2026-03-02/hopes-for-suez-canal-revival-dashed-by-new-middle-east-conflict",
+        "scores": {
+          "kinetic_focus": 0.3,
+          "humanitarian_focus": 0.1,
+          "diplomatic_focus": 0.1,
+          "economic_focus": 0.8,
+          "culpability_bias": 0.2
+        }
+      },
+      {
+        "cluster_id": 1,
+        "cluster_label": "Cluster 1: The Dissident/Resistance Wing",
+        "cluster_color": "#B65F6F",
+        "window_article_count": 25,
+        "distance": 0.1504,
+        "date": "2026-03-02",
+        "outlet": "bloomberg.com",
+        "title": "Iran Strikes Won\u2019t Succeed Without a Real Strategy",
+        "snippet": "Iran Strikes Won\u2019t Succeed Without a Real Strategy The president has a long history with Iran: pulling out of the nuclear deal negotiated by his predecessor in 2018, kill",
+        "url": "https://www.bloomberg.com/opinion/articles/2026-03-02/iran-strikes-us-attack-won-t-succeed-without-a-real-strategy",
+        "scores": {
+          "kinetic_focus": 0.8,
+          "humanitarian_focus": 0.1,
+          "diplomatic_focus": 0.3,
+          "economic_focus": 0.0,
+          "culpability_bias": 0.6
+        }
+      },
+      {
+        "cluster_id": 2,
+        "cluster_label": "Cluster 2: The Diplomatic/Humanitarian Focus",
+        "cluster_color": "#4E6FAE",
+        "window_article_count": 12,
+        "distance": 0.2428,
+        "date": "2026-03-01",
+        "outlet": "foxnews.com",
+        "title": "Khamenei\u2019s death opens uncertain chapter for Iran\u2019s entrenched theocracy",
+        "snippet": "Iran entered a new chapter Saturday after Supreme Leader Ayatollah Ali Khamenei was killed, abruptly ending more than three decades of authoritarian rule and setting in m",
+        "url": "https://www.foxnews.com/world/khameneis-death-opens-uncertain-chapter-irans-entrenched-theocracy",
+        "scores": {
+          "kinetic_focus": 0.4,
+          "humanitarian_focus": 0.1,
+          "diplomatic_focus": 0.3,
+          "economic_focus": 0.1,
+          "culpability_bias": 0.5
+        }
+      },
+      {
+        "cluster_id": 0,
+        "cluster_label": "Cluster 0: The Mainstream Center",
+        "cluster_color": "#7A5BA6",
+        "window_article_count": 9,
+        "distance": 0.2683,
+        "date": "2026-03-02",
+        "outlet": "bloomberg.com",
+        "title": "Trump Pushes for Iran Leadership Change as Tehran Stays Defiant",
+        "snippet": "Trump Says Iran Attacks May Last Weeks With Tehran Defiant US President Donald Trump said the bombing campaign against Iran could last for weeks and called on the nation\u2019",
+        "url": "https://www.bloomberg.com/news/articles/2026-03-02/trump-pushes-for-iran-leadership-change-as-tehran-stays-defiant",
+        "scores": {
+          "kinetic_focus": 0.6,
+          "humanitarian_focus": 0.1,
+          "diplomatic_focus": 0.3,
+          "economic_focus": 0.7,
+          "culpability_bias": 0.5
+        }
+      },
+      {
+        "cluster_id": 4,
+        "cluster_label": "Cluster 4: The Military/Right-Wing Faction",
+        "cluster_color": "#B88A3D",
+        "window_article_count": 2,
+        "distance": 0.4378,
+        "date": "2026-02-28",
+        "outlet": "npr.org",
+        "title": "Trump says he is 'not happy' with the Iran nuclear talks but indicates he'll give them more time",
+        "snippet": "Trump says he is 'not happy' with the Iran nuclear talks but indicates he'll give them more time TEL AVIV, Israel \u2014 U.S. President Donald Trump said Friday he's \"not happ",
+        "url": "https://www.npr.org/2026/02/28/nx-s1-5730151/trump-iran-nuclear-talks",
+        "scores": {
+          "kinetic_focus": 0.6,
+          "humanitarian_focus": 0.4,
+          "diplomatic_focus": 0.7,
+          "economic_focus": 0.1,
+          "culpability_bias": 0.5
+        }
+      }
+    ]
+  },
+  {
+    "id": "oil-breaks-100",
+    "date": "2026-03-08",
+    "label": "Oil Breaks $100",
+    "description": "Crude oil surpasses $100 a barrel as the war disrupts production and shipping. A humanitarian co-spike \u2014 civilian suffering and market shock arrive simultaneously.",
+    "divergence_note": "AP leads with succession crisis in Tehran (culpability frame). Reuters covers a Lebanese civilian displacement story (humanitarian). Two outlets, same day, opposite frames.",
+    "window_days": 2,
+    "clusters": [
+      {
+        "cluster_id": 4,
+        "cluster_label": "Cluster 4: The Military/Right-Wing Faction",
+        "cluster_color": "#B88A3D",
+        "window_article_count": 7,
+        "distance": 0.136,
+        "date": "2026-03-08",
+        "outlet": "nytimes.com",
+        "title": "Americans Struggle to Evacuate the Middle East a Week After Strikes",
+        "snippet": "new video loaded: Americans Struggle to Evacuate the Middle East a Week After Strikes transcript Americans Struggle to Evacuate the Middle East a Week After Strikes One w",
+        "url": "https://www.nytimes.com/video/world/middleeast/100000010759942/middle-east-americans-stranded-airlines.html",
+        "scores": {
+          "kinetic_focus": 0.3,
+          "humanitarian_focus": 0.7,
+          "diplomatic_focus": 0.4,
+          "economic_focus": 0.0,
+          "culpability_bias": 0.6
+        }
+      },
+      {
+        "cluster_id": 2,
+        "cluster_label": "Cluster 2: The Diplomatic/Humanitarian Focus",
+        "cluster_color": "#4E6FAE",
+        "window_article_count": 11,
+        "distance": 0.1536,
+        "date": "2026-03-07",
+        "outlet": "nbcnews.com",
+        "title": "Iran's president rejects unconditional surrender",
+        "snippet": "IE 11 is not supported. For an optimal experience visit our site on another browser. UP NEXT Artemis II crew tells NBC News what sleep is like in space 01:03Artemis II cr",
+        "url": "https://www.nbcnews.com/video/shorts/iran-s-president-rejects-unconditional-surrender-258896453717",
+        "scores": {
+          "kinetic_focus": 0.4,
+          "humanitarian_focus": 0.1,
+          "diplomatic_focus": 0.3,
+          "economic_focus": 0.1,
+          "culpability_bias": 0.3
+        }
+      },
+      {
+        "cluster_id": 1,
+        "cluster_label": "Cluster 1: The Dissident/Resistance Wing",
+        "cluster_color": "#B65F6F",
+        "window_article_count": 9,
+        "distance": 0.1827,
+        "date": "2026-03-06",
+        "outlet": "nytimes.com",
+        "title": "Iran War Pulls New Countries Into Conflict",
+        "snippet": "new video loaded: Iran War Pulls New Countries Into Conflict transcript transcript Iran War Pulls New Countries Into Conflict The conflict between Iran, Israel and the Un",
+        "url": "https://www.nytimes.com/video/world/middleeast/100000010755847/europe-iran-defense-uk-italy.html",
+        "scores": {
+          "kinetic_focus": 0.8,
+          "humanitarian_focus": 0.1,
+          "diplomatic_focus": 0.3,
+          "economic_focus": 0.1,
+          "culpability_bias": 0.5
+        }
+      },
+      {
+        "cluster_id": 0,
+        "cluster_label": "Cluster 0: The Mainstream Center",
+        "cluster_color": "#7A5BA6",
+        "window_article_count": 9,
+        "distance": 0.2619,
+        "date": "2026-03-10",
+        "outlet": "cnn.com",
+        "title": "Live updates: Iran\u2019s next supreme leader is named as oil prices soar",
+        "snippet": "What we covered here \u2022 Focus on strait: The US military said it destroyed Iranian naval ships \u2014 including 16 minelayers \u2014 near the Strait of Hormuz. Sources told CNN earl",
+        "url": "https://www.cnn.com/world/live-news/iran-war-us-israel-trump-03-10-26",
+        "scores": {
+          "kinetic_focus": 0.8,
+          "humanitarian_focus": 0.1,
+          "diplomatic_focus": 0.4,
+          "economic_focus": 0.7,
+          "culpability_bias": 0.6
+        }
+      },
+      {
+        "cluster_id": 3,
+        "cluster_label": "Cluster 3: The Economic Lens",
+        "cluster_color": "#2F7F7B",
+        "window_article_count": 3,
+        "distance": 0.3046,
+        "date": "2026-03-09",
+        "outlet": "npr.org",
+        "title": "Energy analyst discusses how high Iran war could drive oil prices",
+        "snippet": "Energy analyst discusses how high Iran war could drive oil prices Energy analyst discusses how high Iran war could drive oil prices NPR's Michel Martin asks energy indust",
+        "url": "https://www.npr.org/2026/03/09/nx-s1-5739275/energy-analyst-discusses-how-high-iran-war-could-drive-oil-prices",
+        "scores": {
+          "kinetic_focus": 0.1,
+          "humanitarian_focus": 0.1,
+          "diplomatic_focus": 0.3,
+          "economic_focus": 0.9,
+          "culpability_bias": 0.2
+        }
+      }
+    ]
+  },
+  {
+    "id": "saudi-base-attack",
+    "date": "2026-03-27",
+    "label": "Escalation",
+    "description": "Iran hits Prince Sultan Air Base with 6 ballistic missiles and 29 drones, wounding 15 US troops and destroying an E-3 Sentry AWACS. Happens the day after Trump declared Iran\u2019s military \u201cneutralized.\u201d",
+    "divergence_note": "One month into the war, AP frames the strike through domestic political division (CPAC conservatives split on the war). International outlets had no same-day coverage in this dataset.",
+    "window_days": 2,
+    "clusters": [
+      {
+        "cluster_id": 3,
+        "cluster_label": "Cluster 3: The Economic Lens",
+        "cluster_color": "#2F7F7B",
+        "window_article_count": 2,
+        "distance": 0.2109,
+        "date": "2026-03-25",
+        "outlet": "nytimes.com",
+        "title": "How Kharg Island May Change the Trajectory of the Iran War",
+        "snippet": "new video loaded: How Kharg Island May Change the Trajectory of the Iran War How Kharg Island May Change the Trajectory of the Iran War Kharg Island exports 90 percent of",
+        "url": "https://www.nytimes.com/video/business/economy/100000010796199/how-kharg-island-may-change-the-trajectory-of-the-iran-war.html",
+        "scores": {
+          "kinetic_focus": 0.3,
+          "humanitarian_focus": 0.0,
+          "diplomatic_focus": 0.0,
+          "economic_focus": 0.8,
+          "culpability_bias": 0.1
+        }
+      },
+      {
+        "cluster_id": 0,
+        "cluster_label": "Cluster 0: The Mainstream Center",
+        "cluster_color": "#7A5BA6",
+        "window_article_count": 4,
+        "distance": 0.249,
+        "date": "2026-03-26",
+        "outlet": "cnn.com",
+        "title": "Trump says it\u2019s up to Iran to convince US to end the war",
+        "snippet": "Video Ad Feedback Trump says it's up to Iran to convince US to end the war At a Cabinet meeting, President Donald Trump said the US would continue its military campaign i",
+        "url": "https://www.cnn.com/2026/03/26/politics/video/trump-iran-deal-cabinet-meeting-digvid",
+        "scores": {
+          "kinetic_focus": 0.7,
+          "humanitarian_focus": 0.1,
+          "diplomatic_focus": 0.4,
+          "economic_focus": 0.5,
+          "culpability_bias": 0.6
+        }
+      },
+      {
+        "cluster_id": 4,
+        "cluster_label": "Cluster 4: The Military/Right-Wing Faction",
+        "cluster_color": "#B88A3D",
+        "window_article_count": 2,
+        "distance": 0.333,
+        "date": "2026-03-25",
+        "outlet": "cnn.com",
+        "title": "The Odds: American voters the War with Iran",
+        "snippet": "Video Ad Feedback The Odds: American voters & the War with Iran How do Americans feel about President Trump and the war with Iran? CNN News Central's Sara Sidner and chie",
+        "url": "https://www.cnn.com/2026/03/25/politics/video/the-odds-american-voters-and-the-war-with-iran-cnc-kalpar",
+        "scores": {
+          "kinetic_focus": 0.3,
+          "humanitarian_focus": 0.7,
+          "diplomatic_focus": 0.1,
+          "economic_focus": 0.0,
+          "culpability_bias": 0.6
+        }
+      },
+      {
+        "cluster_id": 2,
+        "cluster_label": "Cluster 2: The Diplomatic/Humanitarian Focus",
+        "cluster_color": "#4E6FAE",
+        "window_article_count": 5,
+        "distance": 0.3504,
+        "date": "2026-03-25",
+        "outlet": "foxnews.com",
+        "title": "Fox News Poll: Voters oppose action in Iran but give US military positive marks",
+        "snippet": "Voters are split on what role the United States should play in the world, while attitudes on the military action in Iran reflect sharp partisanship, according to a new Fo",
+        "url": "https://www.foxnews.com/politics/fox-news-poll-voters-oppose-action-iran-give-u-s-military-positive-marks",
+        "scores": {
+          "kinetic_focus": 0.2,
+          "humanitarian_focus": 0.1,
+          "diplomatic_focus": 0.1,
+          "economic_focus": 0.2,
+          "culpability_bias": 0.1
+        }
+      }
+    ]
+  }
+]

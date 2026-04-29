@@ -1,11 +1,12 @@
 gsap.registerPlugin(ScrollTrigger);
 
 (async () => {
-    const [timeline, events, meta, usEvents] = await Promise.all([
+    const [timeline, events, meta, usEvents, eventClusterArticles] = await Promise.all([
     fetch("data/timeline.json").then(res => res.json()),
     fetch("data/events.json").then(res => res.json()),
     fetch("data/meta.json").then(res => res.json()),
     fetch("data/us_events.json").then(res => res.json()).catch(() => []),
+    fetch("data/event_cluster_articles.json").then(res => res.json()).catch(() => []),
 ]);
 
 // Tracks which outlet lines are currently hidden (toggled off by the legend).
@@ -176,7 +177,7 @@ function drawBand(data, bandY, key) {
         g.append('rect')
             .attr('x', x0).attr('y', bandY)
             .attr('width', Math.max(1, x1 - x0)).attr('height', BAND_H)
-            .attr('fill', DIM_COLORS[d[key]]).attr('opacity', 0.72);
+            .attr('fill', DIM_COLORS[d[key]]).attr('opacity', 1);
     });
 }
 
@@ -254,7 +255,7 @@ const CALLOUT_COLORS = Object.assign({
 const _ccStyle = document.createElement('style');
 _ccStyle.textContent = `
 #callout-panel{
-    position:absolute;top:52px;right:20px;width:268px;
+    position:absolute;top:112px;right:20px;width:268px;
     z-index:30;pointer-events:none;opacity:0;
     font-family:Georgia,serif;
 }
@@ -267,6 +268,7 @@ _ccStyle.textContent = `
 }
 .cc-event{
     font-size:11px;font-weight:700;color:#1a1a1a;
+    font-family:Roboto,sans-serif;
     text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px;
 }
 .cc-note{
@@ -287,6 +289,12 @@ _ccStyle.textContent = `
     line-height:1.4;margin-bottom:2px;
 }
 .cc-snip{font-size:9.5px;color:#aaa;line-height:1.4;font-family:Roboto,sans-serif;}
+.cc-meta{font-size:9px;color:#999;line-height:1.35;font-family:Roboto,sans-serif;margin-top:3px;}
+.cc-cluster{
+    display:inline-block;font-size:9.5px;font-weight:700;
+    font-family:Roboto,sans-serif;text-transform:uppercase;
+    letter-spacing:.04em;line-height:1.25;margin-bottom:5px;
+}
 `;
 document.head.appendChild(_ccStyle);
 
@@ -297,10 +305,62 @@ if (timelineInner) timelineInner.appendChild(calloutPanel);
 
 // Build a card for a given event + active dimension.
 // Handles two formats:
+//   us_event_cluster_articles.json → event-window articles closest to cluster centroids
 //   us_events.json  → evt.by_dim[dim]  (per-dimension headline lists)
 //   events.json     → evt.snippets     (shared headline list, fallback)
-function buildDimCard(evt, dim) {
+const useClusterArticleCards = (eventClusterArticles || []).length > 0;
+const clusterArticlesById = {};
+const clusterArticlesByDate = {};
+(eventClusterArticles || []).forEach(evt => {
+    if (evt.id) clusterArticlesById[evt.id] = evt;
+    if (evt.date) clusterArticlesByDate[evt.date] = evt;
+});
+
+function escapeHtml(value) {
+    return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
+function buildClusterArticleCard(evt, dim) {
+    const source = clusterArticlesById[evt.id] || clusterArticlesByDate[evt.date];
+    if (!useClusterArticleCards || !source || !source.clusters || source.clusters.length === 0) {
+        return null;
+    }
+
     const dimColor = DIM_PALETTE[dim] || '#4E79A7';
+    const dimLabel = DIM_DISPLAY[dim] || dim;
+    const clusters = source.clusters.slice(0, 3);
+    const clusterHTML = clusters.map(item => {
+        const clusterColor = item.cluster_color || '#999';
+        const clusterLabel = item.cluster_label || (
+            item.cluster_id != null ? `Cluster ${item.cluster_id}` : 'Cluster'
+        );
+        const outlet = CALLOUT_LABELS[item.outlet] || item.outlet;
+        const activeScore = item.scores && item.scores[dim] != null ? item.scores[dim].toFixed(2) : 'n/a';
+        return `<div class="cc-hl">
+            <div class="cc-cluster" style="color:${clusterColor}">${escapeHtml(clusterLabel)}</div>
+            <div class="cc-title">${escapeHtml(item.title)}</div>
+            <div class="cc-meta">${escapeHtml(outlet)} · ${escapeHtml(item.date)} · ${escapeHtml(dimLabel)} ${activeScore}</div>
+        </div>`;
+    }).join('');
+
+    return `<div class="cc-card" style="border-left-color:${dimColor}">
+        <div class="cc-event">${escapeHtml(source.label)}</div>
+        <div class="cc-note">Closest article examples to cluster centroids within ±${escapeHtml(source.window_days)} days of this event.</div>
+        ${clusterHTML}
+    </div>`;
+}
+
+function buildDimCard(evt, dim) {
+    const clusterCard = buildClusterArticleCard(evt, dim);
+    if (clusterCard) return clusterCard;
+
+    const dimColor = DIM_PALETTE[dim] || '#4E79A7';
+    const dimLabel = DIM_DISPLAY[dim] || dim;
     let items;
 
     if (evt.by_dim) {
@@ -317,11 +377,11 @@ function buildDimCard(evt, dim) {
     const hlHTML = items.map(s => {
         const bg  = CALLOUT_COLORS[s.outlet] || '#999';
         const lbl = CALLOUT_LABELS[s.outlet]  || s.outlet;
-        const snip = (s.snippet || '').replace(/\n/g, ' ').trim().substring(0, 120);
+        const scoreText = s.score != null ? ` ${Number(s.score).toFixed(2)}` : '';
         return `<div class="cc-hl">
             <span class="cc-badge" style="background:${bg}">${lbl}</span>
             <div class="cc-title">${s.title}</div>
-            <div class="cc-snip">${snip}…</div>
+            <div class="cc-meta">${lbl} · ${evt.date || ''} · ${dimLabel}${scoreText}</div>
         </div>`;
     }).join('');
 

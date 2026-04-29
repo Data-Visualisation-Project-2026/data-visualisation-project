@@ -1,0 +1,527 @@
+[
+  {
+    "id": "first-strikes",
+    "date": "2026-03-01",
+    "label": "Opening Strikes",
+    "description": "US-Israeli strikes hit Iran. Only AP is on the ground \u2014 kinetic framing peaks at 0.70, the highest single-day score in the dataset.",
+    "divergence_note": "Early framing is entirely US-centric. No Reuters, no BBC \u2014 a single editorial voice sets the initial narrative.",
+    "window_days": 2,
+    "clusters": [
+      {
+        "cluster_id": 0,
+        "cluster_label": "Cluster 0: The Mainstream Center",
+        "cluster_color": "#7A5BA6",
+        "window_article_count": 2,
+        "distance": 0.1779,
+        "date": "2026-03-03",
+        "outlet": "apnews.com",
+        "title": "Netanyahu takes a gamble on American support for Israel with the war against Iran",
+        "snippet": "Throughout his political career, Israeli Prime Minister Benjamin Netanyahu has steered his country along two pillars of foreign policy: an ironclad partnership with the U",
+        "url": "https://apnews.com/article/iran-war-netanyahu-trump-support-ef032c6370bd31294cab5641a57ba8af",
+        "scores": {
+          "kinetic_focus": 0.7,
+          "humanitarian_focus": 0.3,
+          "diplomatic_focus": 0.6,
+          "economic_focus": 0.5,
+          "culpability_bias": 0.6
+        }
+      },
+      {
+        "cluster_id": 3,
+        "cluster_label": "Cluster 3: The Economic Lens",
+        "cluster_color": "#2F7F7B",
+        "window_article_count": 1,
+        "distance": 0.2038,
+        "date": "2026-03-03",
+        "outlet": "apnews.com",
+        "title": "Iran attacks threaten US economy with more uncertainty around inflation, growth",
+        "snippet": "WASHINGTON (AP) \u2014 Oil prices jumped Tuesday for the second straight day and gas prices moved higher in the United States, underscoring the threat of rising inflation pose",
+        "url": "https://apnews.com/article/iran-economy-inflation-trump-b45192677b0751ec3550e363cdeb256a",
+        "scores": {
+          "kinetic_focus": 0.1,
+          "humanitarian_focus": 0.0,
+          "diplomatic_focus": 0.2,
+          "economic_focus": 0.9,
+          "culpability_bias": 0.1
+        }
+      },
+      {
+        "cluster_id": 1,
+        "cluster_label": "Cluster 1: The Dissident/Resistance Wing",
+        "cluster_color": "#B65F6F",
+        "window_article_count": 3,
+        "distance": 0.2109,
+        "date": "2026-03-02",
+        "outlet": "apnews.com",
+        "title": "Trump officials say Israel\u2019s plans helped lead the US into Iran war",
+        "snippet": "WASHINGTON (AP) \u2014 The Trump administration and its allies in Congress presented a shifting new justification Monday for the U.S. attack on Iran, with House Speaker Mike J",
+        "url": "https://apnews.com/article/congress-war-powers-trump-iran-68d78b2215cc6c021937859ce852e1f2",
+        "scores": {
+          "kinetic_focus": 0.6,
+          "humanitarian_focus": 0.2,
+          "diplomatic_focus": 0.4,
+          "economic_focus": 0.1,
+          "culpability_bias": 0.7
+        }
+      },
+      {
+        "cluster_id": 2,
+        "cluster_label": "Cluster 2: The Diplomatic/Humanitarian Focus",
+        "cluster_color": "#4E6FAE",
+        "window_article_count": 1,
+        "distance": 0.3326,
+        "date": "2026-03-03",
+        "outlet": "apnews.com",
+        "title": "War with Iran strains the US-UK relationship as Starmer and Trump disagree",
+        "snippet": "LONDON (AP) \u2014 Keir Starmer has never had a bad word to say in public about Donald Trump. That is not being reciprocated now as the American president lambasts the British",
+        "url": "https://apnews.com/article/trump-starmer-iran-war-disagreement-fead317c818151d52ec249c8c21fee0b",
+        "scores": {
+          "kinetic_focus": 0.4,
+          "humanitarian_focus": 0.1,
+          "diplomatic_focus": 0.7,
+          "economic_focus": 0.1,
+          "culpability_bias": 0.5
+        }
+      },
+      {
+        "cluster_id": 4,
+        "cluster_label": "Cluster 4: The Military/Right-Wing Faction",
+        "cluster_color": "#B88A3D",
+        "window_article_count": 1,
+        "distance": 0.4228,
+        "date": "2026-03-03",
+        "outlet": "apnews.com",
+        "title": "Tensions flare as lawmakers question Iran war\u2019s costs, risks and strategy",
+        "snippet": "WASHINGTON (AP) \u2014 Tensions flared as questions mounted at the U.S. Capitol on Tuesday over the Trump administration\u2019s shifting rationale for war with Iran as lawmakers de",
+        "url": "https://apnews.com/article/iran-war-marco-rubio-middle-east-9b9dfac9c40c8cf171e229e0a0a6980f",
+        "scores": {
+          "kinetic_focus": 0.6,
+          "humanitarian_focus": 0.4,
+          "diplomatic_focus": 0.7,
+          "economic_focus": 0.2,
+          "culpability_bias": 0.5
+        }
+      }
+    ]
+  },
+  {
+    "id": "oil-breaks-100",
+    "date": "2026-03-08",
+    "label": "Oil Breaks $100",
+    "description": "Crude oil surpasses $100 a barrel as the war disrupts production and shipping. A humanitarian co-spike \u2014 civilian suffering and market shock arrive simultaneously.",
+    "divergence_note": "AP leads with succession crisis in Tehran (culpability frame). Reuters covers a Lebanese civilian displacement story (humanitarian). Two outlets, same day, opposite frames.",
+    "window_days": 2,
+    "clusters": [
+      {
+        "cluster_id": 3,
+        "cluster_label": "Cluster 3: The Economic Lens",
+        "cluster_color": "#2F7F7B",
+        "window_article_count": 8,
+        "distance": 0.1151,
+        "date": "2026-03-09",
+        "outlet": "apnews.com",
+        "title": "How the Iran war and surging oil prices are affecting consumers at the gas pump and beyond",
+        "snippet": "NEW YORK (AP) \u2014 As the war in Iran ratchets up, the price of crude oil has been swinging sharply. Consumers are already feeling the effects of the war and its destabilizi",
+        "url": "https://apnews.com/article/iran-war-oil-prices-gasoline-economy-consumers-a5b47c09f83406adf2a00616382003f6",
+        "scores": {
+          "kinetic_focus": 0.1,
+          "humanitarian_focus": 0.2,
+          "diplomatic_focus": 0.3,
+          "economic_focus": 0.9,
+          "culpability_bias": 0.2
+        }
+      },
+      {
+        "cluster_id": 0,
+        "cluster_label": "Cluster 0: The Mainstream Center",
+        "cluster_color": "#7A5BA6",
+        "window_article_count": 6,
+        "distance": 0.1282,
+        "date": "2026-03-08",
+        "outlet": "apnews.com",
+        "title": "Russia sits back as the Iran war escalates, expecting long-term gains",
+        "snippet": "\u25b6 Follow AP\u2019s live updates on the Iran war MOSCOW (AP) \u2014 As U.S. and Israeli missiles and bombs rain on Iran, Russia has responded with words of indignation but no visibl",
+        "url": "https://apnews.com/article/russia-iran-war-putin-ukraine-oil-8a6af4989692d66a1e5bed1bc1922efa",
+        "scores": {
+          "kinetic_focus": 0.7,
+          "humanitarian_focus": 0.3,
+          "diplomatic_focus": 0.5,
+          "economic_focus": 0.7,
+          "culpability_bias": 0.6
+        }
+      },
+      {
+        "cluster_id": 1,
+        "cluster_label": "Cluster 1: The Dissident/Resistance Wing",
+        "cluster_color": "#B65F6F",
+        "window_article_count": 5,
+        "distance": 0.1857,
+        "date": "2026-03-07",
+        "outlet": "apnews.com",
+        "title": "Trump administration and Democrats at odds over risk to US weapons stockpiles from Iran war",
+        "snippet": "WASHINGTON (AP) \u2014 The U.S. and Israeli strikes on Iran have raised concerns among Democrats and others about diminishing American stockpiles of certain weapons, illustrat",
+        "url": "https://apnews.com/article/iran-us-weapons-stockpiles-interceptors-patriots-thaad-006d6294441fb2338463f6260e1a9256",
+        "scores": {
+          "kinetic_focus": 0.8,
+          "humanitarian_focus": 0.1,
+          "diplomatic_focus": 0.2,
+          "economic_focus": 0.1,
+          "culpability_bias": 0.6
+        }
+      },
+      {
+        "cluster_id": 4,
+        "cluster_label": "Cluster 4: The Military/Right-Wing Faction",
+        "cluster_color": "#B88A3D",
+        "window_article_count": 4,
+        "distance": 0.4225,
+        "date": "2026-03-10",
+        "outlet": "apnews.com",
+        "title": "Iran says skier deeply disappointed at missing Paralympics because of war",
+        "snippet": "CORTINA D\u2019AMPEZZO, Italy (AP) \u2014 Iran\u2019s National Paralympic Committee has called it \u201cheartbreaking\u201d that cross-country skier Aboulfazl Khatibi had to withdraw from the Win",
+        "url": "https://apnews.com/article/milan-cortina-paralympics-iran-7e54f06d356f9e24ea71f1cc1bbe2942",
+        "scores": {
+          "kinetic_focus": 0.1,
+          "humanitarian_focus": 0.7,
+          "diplomatic_focus": 0.5,
+          "economic_focus": 0.0,
+          "culpability_bias": 0.3
+        }
+      },
+      {
+        "cluster_id": 2,
+        "cluster_label": "Cluster 2: The Diplomatic/Humanitarian Focus",
+        "cluster_color": "#4E6FAE",
+        "window_article_count": 2,
+        "distance": 0.4358,
+        "date": "2026-03-07",
+        "outlet": "apnews.com",
+        "title": "State actors are behind much of the visual misinformation about the Iran war",
+        "snippet": "As attacks spread after the bombing of Iran by U.S. and Israeli forces, a video circulated widely of crowds peering up at fire, smoke and debris coming from the top of a ",
+        "url": "https://apnews.com/article/iran-war-images-misinformation-russia-israel-9e495017dc5c4bf24a0b6152863dbfb1",
+        "scores": {
+          "kinetic_focus": 0.1,
+          "humanitarian_focus": 0.1,
+          "diplomatic_focus": 0.1,
+          "economic_focus": 0.0,
+          "culpability_bias": 0.3
+        }
+      }
+    ]
+  },
+  {
+    "id": "saudi-base-attack",
+    "date": "2026-03-27",
+    "label": "Iran Strikes US Base in Saudi Arabia",
+    "description": "Iran hits Prince Sultan Air Base with 6 ballistic missiles and 29 drones, wounding 15 US troops and destroying an E-3 Sentry AWACS. Happens the day after Trump declared Iran\u2019s military \u201cneutralized.\u201d",
+    "divergence_note": "One month into the war, AP frames the strike through domestic political division (CPAC conservatives split on the war). International outlets had no same-day coverage in this dataset.",
+    "window_days": 2,
+    "clusters": [
+      {
+        "cluster_id": 3,
+        "cluster_label": "Cluster 3: The Economic Lens",
+        "cluster_color": "#2F7F7B",
+        "window_article_count": 8,
+        "distance": 0.1228,
+        "date": "2026-03-27",
+        "outlet": "apnews.com",
+        "title": "Wall Street drops again to close its 5th straight losing week and its worst since the Iran war",
+        "snippet": "NEW YORK (AP) \u2014 U.S. stocks deepened their drops Friday as Wall Street finished off a fifth straight losing week, its longest such streak in nearly four years. The S&P 50",
+        "url": "https://apnews.com/article/stock-markets-trump-iran-war-894e6adadff8cb4be04b05fce819461a",
+        "scores": {
+          "kinetic_focus": 0.2,
+          "humanitarian_focus": 0.1,
+          "diplomatic_focus": 0.3,
+          "economic_focus": 0.9,
+          "culpability_bias": 0.2
+        }
+      },
+      {
+        "cluster_id": 0,
+        "cluster_label": "Cluster 0: The Mainstream Center",
+        "cluster_color": "#7A5BA6",
+        "window_article_count": 8,
+        "distance": 0.1345,
+        "date": "2026-03-28",
+        "outlet": "apnews.com",
+        "title": "Zelenskyy visits Gulf Arab states to talk drone defense and seek strategic ties",
+        "snippet": "KYIV, Ukraine (AP) \u2014 Ukrainian President Volodymyr Zelenskyy on Saturday made unannounced visits to the United Arab Emirates and Qatar, as Ukraine seeks to use its drone ",
+        "url": "https://apnews.com/article/russia-ukraine-war-odesa-drones-zelenskyy-gulf-5d520d03324170efbfb7f75ca6f2492e",
+        "scores": {
+          "kinetic_focus": 0.6,
+          "humanitarian_focus": 0.4,
+          "diplomatic_focus": 0.5,
+          "economic_focus": 0.5,
+          "culpability_bias": 0.6
+        }
+      },
+      {
+        "cluster_id": 1,
+        "cluster_label": "Cluster 1: The Dissident/Resistance Wing",
+        "cluster_color": "#B65F6F",
+        "window_article_count": 1,
+        "distance": 0.2771,
+        "date": "2026-03-28",
+        "outlet": "apnews.com",
+        "title": "One month into Iran war, some Trump objectives are unfulfilled as he looks to wind down the conflict",
+        "snippet": "WASHINGTON (AP) \u2014 President Donald Trump has listed five objectives that the U.S. wants to achieve before ending its war with Iran. Now, one month into the conflict, he h",
+        "url": "https://apnews.com/article/trump-iran-objectives-one-month-1a32141f5ca2104af78625b3aa277421",
+        "scores": {
+          "kinetic_focus": 0.8,
+          "humanitarian_focus": 0.1,
+          "diplomatic_focus": 0.4,
+          "economic_focus": 0.3,
+          "culpability_bias": 0.7
+        }
+      },
+      {
+        "cluster_id": 2,
+        "cluster_label": "Cluster 2: The Diplomatic/Humanitarian Focus",
+        "cluster_color": "#4E6FAE",
+        "window_article_count": 5,
+        "distance": 0.3503,
+        "date": "2026-03-28",
+        "outlet": "apnews.com",
+        "title": "Trump\u2019s conflicting messages sow confusion over the Iran war",
+        "snippet": "WASHINGTON (AP) \u2014 President Donald Trump says the United States is winning the war with Iran even as thousands of additional American troops deploy to the Middle East. He",
+        "url": "https://apnews.com/article/trump-iran-war-conflicting-messages-f9269cc4fe1cee914501b68ec5b6c217",
+        "scores": {
+          "kinetic_focus": 0.4,
+          "humanitarian_focus": 0.1,
+          "diplomatic_focus": 0.3,
+          "economic_focus": 0.3,
+          "culpability_bias": 0.6
+        }
+      },
+      {
+        "cluster_id": 4,
+        "cluster_label": "Cluster 4: The Military/Right-Wing Faction",
+        "cluster_color": "#B88A3D",
+        "window_article_count": 4,
+        "distance": 0.4014,
+        "date": "2026-03-29",
+        "outlet": "apnews.com",
+        "title": "Jerusalem heads into a subdued Passover and Easter under the shadow of the Iran war",
+        "snippet": "JERUSALEM (AP) \u2014 Jerusalem\u2019s major holy sites are shuttered and families are dejected and exhausted ahead of Passover and Easter as the Iran war enters its fifth week. Th",
+        "url": "https://apnews.com/article/israel-iran-war-easter-passover-jerusalem-83dd39fc7f931970230542339cd1b827",
+        "scores": {
+          "kinetic_focus": 0.4,
+          "humanitarian_focus": 0.6,
+          "diplomatic_focus": 0.1,
+          "economic_focus": 0.3,
+          "culpability_bias": 0.5
+        }
+      }
+    ]
+  },
+  {
+    "id": "escalation-returns",
+    "date": "2026-04-05",
+    "label": "Escalation",
+    "description": "A second kinetic surge. Reuters spikes to 0.85 kinetic. BBC drops to nearly zero on kinetic and humanitarian \u2014 and pivots to pure economic framing (0.90). AP stays in the middle.",
+    "divergence_note": "Biggest kinetic spread in the dataset (0.85 gap between Reuters and BBC). The same escalation produces opposite editorial instincts: Reuters goes to war, BBC goes to markets.",
+    "window_days": 2,
+    "clusters": [
+      {
+        "cluster_id": 3,
+        "cluster_label": "Cluster 3: The Economic Lens",
+        "cluster_color": "#2F7F7B",
+        "window_article_count": 6,
+        "distance": 0.1506,
+        "date": "2026-04-03",
+        "outlet": "apnews.com",
+        "title": "US employers added a surprisingly strong 178,000 jobs last month, rebounding from a weak February",
+        "snippet": "WASHINGTON (AP) \u2014 American employers added a surprisingly strong 178,000 new jobs last month, rebounding from a dismal February. And the unemployment rate dipped to 4.3%.",
+        "url": "https://apnews.com/article/jobs-unemployment-economy-trump-war-iran-oil-01c14a0e7ecbfb65925ba66c530f0834",
+        "scores": {
+          "kinetic_focus": 0.1,
+          "humanitarian_focus": 0.1,
+          "diplomatic_focus": 0.1,
+          "economic_focus": 0.8,
+          "culpability_bias": 0.2
+        }
+      },
+      {
+        "cluster_id": 0,
+        "cluster_label": "Cluster 0: The Mainstream Center",
+        "cluster_color": "#7A5BA6",
+        "window_article_count": 7,
+        "distance": 0.248,
+        "date": "2026-04-05",
+        "outlet": "apnews.com",
+        "title": "A long Mideast war could take away from support for Ukraine, Zelenskyy tells the AP",
+        "snippet": "ISTANBUL (AP) \u2014 Ukrainian President Volodymyr Zelenskyy expressed concern that a prolonged U.S.-Israeli war on Iran could further erode America\u2019s support for Ukraine as W",
+        "url": "https://apnews.com/article/zelenskyy-russia-ukraine-iran-patriot-missiles-584e73848c0ca1008824c399b8026487",
+        "scores": {
+          "kinetic_focus": 0.6,
+          "humanitarian_focus": 0.4,
+          "diplomatic_focus": 0.7,
+          "economic_focus": 0.5,
+          "culpability_bias": 0.5
+        }
+      },
+      {
+        "cluster_id": 1,
+        "cluster_label": "Cluster 1: The Dissident/Resistance Wing",
+        "cluster_color": "#B65F6F",
+        "window_article_count": 3,
+        "distance": 0.2985,
+        "date": "2026-04-04",
+        "outlet": "apnews.com",
+        "title": "US military jets hit in Iran war are the first shot down by enemy fire in over 20 years",
+        "snippet": "WASHINGTON (AP) \u2014 Iran shooting down two American military jets marks an exceedingly rare assault for the U.S. that has not happened in more than 20 years and shows the I",
+        "url": "https://apnews.com/article/iran-war-fighter-jet-shot-down-trump-3a8b2d5b2cdaceb13bbb62c3f6526e71",
+        "scores": {
+          "kinetic_focus": 0.9,
+          "humanitarian_focus": 0.3,
+          "diplomatic_focus": 0.1,
+          "economic_focus": 0.2,
+          "culpability_bias": 0.7
+        }
+      },
+      {
+        "cluster_id": 4,
+        "cluster_label": "Cluster 4: The Military/Right-Wing Faction",
+        "cluster_color": "#B88A3D",
+        "window_article_count": 2,
+        "distance": 0.3204,
+        "date": "2026-04-05",
+        "outlet": "apnews.com",
+        "title": "Displaced by war, Lebanon\u2019s Christians mark Easter far from their homes and churches",
+        "snippet": "JDEIDEH, Lebanon (AP) \u2014 It was not how the Rev. Maroun Ghafari had envisioned this Holy Week \u2014 for years, he had held Easter sermons in his predominantly Christian villag",
+        "url": "https://apnews.com/article/lebanon-christians-easter-hezbollah-israel-war-936e2d8636610149ef1700f6fccdd7c4",
+        "scores": {
+          "kinetic_focus": 0.4,
+          "humanitarian_focus": 0.7,
+          "diplomatic_focus": 0.2,
+          "economic_focus": 0.0,
+          "culpability_bias": 0.5
+        }
+      },
+      {
+        "cluster_id": 2,
+        "cluster_label": "Cluster 2: The Diplomatic/Humanitarian Focus",
+        "cluster_color": "#4E6FAE",
+        "window_article_count": 3,
+        "distance": 0.3488,
+        "date": "2026-04-04",
+        "outlet": "apnews.com",
+        "title": "Trump\u2019s go-it-alone certainty confronts the uncertainties of war",
+        "snippet": "WASHINGTON (AP) \u2014 President Donald Trump did not equivocate in his first live address to Americans about the war in Iran. \u201cWe\u2019ve beaten and completely decimated Iran,\u201d he",
+        "url": "https://apnews.com/article/trump-iran-war-go-it-alone-approach-c5f6cba859417ad1a6997b422a6f9d43",
+        "scores": {
+          "kinetic_focus": 0.3,
+          "humanitarian_focus": 0.1,
+          "diplomatic_focus": 0.7,
+          "economic_focus": 0.4,
+          "culpability_bias": 0.5
+        }
+      }
+    ]
+  },
+  {
+    "id": "blame-question",
+    "date": "2026-04-08",
+    "label": "Ceasefire",
+    "description": "A two-week ceasefire brokered by Pakistan takes effect. Hormuz remains closed as Iran asserts control. AP leads with diplomatic framing (0.62), while culpability divergence between outlets remains high.",
+    "divergence_note": "Reuters focuses on economic fallout (Hormuz near standstill). AP covers European diplomatic pressure. BBC questions whether the US achieved its war objectives \u2014 three outlets, three entirely different ceasefire stories.",
+    "window_days": 2,
+    "clusters": [
+      {
+        "cluster_id": 3,
+        "cluster_label": "Cluster 3: The Economic Lens",
+        "cluster_color": "#2F7F7B",
+        "window_article_count": 10,
+        "distance": 0.1536,
+        "date": "2026-04-06",
+        "outlet": "apnews.com",
+        "title": "JPMorgan CEO Dimon: Iran war could reignite inflation and keep Fed rates higher for longer",
+        "snippet": "NEW YORK (AP) \u2014 JPMorgan Chase CEO Jamie Dimon warned in his annual shareholder letter that a \u201cresilient\u201d U.S. economy could face renewed inflation pressures if the war i",
+        "url": "https://apnews.com/article/jpmorgan-jamie-dimon-letter-banks-economy-iran-trump-3bc4432e146f23f33f039ef25cc00cf3",
+        "scores": {
+          "kinetic_focus": 0.1,
+          "humanitarian_focus": 0.1,
+          "diplomatic_focus": 0.1,
+          "economic_focus": 0.9,
+          "culpability_bias": 0.3
+        }
+      },
+      {
+        "cluster_id": 0,
+        "cluster_label": "Cluster 0: The Mainstream Center",
+        "cluster_color": "#7A5BA6",
+        "window_article_count": 8,
+        "distance": 0.232,
+        "date": "2026-04-10",
+        "outlet": "apnews.com",
+        "title": "Zelenskyy says Ukrainian forces shot down Shahed drones in Middle Eastern countries during Iran war",
+        "snippet": "KYIV, Ukraine (AP) \u2014 Ukrainian military personnel have shot down Iranian-designed Shahed drones in multiple Middle Eastern countries during the Iran war, President Volody",
+        "url": "https://apnews.com/article/ukraine-zelenskyy-shahed-drones-iran-russia-war-4a5a6e01f0377a20404ab29093e69f12",
+        "scores": {
+          "kinetic_focus": 0.6,
+          "humanitarian_focus": 0.3,
+          "diplomatic_focus": 0.7,
+          "economic_focus": 0.6,
+          "culpability_bias": 0.5
+        }
+      },
+      {
+        "cluster_id": 2,
+        "cluster_label": "Cluster 2: The Diplomatic/Humanitarian Focus",
+        "cluster_color": "#4E6FAE",
+        "window_article_count": 10,
+        "distance": 0.2631,
+        "date": "2026-04-10",
+        "outlet": "apnews.com",
+        "title": "Trump\u2019s tenuous Iran exit plan isn\u2019t healing Republican rifts exposed by the war",
+        "snippet": "WASHINGTON (AP) \u2014 President Donald Trump\u2019s search for an off-ramp from the war with Iran is getting bumpy inside his Republican Party. In the decade since Trump\u2019s \u201cAmeric",
+        "url": "https://apnews.com/article/trump-iran-republicans-election-2026-war-ceasefire-6fe581f139a851a2d2daec3fe5dbc8b2",
+        "scores": {
+          "kinetic_focus": 0.3,
+          "humanitarian_focus": 0.1,
+          "diplomatic_focus": 0.5,
+          "economic_focus": 0.4,
+          "culpability_bias": 0.5
+        }
+      },
+      {
+        "cluster_id": 1,
+        "cluster_label": "Cluster 1: The Dissident/Resistance Wing",
+        "cluster_color": "#B65F6F",
+        "window_article_count": 1,
+        "distance": 0.3061,
+        "date": "2026-04-07",
+        "outlet": "apnews.com",
+        "title": "Trump uses the language of annihilation to threaten Iran ahead of deadline",
+        "snippet": "WASHINGTON (AP) \u2014 The president who yearned for a Nobel Peace Prize and once reveled in the appearance of solving conflicts turned to the language of annihilation as he s",
+        "url": "https://apnews.com/article/trump-iran-threats-civilization-war-crimes-758eb5cd680d7d275c4e1c38b2e01e6d",
+        "scores": {
+          "kinetic_focus": 0.7,
+          "humanitarian_focus": 0.5,
+          "diplomatic_focus": 0.4,
+          "economic_focus": 0.2,
+          "culpability_bias": 0.6
+        }
+      },
+      {
+        "cluster_id": 4,
+        "cluster_label": "Cluster 4: The Military/Right-Wing Faction",
+        "cluster_color": "#B88A3D",
+        "window_article_count": 6,
+        "distance": 0.3564,
+        "date": "2026-04-10",
+        "outlet": "apnews.com",
+        "title": "Pope amplifies criticism of Iran war and says \u2018God does not bless any conflict\u2019",
+        "snippet": "ROME (AP) \u2014 Pope Leo XIV amplified his condemnation of the U.S.-Israeli war with Iran on Friday, saying that \u201cGod does not bless any conflict\u201d and certainly doesn\u2019t side ",
+        "url": "https://apnews.com/article/vatican-pope-leo-chaldean-trump-mideast-iran-720eea814712d1d859875f39661d599f",
+        "scores": {
+          "kinetic_focus": 0.2,
+          "humanitarian_focus": 0.6,
+          "diplomatic_focus": 0.7,
+          "economic_focus": 0.0,
+          "culpability_bias": 0.5
+        }
+      }
+    ]
+  }
+]
