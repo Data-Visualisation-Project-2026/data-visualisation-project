@@ -1,4 +1,5 @@
 import json
+from html import escape
 
 import pandas as pd
 import plotly.express as px
@@ -362,6 +363,232 @@ def make_intl_framing_band_chart(timeline_path):
         yaxis=dict(visible=False, range=[0, 1]),
         plot_bgcolor='white',
         paper_bgcolor='white',
+    )
+
+    return fig
+
+
+def make_stacked_dominant_framing_bars(
+    df,
+    score_cols,
+    timeline_path,
+    events_path,
+    us_articles_path,
+    intl_articles_path,
+):
+    """Compare dominant framing per day for US and non-US outlets in one stacked view."""
+    dim_colors = {
+        'kinetic_focus': '#4E79A7',
+        'humanitarian_focus': '#F28E2B',
+        'diplomatic_focus': '#76B7B2',
+        'economic_focus': '#59A14F',
+        'culpability_bias': '#E15759',
+    }
+    dim_labels = {
+        'kinetic_focus': 'Kinetic',
+        'humanitarian_focus': 'Humanitarian',
+        'diplomatic_focus': 'Diplomatic',
+        'economic_focus': 'Economic',
+        'culpability_bias': 'Culpability Bias',
+    }
+    dim_order = list(dim_colors)
+    dim_to_id = {dim: idx for idx, dim in enumerate(dim_order)}
+
+    us_daily = df.groupby(df['publish_date'].dt.normalize())[score_cols].mean()
+    us_dominant = us_daily.idxmax(axis=1).rename('dominant_dim').reset_index()
+    us_dominant = us_dominant.rename(columns={'publish_date': 'date'})
+
+    with open(timeline_path) as f:
+        timeline = json.load(f)
+
+    rows = []
+    intl_outlets = ['apnews.com', 'reuters.com', 'bbc.com', 'aljazeera.com']
+    for entry in timeline:
+        outlet_vals = [
+            entry['outlets'][outlet]
+            for outlet in intl_outlets
+            if outlet in entry['outlets'] and entry['outlets'][outlet]
+        ]
+        if not outlet_vals:
+            continue
+        avg = {
+            dim: sum(outlet[dim] for outlet in outlet_vals if outlet.get(dim) is not None) /
+                 max(1, sum(1 for outlet in outlet_vals if outlet.get(dim) is not None))
+            for dim in dim_order
+        }
+        avg['date'] = pd.Timestamp(entry['date'])
+        rows.append(avg)
+    intl_daily = pd.DataFrame(rows).set_index('date')
+    full_range = pd.date_range(intl_daily.index.min(), intl_daily.index.max(), freq='D')
+    intl_daily = intl_daily.reindex(full_range).ffill()
+    intl_dominant = intl_daily.idxmax(axis=1).rename('dominant_dim').reset_index()
+    intl_dominant = intl_dominant.rename(columns={'index': 'date'})
+
+    start = pd.Timestamp('2026-02-27')
+    end = pd.Timestamp('2026-04-20')
+    date_index = pd.date_range(start, end, freq='D')
+
+    def align_dominant(data):
+        aligned = data.set_index('date').reindex(date_index).ffill()
+        return aligned['dominant_dim'].tolist()
+
+    us_dims = align_dominant(us_dominant)
+    intl_dims = align_dominant(intl_dominant)
+
+    with open(events_path) as f:
+        events = json.load(f)
+    event_by_date = {
+        pd.Timestamp(event['date']).normalize(): event.get('label', '')
+        for event in events
+    }
+
+    with open(us_articles_path) as f:
+        us_article_events = json.load(f)
+    with open(intl_articles_path) as f:
+        intl_article_events = json.load(f)
+
+    outlet_labels = {
+        'apnews.com': 'AP News',
+        'reuters.com': 'Reuters',
+        'bbc.com': 'BBC',
+        'aljazeera.com': 'Al Jazeera',
+        'nytimes.com': 'New York Times',
+        'foxnews.com': 'Fox News',
+        'cnn.com': 'CNN',
+        'bloomberg.com': 'Bloomberg',
+        'npr.org': 'NPR',
+        'breitbart.com': 'Breitbart',
+        'nbcnews.com': 'NBC News',
+        'usatoday.com': 'USA Today',
+    }
+
+    def event_lookup(article_events):
+        lookup = {}
+        for event in article_events:
+            event_date = pd.Timestamp(event['date']).normalize()
+            window_days = int(event.get('window_days', 2))
+            for offset in range(-window_days, window_days + 1):
+                lookup[event_date + pd.Timedelta(days=offset)] = event
+        return lookup
+
+    us_events_by_window = event_lookup(us_article_events)
+    intl_events_by_window = event_lookup(intl_article_events)
+
+    def article_panel(group_name, dim, date, article_event):
+        frame_label = dim_labels.get(dim, '')
+        frame_color = dim_colors.get(dim, '#777777')
+        header = (
+            f'<span style="color:{frame_color};font-size:18px">▌</span> '
+            f'<b>{escape(group_name)}</b><br>'
+            f'{date:%b %d, %Y}<br>'
+            f'Dominant frame: {escape(frame_label)}'
+        )
+        if not article_event:
+            return f'{header}<br><span style="color:#999">No event panel for this date.</span>'
+
+        parts = [
+            header,
+            f'<br><b>Event: {escape(article_event.get("label", ""))}</b>',
+            '<br><span style="color:#777">Closest article examples to cluster centroids within '
+            f'±{escape(str(article_event.get("window_days", 2)))} days.</span>',
+        ]
+        for item in article_event.get('clusters', []):
+            outlet = outlet_labels.get(item.get('outlet'), item.get('outlet', ''))
+            score = item.get('scores', {}).get(dim)
+            score_text = f' · {escape(frame_label)} {score:.2f}' if score is not None else ''
+            parts.append(
+                '<br><br>'
+                f'<b>{escape(item.get("cluster_label", ""))}</b><br>'
+                f'{escape(item.get("title", ""))}<br>'
+                f'<span style="color:#888">{escape(outlet)} · {escape(item.get("date", ""))}{score_text}</span>'
+            )
+        return ''.join(parts)
+
+    z = [
+        [dim_to_id.get(dim) for dim in us_dims],
+        [dim_to_id.get(dim) for dim in intl_dims],
+    ]
+    customdata = [
+        [
+            article_panel('US outlets', dim, date, us_events_by_window.get(date))
+            for date, dim in zip(date_index, us_dims)
+        ],
+        [
+            article_panel('Non-US outlets', dim, date, intl_events_by_window.get(date))
+            for date, dim in zip(date_index, intl_dims)
+        ],
+    ]
+
+    colorscale = []
+    last_idx = len(dim_order) - 1
+    for idx, dim in enumerate(dim_order):
+        left = idx / last_idx if last_idx else 0
+        right = (idx + 0.999) / last_idx if last_idx else 1
+        colorscale.extend([[left, dim_colors[dim]], [min(right, 1), dim_colors[dim]]])
+
+    fig = go.Figure(
+        data=go.Heatmap(
+            x=date_index,
+            y=[1, 0],
+            z=z,
+            customdata=customdata,
+            colorscale=colorscale,
+            zmin=0,
+            zmax=last_idx,
+            showscale=False,
+            ygap=36,
+            hovertemplate='%{customdata}<extra></extra>',
+        )
+    )
+
+    for event_date, event_label in event_by_date.items():
+        fig.add_vline(
+            x=event_date,
+            line_width=1,
+            line_dash='dash',
+            line_color='rgba(70,70,70,0.55)',
+        )
+        fig.add_annotation(
+            x=event_date,
+            y=1.08,
+            xref='x',
+            yref='paper',
+            text=event_label,
+            showarrow=False,
+            xanchor='left',
+            yanchor='bottom',
+            font={'size': 10, 'color': 'rgba(60,60,60,0.9)'},
+        )
+
+    fig.update_layout(
+        height=360,
+        margin={'l': 115, 'r': 30, 't': 70, 'b': 55},
+        plot_bgcolor='white',
+        paper_bgcolor='white',
+        hovermode='x unified',
+        hoverlabel={
+            'bgcolor': 'rgba(255,255,255,0.98)',
+            'bordercolor': 'rgba(0,0,0,0.12)',
+            'font': {'family': 'Roboto, sans-serif', 'size': 11, 'color': '#263746'},
+            'align': 'left',
+        },
+        xaxis={
+            'type': 'date',
+            'range': [start, end],
+            'showgrid': False,
+            'tickvals': list(event_by_date),
+            'ticktext': [
+                f"{date.strftime('%b')} {date.day}"
+                for date in event_by_date
+            ],
+        },
+        yaxis={
+            'showgrid': False,
+            'tickmode': 'array',
+            'tickvals': [1, 0],
+            'ticktext': ['US outlets', 'Non-US outlets'],
+            'tickfont': {'size': 12, 'color': '#555555'},
+        },
     )
 
     return fig

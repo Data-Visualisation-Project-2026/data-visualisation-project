@@ -256,15 +256,16 @@ const _ccStyle = document.createElement('style');
 _ccStyle.textContent = `
 #callout-panel{
     position:absolute;top:112px;right:20px;width:268px;
-    z-index:30;pointer-events:none;opacity:0;
+    z-index:30;pointer-events:auto;opacity:0;
     font-family:Georgia,serif;
 }
 .cc-card{
     background:rgba(255,255,255,0.97);
-    border-left:3px solid #4E79A7;
     border-radius:3px;
     box-shadow:0 2px 16px rgba(0,0,0,0.12);
     padding:13px 15px 11px;
+    max-height:620px;
+    overflow-y:auto;
 }
 .cc-event{
     font-size:11px;font-weight:700;color:#1a1a1a;
@@ -331,9 +332,8 @@ function buildClusterArticleCard(evt, dim) {
         return null;
     }
 
-    const dimColor = DIM_PALETTE[dim] || '#4E79A7';
     const dimLabel = DIM_DISPLAY[dim] || dim;
-    const clusters = source.clusters.slice(0, 3);
+    const clusters = source.clusters;
     const clusterHTML = clusters.map(item => {
         const clusterColor = item.cluster_color || '#999';
         const clusterLabel = item.cluster_label || (
@@ -348,7 +348,7 @@ function buildClusterArticleCard(evt, dim) {
         </div>`;
     }).join('');
 
-    return `<div class="cc-card" style="border-left-color:${dimColor}">
+    return `<div class="cc-card">
         <div class="cc-event">${escapeHtml(source.label)}</div>
         <div class="cc-note">Closest article examples to cluster centroids within ±${escapeHtml(source.window_days)} days of this event.</div>
         ${clusterHTML}
@@ -359,7 +359,6 @@ function buildDimCard(evt, dim) {
     const clusterCard = buildClusterArticleCard(evt, dim);
     if (clusterCard) return clusterCard;
 
-    const dimColor = DIM_PALETTE[dim] || '#4E79A7';
     const dimLabel = DIM_DISPLAY[dim] || dim;
     let items;
 
@@ -386,7 +385,7 @@ function buildDimCard(evt, dim) {
     }).join('');
 
     const note = evt.divergence_note || evt.description || '';
-    return `<div class="cc-card" style="border-left-color:${dimColor}">
+    return `<div class="cc-card">
         <div class="cc-event">${evt.label}</div>
         ${note ? `<div class="cc-note">${note}</div>` : ''}
         ${hlHTML || '<div class="cc-snip" style="color:#ccc;font-style:italic">No coverage data for this period.</div>'}

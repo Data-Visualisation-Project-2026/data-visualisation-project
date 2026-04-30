@@ -5,10 +5,13 @@ from pathlib import Path
 import streamlit.components.v1 as components
 
 
+D3_TIMELINE_HEIGHT = 900
+
+
 def render_outlet_event_timeline():
     """Render the international outlet event timeline inside the Streamlit app."""
     html = _build_outlet_event_timeline_html()
-    components.html(html, height=700, scrolling=True)
+    components.html(html, height=D3_TIMELINE_HEIGHT, scrolling=True)
 
 
 def render_us_outlet_event_timeline():
@@ -17,7 +20,7 @@ def render_us_outlet_event_timeline():
         timeline_file='us_timeline.json',
         meta_file='us_meta.json',
     )
-    components.html(html, height=700, scrolling=True)
+    components.html(html, height=D3_TIMELINE_HEIGHT, scrolling=True)
 
 
 def render_outlet_event_timeline_lab():
@@ -27,7 +30,7 @@ def render_outlet_event_timeline_lab():
         meta_file='meta.json',
         js_file='main_pretext.js',
     )
-    components.html(html, height=700, scrolling=True)
+    components.html(html, height=D3_TIMELINE_HEIGHT, scrolling=True)
 
 
 def render_us_outlet_event_timeline_lab():
@@ -37,7 +40,7 @@ def render_us_outlet_event_timeline_lab():
         meta_file='us_meta.json',
         js_file='main_pretext.js',
     )
-    components.html(html, height=700, scrolling=True)
+    components.html(html, height=D3_TIMELINE_HEIGHT, scrolling=True)
 
 
 def _build_outlet_event_timeline_html(timeline_file='timeline.json', meta_file='meta.json', js_file='main.js'):
