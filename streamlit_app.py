@@ -30,6 +30,8 @@ from visualizations.dataset_overview import make_article_count_chart, make_gantt
 # Set up the Streamlit page and main title.
 st.set_page_config(layout='wide')
 
+DATA_DIR = Path(__file__).resolve().parent / 'data'
+
 
 CLUSTER_TEXT_COLORS = {
     0: '#7A5BA6',
@@ -100,7 +102,7 @@ def render_top_navigation(pages: list[str], active_page: str):
 def load_us_framing_chart_data():
     """Load only columns needed for the main US framing charts."""
     return pd.read_parquet(
-        'iran_war_media_framing_scores_clustered.parquet',
+        DATA_DIR / 'iran_war_media_framing_scores_clustered.parquet',
         columns=['indexed_date', 'media_name', *score_cols],
         engine='fastparquet',
     )
@@ -110,7 +112,7 @@ def load_us_framing_chart_data():
 def load_bigram_article_data():
     """Load only article text and cluster labels needed for bigram analysis."""
     return pd.read_parquet(
-        'iran_war_media_framing_scores_clustered.parquet',
+        DATA_DIR / 'iran_war_media_framing_scores_clustered.parquet',
         columns=['article_text', 'article_cluster'],
         engine='fastparquet',
     )
@@ -120,7 +122,7 @@ def load_bigram_article_data():
 def load_representative_article_data():
     """Load only columns needed to choose and display representative articles."""
     return pd.read_parquet(
-        'iran_war_media_framing_scores_clustered.parquet',
+        DATA_DIR / 'iran_war_media_framing_scores_clustered.parquet',
         columns=['article_cluster', 'title', 'media_name', *score_cols],
         engine='fastparquet',
     )
@@ -130,7 +132,7 @@ def load_representative_article_data():
 def load_outlet_heatmap_data():
     """Load only columns needed for the five-outlet heatmap."""
     return pd.read_parquet(
-        'iran_war_media_framing_scores2_clustered.parquet',
+        DATA_DIR / 'iran_war_media_framing_scores2_clustered.parquet',
         columns=['media_name', *score_cols],
         engine='fastparquet',
     )

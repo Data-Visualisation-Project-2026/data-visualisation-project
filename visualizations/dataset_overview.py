@@ -55,19 +55,20 @@ def _ticktext(sort_order: list, grey_names: set) -> list:
 
 
 def _load_data():
-    base = Path(__file__).parent.parent
+    base = Path(__file__).resolve().parent.parent
+    data_dir = base / "data"
     pq_root = pd.read_parquet(
-        base / "iran_war_media_framing_scores_clustered.parquet",
+        data_dir / "iran_war_media_framing_scores_clustered.parquet",
         columns=["indexed_date", "media_name"],
         engine="pyarrow",
     )
     pq_5 = pd.read_parquet(
-        base / "iran_war_media_framing_scores2_clustered.parquet",
+        data_dir / "iran_war_media_framing_scores2_clustered.parquet",
         columns=["indexed_date", "media_name", "url"],
         engine="pyarrow",
     )
     pq_avg = pd.read_parquet(
-        base / "iran_war_outlet_averages_clustered.parquet",
+        data_dir / "iran_war_outlet_averages_clustered.parquet",
         columns=["media_name", "media_cluster"],
         engine="pyarrow",
     )
@@ -76,7 +77,7 @@ def _load_data():
     pq_5["date"]    = pd.to_datetime(pq_5["indexed_date"].astype(str), errors="coerce")
 
     # pq_5 outlets (BBC, Al Jazeera, Reuters) have null indexed_date — fill from scraped_articles.csv
-    csv_path = base / "scraped_articles.csv"
+    csv_path = data_dir / "scraped_articles.csv"
     if csv_path.exists():
         csv_dates = pd.read_csv(csv_path, usecols=["url", "published_datetime"])
         csv_dates["csv_date"] = pd.to_datetime(

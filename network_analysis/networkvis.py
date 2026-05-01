@@ -10,9 +10,11 @@ import plotly.graph_objects as go
 from sklearn.decomposition import PCA
 from sklearn.neighbors import NearestNeighbors
 import networkx as nx
+from pathlib import Path
 
 # Load the clustered data
-df = pd.read_parquet('iran_war_outlet_averages_clustered.parquet')
+DATA_DIR = Path(__file__).resolve().parent.parent / 'data'
+df = pd.read_parquet(DATA_DIR / 'iran_war_outlet_averages_clustered.parquet')
 
 # Map Labels and Colors
 cluster_labels = {

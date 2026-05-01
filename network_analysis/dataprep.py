@@ -17,10 +17,13 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 import transformers
 transformers.logging.set_verbosity_error()
 import os
+from pathlib import Path
+
+DATA_DIR = Path(__file__).resolve().parent.parent / 'data'
 
 '''
 # Loading the data into a pandas DataFrame
-df = pd.read_csv('./data/mc-onlinenews-mediacloud-20260330180736-content.csv')
+df = pd.read_csv(DATA_DIR / 'mc-onlinenews-mediacloud-20260330180736-content.csv')
 df = df.dropna(subset=['title']).copy()
 
 # Because many of the articles scraped are not actually related to the Iran war, I am going to run a small sentence similarity model to find titles that are clearly related to the Iran war
@@ -49,10 +52,10 @@ df['negative_score'] = neg_scores
 threshold = 0.35
 df_relevant = df[(df['positive_score'] >= threshold) & (df['positive_score'] > df['negative_score'])]
 
-df_relevant.to_csv('./data/filtered_iran_articles.csv', index=False)
+df_relevant.to_csv(DATA_DIR / 'filtered_iran_articles.csv', index=False)
 '''
 '''
-df = pd.read_csv('./data/filtered_iran_articles.csv')
+df = pd.read_csv(DATA_DIR / 'filtered_iran_articles.csv')
 
 # Scraping all article texts from the DataFrame of articles relevant to Iran
 article_texts = []
@@ -75,11 +78,11 @@ df['article_text'] = article_texts
 
 df_clean = df.dropna(subset=['article_text'])
 
-df_clean.to_csv('./data/scraped_articles.csv', index=False)
+df_clean.to_csv(DATA_DIR / 'scraped_articles.csv', index=False)
 '''
 
 # Sampling 25 articles from sources which have at least 25 articles on the topic
-df = pd.read_csv('./data/scraped_articles2.csv')
+df = pd.read_csv(DATA_DIR / 'scraped_articles2.csv')
 #counts = df['media_name'].value_counts()
 
 #valid_outlets = counts[counts >= 25].index
@@ -87,7 +90,7 @@ df = pd.read_csv('./data/scraped_articles2.csv')
 
 #sampled_df = df_filtered.groupby('media_name').sample(n=25, random_state=5)
 
-checkpoint_path = './data/iran_war_backup_checkpoint2.csv'
+checkpoint_path = DATA_DIR / 'iran_war_backup_checkpoint2.csv'
 
 if os.path.exists(checkpoint_path):
     checkpoint_df = pd.read_csv(checkpoint_path)
@@ -206,7 +209,7 @@ for text in tqdm(remaining_df['article_text'], initial=completed_count, total=le
         for key, values_list in scores_data.items():
             temp_df[key] = values_list
             
-        temp_df.to_csv('./data/iran_war_backup_checkpoint2.csv', index=False)
+        temp_df.to_csv(checkpoint_path, index=False)
         tqdm.write(f">>> Checkpoint saved at {current_index} articles <<<")
 
 for key, values_list in scores_data.items():
@@ -215,7 +218,7 @@ for key, values_list in scores_data.items():
 
 #df_final = sampled_df.dropna(subset=['kinetic_focus', 'humanitarian_focus', 'diplomatic_focus', 'economic_focus', 'culpability_bias'])
 df_final = df.dropna(subset=['kinetic_focus', 'humanitarian_focus', 'diplomatic_focus', 'economic_focus', 'culpability_bias'])
-df_final.to_csv('iran_war_media_framing_scores2.csv', index=False)
-df_final.to_parquet('iran_war_media_framing_scores2.parquet', engine='pyarrow')
+df_final.to_csv(DATA_DIR / 'iran_war_media_framing_scores2.csv', index=False)
+df_final.to_parquet(DATA_DIR / 'iran_war_media_framing_scores2.parquet', engine='pyarrow')
 
-df_test = pd.read_parquet('iran_war_media_framing_scores2.parquet')
+df_test = pd.read_parquet(DATA_DIR / 'iran_war_media_framing_scores2.parquet')

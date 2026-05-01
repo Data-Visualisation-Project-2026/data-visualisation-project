@@ -7,10 +7,13 @@ Created on Tue Apr 21 23:12:44 2026
 
 import pandas as pd
 from sklearn.cluster import KMeans
+from pathlib import Path
+
+DATA_DIR = Path(__file__).resolve().parent.parent / 'data'
 
 # Read the Parquet Files
-df1 = pd.read_parquet('iran_war_media_framing_scores.parquet')
-df2 = pd.read_parquet('iran_war_media_framing_scores2.parquet')
+df1 = pd.read_parquet(DATA_DIR / 'iran_war_media_framing_scores.parquet')
+df2 = pd.read_parquet(DATA_DIR / 'iran_war_media_framing_scores2.parquet')
 
 # Clean and Align Headers
 df1 = df1.drop(columns=['pos_score', 'neg_score'], errors='ignore')
@@ -57,9 +60,9 @@ df_media['media_cluster'] = kmeans_media.fit_predict(df_media[features])
 df1_clustered = df_merged.iloc[:split_index].copy()
 df2_clustered = df_merged.iloc[split_index:].copy()
 
-df1_clustered.to_parquet('iran_war_media_framing_scores_clustered.parquet', engine='pyarrow')
-df2_clustered.to_parquet('iran_war_media_framing_scores2_clustered.parquet', engine='pyarrow')
+df1_clustered.to_parquet(DATA_DIR / 'iran_war_media_framing_scores_clustered.parquet', engine='pyarrow')
+df2_clustered.to_parquet(DATA_DIR / 'iran_war_media_framing_scores2_clustered.parquet', engine='pyarrow')
 
-df_media.to_parquet('iran_war_outlet_averages_clustered.parquet', engine='pyarrow')
+df_media.to_parquet(DATA_DIR / 'iran_war_outlet_averages_clustered.parquet', engine='pyarrow')
 
 print('Success')
