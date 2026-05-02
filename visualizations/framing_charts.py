@@ -594,6 +594,337 @@ def make_stacked_dominant_framing_bars(
     return fig
 
 
+def make_stacked_dominant_framing_comparison_html(
+    df,
+    score_cols,
+    timeline_path,
+    events_path,
+    us_articles_path,
+    intl_articles_path,
+):
+    """Build an interactive HTML comparison of dominant frames and event article panels."""
+    dim_colors = {
+        'kinetic_focus': '#4E79A7',
+        'humanitarian_focus': '#F28E2B',
+        'diplomatic_focus': '#76B7B2',
+        'economic_focus': '#59A14F',
+        'culpability_bias': '#E15759',
+    }
+    dim_labels = {
+        'kinetic_focus': 'Kinetic',
+        'humanitarian_focus': 'Humanitarian',
+        'diplomatic_focus': 'Diplomatic',
+        'economic_focus': 'Economic',
+        'culpability_bias': 'Culpability Bias',
+    }
+    outlet_labels = {
+        'apnews.com': 'AP News',
+        'reuters.com': 'Reuters',
+        'bbc.com': 'BBC',
+        'aljazeera.com': 'Al Jazeera',
+        'nytimes.com': 'New York Times',
+        'foxnews.com': 'Fox News',
+        'cnn.com': 'CNN',
+        'bloomberg.com': 'Bloomberg',
+        'npr.org': 'NPR',
+        'breitbart.com': 'Breitbart',
+        'nbcnews.com': 'NBC News',
+        'usatoday.com': 'USA Today',
+    }
+
+    start = pd.Timestamp('2026-02-27')
+    end = pd.Timestamp('2026-04-20')
+    date_index = pd.date_range(start, end, freq='D')
+
+    us_daily = df.groupby(df['publish_date'].dt.normalize())[score_cols].mean()
+    us_dominant = us_daily.idxmax(axis=1).rename('dominant_dim').reset_index()
+    us_dominant = us_dominant.rename(columns={'publish_date': 'date'})
+
+    with open(timeline_path) as f:
+        timeline = json.load(f)
+    intl_rows = []
+    intl_outlets = ['apnews.com', 'reuters.com', 'bbc.com', 'aljazeera.com']
+    for entry in timeline:
+        outlet_vals = [
+            entry['outlets'][outlet]
+            for outlet in intl_outlets
+            if outlet in entry['outlets'] and entry['outlets'][outlet]
+        ]
+        if not outlet_vals:
+            continue
+        avg = {
+            dim: sum(outlet[dim] for outlet in outlet_vals if outlet.get(dim) is not None) /
+                 max(1, sum(1 for outlet in outlet_vals if outlet.get(dim) is not None))
+            for dim in dim_colors
+        }
+        avg['date'] = pd.Timestamp(entry['date'])
+        intl_rows.append(avg)
+    intl_daily = pd.DataFrame(intl_rows).set_index('date')
+    intl_daily = intl_daily.reindex(pd.date_range(intl_daily.index.min(), intl_daily.index.max(), freq='D')).ffill()
+    intl_dominant = intl_daily.idxmax(axis=1).rename('dominant_dim').reset_index()
+    intl_dominant = intl_dominant.rename(columns={'index': 'date'})
+
+    def align_dominant(data):
+        return data.set_index('date').reindex(date_index).ffill()['dominant_dim'].tolist()
+
+    us_dims = align_dominant(us_dominant)
+    intl_dims = align_dominant(intl_dominant)
+
+    with open(events_path) as f:
+        events = json.load(f)
+    with open(us_articles_path) as f:
+        us_article_events = json.load(f)
+    with open(intl_articles_path) as f:
+        intl_article_events = json.load(f)
+
+    us_articles_by_id = {event.get('id'): event for event in us_article_events}
+    intl_articles_by_id = {event.get('id'): event for event in intl_article_events}
+    us_dim_by_date = {date.strftime('%Y-%m-%d'): dim for date, dim in zip(date_index, us_dims)}
+    intl_dim_by_date = {date.strftime('%Y-%m-%d'): dim for date, dim in zip(date_index, intl_dims)}
+
+    def bar_cells(dims):
+        cells = []
+        for date, dim in zip(date_index, dims):
+            label = dim_labels.get(dim, '')
+            cells.append(
+                '<div class="dominant-cell" '
+                f'style="background:{dim_colors.get(dim, "#ccc")};" '
+                f'title="{date:%b %d}: {escape(label)}"></div>'
+            )
+        return ''.join(cells)
+
+    def render_panel(group_name, article_event, dim):
+        frame_label = dim_labels.get(dim, '')
+        frame_color = dim_colors.get(dim, '#777')
+        if not article_event:
+            return (
+                f'<div class="event-panel" style="border-left-color:{frame_color};">'
+                f'<div class="panel-kicker">{escape(group_name)}</div>'
+                '<div class="panel-empty">No representative article panel for this event.</div>'
+                '</div>'
+            )
+
+        parts = [
+            f'<div class="event-panel" style="border-left-color:{frame_color};">',
+            f'<div class="panel-kicker">{escape(group_name)}</div>',
+            f'<div class="panel-frame">Dominant frame: {escape(frame_label)}</div>',
+            '<div class="panel-note">Closest article examples to cluster centroids within '
+            f'±{escape(str(article_event.get("window_days", 2)))} days.</div>',
+        ]
+        for item in article_event.get('clusters', []):
+            outlet = outlet_labels.get(item.get('outlet'), item.get('outlet', ''))
+            score = item.get('scores', {}).get(dim)
+            score_text = f' · {escape(frame_label)} {score:.2f}' if score is not None else ''
+            cluster_color = item.get('cluster_color', '#444444')
+            parts.extend([
+                '<div class="panel-article">',
+                f'<div class="panel-cluster" style="color:{escape(cluster_color)};">{escape(item.get("cluster_label", ""))}</div>',
+                f'<div class="panel-title">{escape(item.get("title", ""))}</div>',
+                f'<div class="panel-meta">{escape(outlet)} · {escape(item.get("date", ""))}{score_text}</div>',
+                '</div>',
+            ])
+        parts.append('</div>')
+        return ''.join(parts)
+
+    event_payload = {}
+    for event in events:
+        event_id = event.get('id')
+        event_date = pd.Timestamp(event['date'])
+        date_key = event_date.strftime('%Y-%m-%d')
+        us_dim = us_dim_by_date.get(date_key, 'kinetic_focus')
+        intl_dim = intl_dim_by_date.get(date_key, 'kinetic_focus')
+        event_payload[event_id] = {
+            'label': event.get('label', ''),
+            'date': event_date.strftime('%b %d, %Y'),
+            'usPanel': render_panel('US Media outlets', us_articles_by_id.get(event_id), us_dim),
+            'intlPanel': render_panel('Non-US Media outlets', intl_articles_by_id.get(event_id), intl_dim),
+        }
+
+    tickers = []
+    total_days = max(1, (end - start).days)
+    for event in events:
+        event_date = pd.Timestamp(event['date'])
+        left_pct = ((event_date - start).days / total_days) * 100
+        tickers.append(
+            '<button class="event-tick" '
+            f'style="left:{left_pct:.4f}%;" '
+            f'data-event-id="{escape(event.get("id", ""))}">'
+            f'<span>{escape(event.get("label", ""))}</span>'
+            '</button>'
+        )
+
+    initial_id = events[0].get('id') if events else ''
+    payload_json = json.dumps(event_payload).replace('</', '<\\/')
+
+    return f"""
+<div class="stacked-dominant-comparison">
+  <style>
+    .stacked-dominant-comparison {{
+      font-family: Roboto, Arial, sans-serif;
+      color: #263746;
+      padding: 8px 0 18px;
+    }}
+    .comparison-bars {{
+      position: relative;
+      margin: 42px 24px 22px 92px;
+      padding-top: 24px;
+    }}
+    .bar-row {{
+      display: grid;
+      grid-template-columns: repeat({len(date_index)}, 1fr);
+      height: 26px;
+      margin-bottom: 22px;
+      border-radius: 2px;
+      overflow: hidden;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06);
+    }}
+    .bar-label {{
+      position: absolute;
+      left: -92px;
+      width: 78px;
+      font-size: 11px;
+      color: #666;
+      text-align: right;
+      line-height: 26px;
+    }}
+    .bar-label.us {{ top: 24px; }}
+    .bar-label.intl {{ top: 72px; }}
+    .dominant-cell {{ min-width: 1px; }}
+    .event-tick {{
+      position: absolute;
+      top: 0;
+      height: 122px;
+      border: 0;
+      border-left: 1px dashed rgba(70,70,70,0.65);
+      background: transparent;
+      padding: 0;
+      cursor: pointer;
+    }}
+    .event-tick span {{
+      position: absolute;
+      top: -22px;
+      left: 6px;
+      white-space: nowrap;
+      font-size: 10px;
+      color: #555;
+      font-family: Roboto, Arial, sans-serif;
+    }}
+    .event-tick.active,
+    .event-tick:hover {{
+      border-left-color: #222;
+    }}
+    .comparison-event-title {{
+      margin: 0 24px 12px 92px;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: #1a1a1a;
+    }}
+    .comparison-panels {{
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 16px;
+      margin: 0 24px 0 92px;
+    }}
+    .event-panel {{
+      background: rgba(255,255,255,0.98);
+      border-left: 4px solid #999;
+      border-radius: 4px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+      padding: 14px 16px 12px;
+      max-height: 420px;
+      overflow-y: auto;
+    }}
+    .panel-kicker {{
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: .02em;
+      color: #1a1a1a;
+      margin-bottom: 6px;
+    }}
+    .panel-frame,
+    .panel-note,
+    .panel-meta {{
+      font-size: 10px;
+      color: #777;
+      line-height: 1.45;
+      margin-bottom: 6px;
+    }}
+    .panel-note {{
+      font-style: italic;
+      margin-bottom: 10px;
+    }}
+    .panel-article {{
+      border-top: 1px solid #f0f0f0;
+      padding: 9px 0 4px;
+    }}
+    .panel-article:first-of-type {{
+      border-top: none;
+    }}
+    .panel-cluster {{
+      font-size: 10px;
+      font-weight: 700;
+      font-family: Roboto, Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      margin-bottom: 4px;
+    }}
+    .panel-title {{
+      font-family: Georgia, serif;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.3;
+      color: #1a1a1a;
+      margin-bottom: 3px;
+    }}
+    .panel-empty {{
+      font-size: 11px;
+      color: #999;
+      font-style: italic;
+    }}
+  </style>
+  <div class="comparison-bars">
+    <div class="bar-label us">US outlets</div>
+    <div class="bar-label intl">Non-US outlets</div>
+    <div class="bar-row">{bar_cells(us_dims)}</div>
+    <div class="bar-row">{bar_cells(intl_dims)}</div>
+    {"".join(tickers)}
+  </div>
+  <div id="comparison-event-title" class="comparison-event-title"></div>
+  <div class="comparison-panels">
+    <div id="comparison-us-panel"></div>
+    <div id="comparison-intl-panel"></div>
+  </div>
+  <script>
+    const comparisonEvents = {payload_json};
+    const initialEventId = {json.dumps(initial_id)};
+    const titleEl = document.getElementById('comparison-event-title');
+    const usPanelEl = document.getElementById('comparison-us-panel');
+    const intlPanelEl = document.getElementById('comparison-intl-panel');
+    const ticks = Array.from(document.querySelectorAll('.event-tick'));
+
+    function showEvent(eventId) {{
+      const event = comparisonEvents[eventId];
+      if (!event) return;
+      titleEl.textContent = event.label + ' · ' + event.date;
+      usPanelEl.innerHTML = event.usPanel;
+      intlPanelEl.innerHTML = event.intlPanel;
+      ticks.forEach(tick => tick.classList.toggle('active', tick.dataset.eventId === eventId));
+    }}
+
+    ticks.forEach(tick => {{
+      tick.addEventListener('mouseenter', () => showEvent(tick.dataset.eventId));
+      tick.addEventListener('focus', () => showEvent(tick.dataset.eventId));
+      tick.addEventListener('click', () => showEvent(tick.dataset.eventId));
+    }});
+    showEvent(initialEventId);
+  </script>
+</div>
+"""
+
+
 def make_combined_aggregate_chart(df, score_cols, score_labels, timeline_path):
     """US (top) and international (bottom) aggregate as a shared-x subplot."""
     from plotly.subplots import make_subplots

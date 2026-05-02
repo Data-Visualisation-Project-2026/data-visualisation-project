@@ -16,7 +16,7 @@ from visualizations.framing_charts import (
     make_international_framing_chart,
     make_us_framing_band_chart,
     make_intl_framing_band_chart,
-    make_stacked_dominant_framing_bars,
+    make_stacked_dominant_framing_comparison_html,
 )
 from visualizations.text_analysis import (
     get_top_cluster_bigrams,
@@ -714,7 +714,7 @@ if page == 'Media framing':
         'This compact view stacks the daily dominant framing bars for US and non-US outlets. '
         'Hover near the event tick marks to compare which frame led each media group at the same moment.'
     )
-    stacked_band_chart = make_stacked_dominant_framing_bars(
+    stacked_comparison_html = make_stacked_dominant_framing_comparison_html(
         df,
         score_cols,
         'iran-war-framing/data/timeline.json',
@@ -722,12 +722,7 @@ if page == 'Media framing':
         'iran-war-framing/data/us_event_cluster_articles.json',
         'iran-war-framing/data/event_cluster_articles.json',
     )
-    st.plotly_chart(
-        stacked_band_chart,
-        use_container_width=True,
-        config={'displayModeBar': False},
-        key='stacked_dominant_framing_bars',
-    )
+    components.html(stacked_comparison_html, height=720, scrolling=True)
 
     render_next_page_button('Media Clusters')
 
