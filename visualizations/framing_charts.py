@@ -2,12 +2,12 @@ import json
 from html import escape
 
 import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
 
 
 def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimensions):
     """Create an interactive line chart showing average framing scores over time."""
+    import plotly.express as px
+
     # Aggregate each framing score by publication date.
     daily = df.groupby('publish_date')[score_cols].mean().reset_index()
 
@@ -129,6 +129,8 @@ def make_framing_over_time_chart(df, score_cols, score_labels, highlighted_dimen
 
 def make_international_framing_chart(timeline_path, highlighted_dimensions):
     """5-dimension line chart averaged across the 4 international/wire outlets."""
+    import plotly.express as px
+
     with open(timeline_path) as f:
         timeline = json.load(f)
 
@@ -227,6 +229,8 @@ def make_international_framing_chart(timeline_path, highlighted_dimensions):
 
 def make_us_framing_band_chart(df, score_cols):
     """Thin colored-rectangle strip showing dominant US framing per day."""
+    import plotly.graph_objects as go
+
     DIMS = score_cols
     DIM_COLORS = {
         'kinetic_focus':      '#4E79A7',
@@ -286,6 +290,8 @@ def make_us_framing_band_chart(df, score_cols):
 
 def make_intl_framing_band_chart(timeline_path):
     """Thin strip showing dominant international framing per day (AP/Reuters/BBC/AJ)."""
+    import plotly.graph_objects as go
+
     DIMS = ['kinetic_focus', 'humanitarian_focus', 'diplomatic_focus',
             'economic_focus', 'culpability_bias']
     OUTLETS = ['apnews.com', 'reuters.com', 'bbc.com', 'aljazeera.com']
@@ -377,6 +383,8 @@ def make_stacked_dominant_framing_bars(
     intl_articles_path,
 ):
     """Compare dominant framing per day for US and non-US outlets in one stacked view."""
+    import plotly.graph_objects as go
+
     dim_colors = {
         'kinetic_focus': '#4E79A7',
         'humanitarian_focus': '#F28E2B',
@@ -927,6 +935,7 @@ def make_stacked_dominant_framing_comparison_html(
 
 def make_combined_aggregate_chart(df, score_cols, score_labels, timeline_path):
     """US (top) and international (bottom) aggregate as a shared-x subplot."""
+    import plotly.graph_objects as go
     from plotly.subplots import make_subplots
 
     DIMS = ['kinetic_focus', 'humanitarian_focus', 'diplomatic_focus',

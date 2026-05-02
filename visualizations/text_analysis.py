@@ -1,7 +1,5 @@
 import numpy as np
 import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
 from sklearn.feature_extraction.text import CountVectorizer, ENGLISH_STOP_WORDS
 
 
@@ -101,6 +99,8 @@ def make_cluster_bigram_charts(top_terms):
 
 def make_cluster_bigram_chart(cluster_label, top_terms):
     """Create a horizontal bar chart for one article cluster's top bigrams."""
+    import plotly.express as px
+
     chart_data = top_terms[top_terms['cluster'] == cluster_label].sort_values('ctfidf_score')
     short_title = cluster_label
 
@@ -140,6 +140,8 @@ def make_cluster_bigram_chart(cluster_label, top_terms):
 
 def make_outlet_framing_heatmap(df):
     """Create an outlet-level heatmap of average framing scores for the 5-source dataset."""
+    import plotly.graph_objects as go
+
     score_cols = [
         'kinetic_focus',
         'humanitarian_focus',

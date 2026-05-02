@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 import pandas as pd
-import plotly.graph_objects as go
 from pathlib import Path
 
 CLUSTER_COLORS = {
@@ -134,6 +135,8 @@ def _toggle_menu(buttons: list, y: float = 1.05) -> dict:
 # ── Articles per outlet ──────────────────────────────────────────────────────
 
 def make_article_count_chart(combined: pd.DataFrame) -> go.Figure:
+    import plotly.graph_objects as go
+
     summary = (
         combined.groupby(["media_name", "cluster", "country"])
         .size()
@@ -222,6 +225,8 @@ def make_article_count_chart(combined: pd.DataFrame) -> go.Figure:
 # ── Coverage window (Gantt) ──────────────────────────────────────────────────
 
 def make_gantt_chart(combined: pd.DataFrame, date_range=None) -> go.Figure:
+    import plotly.graph_objects as go
+
     gantt = (
         combined.dropna(subset=["date"])
         .groupby(["media_name", "cluster", "country"])["date"]
@@ -324,6 +329,8 @@ def make_gantt_chart(combined: pd.DataFrame, date_range=None) -> go.Figure:
 # ── Daily volume over time ───────────────────────────────────────────────────
 
 def make_articles_over_time_chart(combined: pd.DataFrame, date_range=None) -> go.Figure:
+    import plotly.graph_objects as go
+
     df = combined.dropna(subset=["date"]).copy()
     df["date_only"] = df["date"].dt.normalize()
 
